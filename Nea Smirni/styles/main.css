@@ -227,7 +227,7 @@ body, html {
 }
 
 /* DEVICE SPECIFIC STYLES*/
-#skin-change {
+#openLoginModalView {
     position: absolute;
     right: 10px;
     top: 10px;
