@@ -4,6 +4,15 @@ body, html {
     width: 100%;
 }
 
+/* portrait */
+@media screen and (orientation:portrait) {
+
+}
+/* landscape */
+@media screen and (orientation:landscape) {
+
+}
+
 /* COMMON STYLES*/
 .view-content h1 {
     color: #42454a;
