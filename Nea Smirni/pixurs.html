@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<div data-role="view" data-title="Cuteness." id="list" data-show="showApp">
+		<header data-role="header">
+			<div data-role="navbar">
+				<a data-role="button" data-icon="drawer-button" data-align="left">Back</a>
+				<span data-role="view-title"></span>
+				<a href="#canvas" data-role="button" data-icon="canvas" data-transition="slide" data-align="right">Canvas</a>
+			</div>
+		</header>
+		<ul id="aww"
+			data-role="listview" 
+			data-template="item-template"
+			data-source="awwDataSource"
+			data-load-more="true"
+			data-pull-to-refresh="true"
+			data-click="showDetail">
+		</ul>
+	</div>
+
+	<div data-role="view" id="canvas" data-stretch="true" data-title="Canvas View" data-init="canvasInit" data-show="canvasShow">
+		<header data-role="header">
+			<div data-role="navbar">
+				<a data-role="backbutton" href="#list" data-transition="slide:left reverse" data-icon="list-icon" data-align="left"></a>
+				<span data-role="view-title">&nbsp;</span>
+			</div>
+		</header>
+		<div id="canvas-scrollview"></div>
+	</div>
+
+	<div id="canvas-detail" data-role="view" data-transition="overlay:up" data-stretch="true" data-init="canvasDetailInit" data-show="canvasDetailShow">
+		<header data-role="header">
+			<div data-role="navbar">
+				<a data-role="button" data-click="goToCanvas" data-align="left">Canvas</a>
+				<span data-role="view-title">&nbsp;</span>
+			</div>
+		</header>
+		<div id="detail-scrollview"></div>
+		<div class="title-bar">
+			<p><span></span></p>
+		</div>
+	</div>
+
+
+	<div data-role="view" id="detail" data-transition="slide" data-after-show="renderDetail" data-title="" data-hide="resetDetail" data-stretch="true">
+		<header data-role="header">
+			<div data-role="navbar">
+				<a data-role="backbutton" data-align="left">Back</a>
+				<span data-role="view-title">&nbsp;</span>
+			</div>
+		</header>
+
+		<div class="detail-image" data-role="scroller" data-zoom="true"><img /></div>
+		<div class="detail-text"></div>
+	</div>
+
+	<script type="text/x-kendo-template" id="item-template">
+		<div class="item">
+			<div class="item-thumb">
+				<img class="loading-thumb" src="styles/images/My_municipality.png" />
+			</div>
+			<div class="item-summary">
+			   <h3>#: data.title #</h3>
+			   <p> #: data.subreddit # | #: data.ups - data.downs # | #: kendo.toString(new Date(data.created_utc * 1000), 'HH:mm') # | <a data-rel="external" href="http://reddit.com/#: data.permalink #" target="_blank">#= data.num_comments # comments on Reddit</a></p>
+			</div>
+		</div>
+	</script>
+
+	<script type="text/x-kendo-template" id="canvas-template">
+		<div data-uid="#: data[0].uid #" data-offset="#: calculateOffset(data[0]) #" class="tile">
+			#= createImage(data[0].data) #
+		</div>
+		<div data-uid="#: data[1].uid #" data-offset="#: calculateOffset(data[1]) #" class="tile">
+			#= createImage(data[1].data) #
+		</div>
+		<div data-uid="#: data[2].uid #" data-offset="#: calculateOffset(data[2]) #" class="tile">
+			#= createImage(data[2].data) #
+		</div>
+		<div data-uid="#: data[3].uid #" data-offset="#: calculateOffset(data[3]) #" class="tile">
+			#= createImage(data[3].data) #
+		</div>
+		<div data-uid="#: data[4].uid #" data-offset="#: calculateOffset(data[4]) #" class="tile">
+			#= createImage(data[4].data) #
+		</div>
+		<div data-uid="#: data[5].uid #" data-offset="#: calculateOffset(data[5]) #" class="tile">
+			#= createImage(data[5].data) #
+		</div>
+	</script>
+
+	<script src="scripts/pixurs.js"></script>
+
+</body>
+</html>

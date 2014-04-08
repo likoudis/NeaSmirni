@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title></title>
+			<meta charset="utf-8" />
+			<link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+			<link href="styles/main.css" rel="stylesheet" />
+		
+			<script src="cordova.js"></script>
+			<script src="kendo/js/jquery.min.js"></script>
+			<script src="kendo/js/kendo.mobile.min.js"></script>
+	</head>
+    <body>
+
+		<div data-role="splitview">
+			<div data-role="pane" data-layout="side-default" data-transition="slide">
+				<div data-role="view" data-title="Views" id="side-root">
+					<ul data-role="listview" data-style="inset" data-source="splitViewCategories" data-template="categoriesTemplate">
+					</ul>
+				</div>
+		
+				<script id="categoriesTemplate" type="text/x-kendo-template">
+					<a href="\#side-inbox?CategoryID=#: CategoryID#">#: CategoryName #</a>
+				</script>
+		
+				<div data-role="view" id="side-inbox" data-title="Inspections" data-show="filterProducts">
+					<ul data-role="listview" data-auto-bind="false" data-source="splitViewProducts" data-template="productsTemplate">
+					</ul>
+				</div>
+
+				<script id="productsTemplate" type="text/x-kendo-template">
+					<a href="\#orders?ProductID=#: ProductID #" data-target="main-pane">
+						<span class="date">$#: UnitPrice#</span>
+						<h3>#: ProductName #</h3>
+						<span class="excerpt">#: QuantityPerUnit #</span>
+					</a>
+				</script>
+		
+				<div data-role="layout" data-id="side-default" data-show="toggleBackButton">
+					<div data-role="header">
+						<div data-role="navbar">
+							<a class="nav-button" data-align="left" data-role="backbutton">Back</a>
+							<a class="nav-button" data-align="right" data-role="button" href="home.html"
+								data-target="_top">Lists</a>
+							<span data-role="view-title"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div data-role="pane" data-layout="main-default" id="main-pane">
+				<div data-role="view" data-title="Inspection Details">
+					No product selected
+				</div>
+		
+				<script type="text/x-kendo-template" id="ordersTemplate">
+					<dl>
+						<dt>Discount</dt>
+						<dd>#: Discount #</dd>
+						<dt>Quantity</dt>
+						<dd>#: Quantity #</dd>
+						<dt>UnitPrice</dt>
+						<dd>#: UnitPrice #</dd>
+					</dl>
+				</script>
+		
+				<div data-role="view" data-title="Inspection Details" id="orders" data-show="displayOrder">
+					<div id="product-details">
+					</div>
+				</div>
+		
+				<div data-role="layout" data-id="main-default">
+					<div data-role="header">
+						<div data-role="navbar">
+							<span data-role="view-title"></span>
+							<a data-role="button" href="index.html" data-align="right" data-target="_top">Home</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			var categoryID = null;
+
+			var splitViewCategories = new kendo.data.DataSource({
+				type: "odata",
+				transport: {
+					read: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Categories"
+				}
+			});
+
+			var splitViewProducts = new kendo.data.DataSource({
+				type: "odata",
+				serverFiltering: true,
+		
+				transport: {
+					read: {
+						url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Products"
+					}
+				}
+			});
+
+			var splitViewOrderDetails = new kendo.data.DataSource({
+				type: "odata",
+				serverFiltering: true,
+				transport: {
+					read: {
+						url: "http://demos.telerik.com/kendo-ui/service/Northwind.svc/Order_Details?$expand=Order"
+					}
+				},
+		
+				change: function() {
+					var template = kendo.template($("#ordersTemplate").text());
+					$("#product-details").html(kendo.render(template, this.data()));
+				}
+			});
+
+			function displayOrder(e) {
+				splitViewOrderDetails.filter({
+					field: "ProductID",
+					operator: "eq",
+					value: parseInt(e.view.params.ProductID)
+				});
+		
+				splitViewOrderDetails.read();
+			}
+
+			function filterProducts(e) {
+				splitViewProducts.filter({
+					field: "CategoryID",
+					operator: "eq",
+					value: parseInt(e.view.params.CategoryID)
+				});
+		
+				splitViewProducts.read();
+			}
+
+			function toggleBackButton(e) {
+				if (e.view.id === "#side-root") {
+					e.view.element.find("[data-role=backbutton]").css("visibility", "hidden");
+				} else {
+					e.view.element.find("[data-role=backbutton]").css("visibility", "visible");
+				}
+			}
+		</script>
+
+    </body>
+</html>
