@@ -10,8 +10,7 @@
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
 
-    <script src="scripts/app.js"></script>
-    <style>
+	<style>
         html .km-wp-light .km-content,
         html .km-wp-light .km-button,
         html .km-wp-light .km-navbar,
@@ -34,22 +33,24 @@
         <div class="view-content">
             <h1>Welcome!</h1>
             <a id="openLoginModalView" 
-				data-role="button" 
+				data-role="button"
 				data-rel="modalview" 
-				href="#loginModalView">
+				href="#loginModalView"
+				style="margin: 5%">
 				Login
             </a>
             <p>
                 This is the Welcome page.
             </p>
             <div class="img"></div>
+			<div style="text-align:center; margin: 5%">
             <a id="openHomePage" 
 				data-role="button"
-				href="home.html"
-				data-enable="false">
+				data-enable="false"
+				href="home.html">
 				Open Inspections
             </a>
-
+			</div>
         </div>
     </div>
 
@@ -57,7 +58,7 @@
         <div data-role="header">
             <div data-role="navbar">
 				<span>Login</span>
-				<a data-click="app.closeLoginModalView" data-role="button" data-align="right">Cancel</a>
+				<a id="cancel-login" data-click="app.closeLoginModalView" data-role="button" data-align="right">Cancel</a>
 			</div>
         </div>    
         <ul data-role="listview" data-style="inset">
@@ -75,5 +76,8 @@
         <a data-role="button" data-rel="modalview" data-click="app.closeLoginModalView">Login</a>
     </div>
 
+	<script src="scripts/app.js"></script>
+
+	
 </body>
 </html>
