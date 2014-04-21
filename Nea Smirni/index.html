@@ -10,6 +10,8 @@
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
 
+	<script src="scripts/app.js"></script>
+
 	<style>
         html .km-wp-light .km-content,
         html .km-wp-light .km-button,
@@ -73,7 +75,9 @@
                 </label>
             </li>
         </ul>
-        <a data-role="button" data-rel="modalview" data-click="app.closeLoginModalView">Login</a>
+		<div style="text-align:center">
+    	    <a data-role="button" data-rel="modalview" data-click="app.closeLoginModalView">Login</a>
+		</div>
     </div>
 
 	<!--Left drawer-->
@@ -112,7 +116,7 @@
 		<header data-role="header">
 			<div data-role="navbar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
-				<span data-role="view-title"></span>
+				<span data-role="view-title" style="visibility: visible"></span>
 				<a data-role="button" data-align="right" class="nav-button" href="#view-welcome" data-icon="home">Home</a>
 				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer" data-icon="share">Actions</a>    
 			</div>
@@ -125,7 +129,7 @@
 	</script>
 
 	<!--Inspections-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-inspxions" data-title="Inspections">
+	<div data-role="view" data-layout="drawer-layout" id="drawer-inspxions" data-title="Inspection List">
 		<div id="map-search-wrap">
 			<button id="map-navigate-home"></button>
 			<form onsubmit="return false;">
@@ -139,14 +143,14 @@
 
 	<script>
 		var inspxDataList = [
-			{date: "03/02/2014 07:56", address: "Shcawsi Trail", comment:"Second floor addition and new screened-in porch."},
-			{date: "03/02/2014 07:56", address: "Shcawsi Trail", comment:"Second floor addition and new screened-in porch."},
-			{date: "03/02/2014 07:56", address: "Shcawsi Trail", comment:"Second floor addition and new screened-in porch."},
-			{date: "03/02/2014 07:56", address: "Shcawsi Trail", comment:"Second floor addition and new screened-in porch."}
+			{date: "03/02/2014", address: "Shcawsi Trail",    comment:"Second floor addition and new screened-in porch."},
+			{date: "05/04/2013", address: "41 LAKEVIEW DR",   comment:"Support beam, size, span, bearing, splicing..."},
+			{date: "29/11/2013", address: "101 BURGESS RD",   comment:"Electrical system certificate:"},
+			{date: "05/04/2013", address: "459 STAR LAKE RD", comment:"Floor pad: Tye/ must be grouted."}
 		]
     </script>
 	<script type="text/x-kendo-template" id="inspx-template">
-		<a href="\#inspx-details">
+		<div>
 			<div class="item-thumb">
 				<img class="loading-thumb" src="styles/images/My_municipality.png" />
 			</div>
@@ -154,7 +158,9 @@
 				<h3 class="time">#: date #</h3> <h2>#: address #</h2>
 				<p>#: comment #</p>
 			</div>
+		<a class="item-link" href="\#inspx-details" data-role="button" data-icon="details" style="border-style:none" > 
 		</a>
+		</div>
 	</script>
 	
 	<!--Inspection details-->
@@ -163,13 +169,13 @@
 			<div data-role="navbar">
 				<a data-role="backbutton" data-align="left">Back</a>
 				<span data-role="view-title"></span>
+				<ul style="float:right" data-role="buttongroup" data-index="2">
+					<li>Pass</li>
+					<li>Fail</li>
+					<li>Notes</li>
+					<li>e-mail</li>
+				</ul>
 			</div>
-  <ul data-role="buttongroup" data-index="0">
-    <li>Pass</li>
-    <li>Fail</li>
-    <li>Notes</li>
-    <li>e-mail</li>
-  </ul>
 		</header>
 		<ul id="i-detail-list" data-role="listview" data-style="inset" data-type="group">
 			<li>Insection Information
@@ -215,111 +221,39 @@
         }
     </style>
 
+	<!--Pictures-->
+	<div data-role="view" data-title="Inspection Pictures." id="drawer-pixurs" data-layout="drawer-layout" >
+		<ul id="gallery-listview"
+			data-role="listview" 
+			data-template="pix-list-template" 
+			data-source="galleryDataSource"
+			data-click="showDetail">
+		</ul>
+	</div>
+	
 	<script>
-		var inspxDetails = new kendo.data.DataSource({
-			data: [{
-				scheduled: "03/02/2014", tod: "07:56", address: "Shcawsi Trail", 
-				permit: "2013-5143 ", status: "PASSED",
-				comment:"Second floor addition and new screened-in porch."
-			}]
+		var galleryDataSource = new kendo.data.DataSource({
+			data: [
+					{
+						scheduled: "03/02/2014", tod: "07:56", address: "Shcawsi Trail", 
+						permit: "2013-5143 ", status: "PASSED",
+						comment:"Second floor addition and new screened-in porch."
+					},
+					{
+						scheduled: "03/02/2014", tod: "07:56", address: "Shcawsi Trail", 
+						permit: "2013-5143 ", status: "PASSED",
+						comment:"Second floor addition and new screened-in porch."
+					}
+			],
+			pageSize: 2
 		})
     </script>
-
-	<script type="text/x-kendo-template" id="i-detail-template">
+	<script type="text/x-kendo-template" id="pix-list-template">
 		<p><span class="idetail-t">Date</span>   <span class="idetail-d"> #= scheduled#   </span></p>
 		<p><span class="idetail-t">Address</span><span class="idetail-d"> #= address#</span></p>
 		<p><span class="idetail-t">Comment</span><span class="idetail-d"> #= comment#</span></p>
 	</script>
 	
-	<!--Pictures-->
-	<div data-role="view" data-title="Cuteness." id="list" data-show="showApp">
-		<header data-role="header">
-			<div data-role="navbar">
-				<a data-role="button" data-icon="drawer-button" data-align="left">Back</a>
-				<span data-role="view-title"></span>
-				<a href="#canvas" data-role="button" data-icon="canvas" data-transition="slide" data-align="right">Canvas</a>
-			</div>
-		</header>
-		<ul id="aww"
-			data-role="listview" 
-			data-template="item-template"
-			data-source="awwDataSource"
-			data-load-more="true"
-			data-pull-to-refresh="true"
-			data-click="showDetail">
-		</ul>
-	</div>
-	
-	<!--Pictures Canvas-->
-	<div data-role="view" id="canvas" data-stretch="true" data-title="Canvas View" data-init="canvasInit" data-show="canvasShow">
-		<header data-role="header">
-			<div data-role="navbar">
-				<a data-role="backbutton" href="#list" data-transition="slide:left reverse" data-icon="list-icon" data-align="left"></a>
-				<span data-role="view-title">&nbsp;</span>
-			</div>
-		</header>
-		<div id="canvas-scrollview"></div>
-	</div>
-	
-	<!--Pictures Canvas Detail-->
-	<div id="canvas-detail" data-role="view" data-transition="overlay:up" data-stretch="true" data-init="canvasDetailInit" data-show="canvasDetailShow">
-		<header data-role="header">
-			<div data-role="navbar">
-				<a data-role="button" data-click="goToCanvas" data-align="left">Canvas</a>
-				<span data-role="view-title">&nbsp;</span>
-			</div>
-		</header>
-		<div id="detail-scrollview"></div>
-		<div class="title-bar">
-			<p><span></span></p>
-		</div>
-	</div>
-	
-	<!--Pictures Detail-->
-	<div data-role="view" id="detail" data-transition="slide" data-after-show="renderDetail" data-title="" data-hide="resetDetail" data-stretch="true">
-		<header data-role="header">
-			<div data-role="navbar">
-				<a data-role="backbutton" data-align="left">Back</a>
-				<span data-role="view-title">&nbsp;</span>
-			</div>
-		</header>
-	
-		<div class="detail-image" data-role="scroller" data-zoom="true"><img /></div>
-		<div class="detail-text"></div>
-	</div>
-	
-	<script type="text/x-kendo-template" id="item-template">
-		<div class="item">
-			<div class="item-thumb">
-				<img class="loading-thumb" src="styles/images/My_municipality.png" />
-			</div>
-			<div class="item-summary">
-			   <h3>#: data.title #</h3>
-			   <p> #: data.subreddit # | #: data.ups - data.downs # | #: kendo.toString(new Date(data.created_utc * 1000), 'HH:mm') # | <a data-rel="external" href="http://reddit.com/#: data.permalink #" target="_blank">#= data.num_comments # comments on Reddit</a></p>
-			</div>
-		</div>
-	</script>
-	
-	<script type="text/x-kendo-template" id="canvas-template">
-		<div data-uid="#: data[0].uid #" data-offset="#: calculateOffset(data[0]) #" class="tile">
-			#= createImage(data[0].data) #
-		</div>
-		<div data-uid="#: data[1].uid #" data-offset="#: calculateOffset(data[1]) #" class="tile">
-			#= createImage(data[1].data) #
-		</div>
-		<div data-uid="#: data[2].uid #" data-offset="#: calculateOffset(data[2]) #" class="tile">
-			#= createImage(data[2].data) #
-		</div>
-		<div data-uid="#: data[3].uid #" data-offset="#: calculateOffset(data[3]) #" class="tile">
-			#= createImage(data[3].data) #
-		</div>
-		<div data-uid="#: data[4].uid #" data-offset="#: calculateOffset(data[4]) #" class="tile">
-			#= createImage(data[4].data) #
-		</div>
-		<div data-uid="#: data[5].uid #" data-offset="#: calculateOffset(data[5]) #" class="tile">
-			#= createImage(data[5].data) #
-		</div>
-	</script>
 
 	<!--Map-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-map" data-title="Map">
@@ -375,10 +309,10 @@
 		
 	<!--Snap-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-snap" data-title="Take Pictures">
-		<ul data-role="listview">
-			<li data-icon="trash">Untitled message 4</li>
-			<li data-icon="trash">Untitled message 5</li>
-		</ul>
+		Add a picture to current inspetion
+		<a data-role="button" data-click="app.onSnapShow">
+			Snap
+        </a>
 	</div>
 	
 	<!--Report-->
@@ -412,10 +346,6 @@
 			<li data-icon="trash">Untitled message 5</li>
 		</ul>
 	</div>
-
-	<script src="scripts/app.js"></script>
-	<script src="scripts/inspections.js"></script>
-	<script src="scripts/pixurs.js"></script>
 
 <!--Crap-->
 

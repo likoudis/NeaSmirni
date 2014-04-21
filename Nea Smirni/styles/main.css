@@ -438,13 +438,19 @@ body, html {
     margin-top: 1em;
     display: inline-block;
 }
-.item-thumb, .item-summary, .item-comments {
+.item-thumb, .item-summary, .item-comments, .item-link{
     display: table-cell;
     vertical-align: top;
     padding-bottom: .5em;
     padding-right: .5em;
 }
 .item-thumb {
-    width: 50px;
+    padding-left: 0.5em;
+}
+.item-link {
+	vertical-align: middle;
+}
+.item-summary {
+    width: 100%;
     padding-left: 1em;
 }
