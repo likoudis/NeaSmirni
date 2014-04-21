@@ -66,6 +66,7 @@
 			//Store imagepath in session for future use
 			// like to store it in database
 			sessionStorage.setItem('imagepath', entry.fullPath);
+			document.getElementById("pixur-fname").innerHTML=entry.fullPath;
 		}
 		
 		function resOnError(error) {
