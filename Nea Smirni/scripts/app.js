@@ -66,7 +66,9 @@
 			//Store imagepath in session for future use
 			// like to store it in database
 			sessionStorage.setItem('imagepath', entry.fullPath);
-			document.getElementById("pixur-fname").innerHTML=entry.fullPath;
+			document.getElementById("snap-fname").innerHTML=entry.fullPath;
+			document.getElementById("snap-thumb").src=entry.fullPath;
+			//document.getElementById("snap-thumb").src="styles/images/My_municipality.png";
 		}
 		
 		function resOnError(error) {
