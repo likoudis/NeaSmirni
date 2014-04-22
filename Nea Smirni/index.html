@@ -234,26 +234,17 @@
 	<script>
 		var galleryDataSource = new kendo.data.DataSource({
 			data: [
-					{
-						scheduled: "03/02/2014", tod: "07:56", address: "Shcawsi Trail", 
-						permit: "2013-5143 ", status: "PASSED",
-						comment:"Second floor addition and new screened-in porch."
-					},
-					{
-						scheduled: "03/02/2014", tod: "07:56", address: "Shcawsi Trail", 
-						permit: "2013-5143 ", status: "PASSED",
-						comment:"Second floor addition and new screened-in porch."
-					}
-			],
-			pageSize: 2
+			{fname:"/storage/sdcard0/MyInspections/000000000_000.jpg"},
+			{fname:"/storage/sdcard0/MyInspections/000000000_001.jpg"},
+			{fname:"/storage/sdcard0/MyInspections/000000000_002.jpg"},
+			{fname:"/storage/sdcard0/MyInspections/000000000_003.jpg"}
+			]
 		})
     </script>
-	<script type="text/x-kendo-template" id="pix-list-template">
-		<p><span class="idetail-t">Date</span>   <span class="idetail-d"> #= scheduled#   </span></p>
-		<p><span class="idetail-t">Address</span><span class="idetail-d"> #= address#</span></p>
-		<p><span class="idetail-t">Comment</span><span class="idetail-d"> #= comment#</span></p>
-	</script>
 	
+	<script type="text/x-kendo-template" id="pix-list-template">
+		<p><img height="100" width="100" src="#: fname #">   <span class="idetail-d"> #= fname#   </span></p>
+	</script>
 
 	<!--Map-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-map" data-title="Map">
@@ -350,23 +341,5 @@
 		</ul>
 	</div>
 
-<!--Crap-->
-
-<!--	
-	<div data-role="view" data-layout="drawer-layout" id="drawer-pixurs" data-title="Pictures">
-		<ul data-role="listview">
-			<li data-icon="compose">Re: Monday meeting</li>
-			<li data-icon="compose">Untitled message 1</li>
-			<li data-icon="compose">Untitled message 2</li>
-			<li data-icon="compose">Re: Regarding org chart changes</li>
-			<li data-icon="compose">Re: Re: Regarding org chart changes</li>
-			<li data-icon="compose">Re: Your Costume is ready</li>
-			<li data-icon="compose">Re: Out tonight?</li>
-			<li data-icon="compose">Untitled message 3</li>
-		</ul>
-	</div>
-
-
--->	
 </body>
 </html>
