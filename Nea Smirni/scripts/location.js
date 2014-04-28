@@ -25,12 +25,12 @@
 
 			dataSource = new kendo.data.DataSource({
 				data: [
-					{id: 0, lat:00, lng:05, address: "address1", isOnMap: false},
-					{id: 1, lat:10, lng:15, address: "address2", isOnMap: false},
-					{id: 2, lat:20, lng:25, address: "address3", isOnMap: false},
-					{id: 3, lat:30, lng:35, address: "address4", isOnMap: false},
-					{id: 4, lat:40, lng:45, address: "address5", isOnMap: false},
-					{id: 5, lat:50, lng:55, address: "address6", isOnMap: false}
+					{id: 0, lat:43.1, lng:-80.5, address: "Middle Townline Rd", isOnMap: false},
+					{id: 1, lat:43.3, lng:-80.3, address: "Lockie Rd", isOnMap: false},
+					{id: 2, lat:43.5, lng:-80.1, address: "Watson Rd S", isOnMap: false},
+					{id: 3, lat:43.7, lng:-79.9, address: "Heritage Rd", isOnMap: false},
+					{id: 4, lat:43.9, lng:-79.7, address: "Concession Rd 11", isOnMap: false},
+					{id: 5, lat:44.1, lng:-79.5, address: "Toby Ct", isOnMap: false}
 				]
 			});
 
@@ -90,7 +90,8 @@
 			that.showLoading();
 
 			navigator.geolocation.getCurrentPosition(
-				function (position) {					position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				function (position) {
+					position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
 					map.panTo(position);
 					that._putMarker(position);
@@ -100,7 +101,7 @@
 				},
 				function (error) {
 					//default map coordinates
-					position = new google.maps.LatLng(38,24);
+					position = new google.maps.LatLng(43.639206,-79.384841);
 					map.panTo(position);
 
 					that._isLoading = false;

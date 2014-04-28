@@ -263,6 +263,13 @@
 			Location requires internet connection to display the map.
 		</div>
 		<div>
+		<div id="map-search-wrap">
+            <div>
+                <button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
+                <input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
+                <button id="map-search" class="map-tools-button search" data-bind="click: onSearchAddress"></button>
+            </div>
+		</div>
 			<ul id="listview-permitsToday" 
 				style="width: 32%; float:left"
 				data-role="listview"
