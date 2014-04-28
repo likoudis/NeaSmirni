@@ -9,7 +9,9 @@
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
+	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
 
 	<style>
@@ -83,7 +85,7 @@
 	<!--Left drawer-->
 	<div data-role="drawer" id="left-drawer" data-position="left"
 		data-views="[
-		'drawer-inspxions','drawer-pixurs','drawer-contacts','drawer-map','drawer-settings',
+		'drawer-inspxions','drawer-pixurs','drawer-contacts','drawer-settings',
 		'drawer-search','drawer-snap','drawer-report','drawer-email','drawer-addinspx','drawer-sync']"
 		style="width: 200px"> 
 		<ul data-role="listview" data-type="flat">
@@ -98,7 +100,7 @@
 	<!--Right drawer-->
 	<div data-role="drawer" id="right-drawer" data-position="right"
 		data-views="[
-		'drawer-inspxions','drawer-pixurs','drawer-contacts','drawer-map','drawer-settings',
+		'drawer-inspxions','drawer-pixurs','drawer-contacts','drawer-settings',
 		'drawer-search','drawer-snap','drawer-report','drawer-email','drawer-addinspx','drawer-sync']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="flat">
@@ -125,7 +127,7 @@
 
 	<script>
     // reset global drawer instance, for demo purposes
-    	kendo.mobile.ui.Drawer.current = null;
+    //	kendo.mobile.ui.Drawer.current = null;
 	</script>
 
 	<!--Inspections-->
@@ -244,25 +246,65 @@
 	
 	<script type="text/x-kendo-template" id="pix-list-template">
 		<p><img height="100" width="100" src="#: fname #">   <span class="idetail-d"> #= fname#   </span></p>
-		<a href="mailto:example@foo.com?subject=hello world">Email Me</a>
+		<a href="mailto:likoudis@hotmail.com?subject=My Inspections">
+			Email Me
+		</a>
 	</script>
 
 	<!--Map-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-map" data-title="Map">
-		<ul data-role="listview">
-			<li>Build enterprise apps</li>
-			<li>Fw: Regarding Multiline textbox</li>
-			<li>Away next week</li>
-			<li>Fw: Your Costume is ready</li>
-			<li>Update completed</li>
-			<li>Survey</li>
-			<li>Problem with this account</li>
-			<li>Advice For Designers</li>
-			<li>Fw: Missing Book</li>
-			<li>Fun & useful reading</li>
-		</ul>
+	<div data-role="view" data-layout="map-layout" id="drawer-map" data-title="Map"
+		data-init="app.locationService.initLocation"
+		data-show="app.locationService.show"
+		data-hide="app.locationService.hide"
+		data-model="app.locationService.viewModel"
+		data-stretch="true">
+
+		<div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
+			Location requires internet connection to display the map.
+		</div>
+		<div>
+			<ul id="listview-permitsToday" 
+				style="width: 32%; float:left"
+				data-role="listview"
+				data-bind="source: permitsTodayDataSource"
+				data-template="location-inspections-template">
+			</ul>
+			<p id="map-canvas"
+				style="width: 66%; float:right" 
+				data-bind="visible: isGoogleMapsInitialized">
+			</p>
+		</div>
 	</div>
-	
+
+	<!--Map Layout-->
+	<div data-role="layout" data-id="map-layout">
+		<header data-role="header">
+			<div data-role="navbar">
+				<a data-role="backbutton" data-align="left" data-icon="rewind">Back</a>
+				<span data-role="view-title" style="visibility: visible"></span>
+				<a data-role="button" data-align="right" class="nav-button" href="#view-welcome" data-icon="home">Home</a>
+			</div>
+		</header>
+	</div>
+
+	<!--Inspection Address List template-->
+	<script type="text/x-kendo-tmpl" id="location-inspections-template">
+		<div>
+			#:address#
+			<a 
+				data-role="detailbutton" data-icon="contactadd"
+				data-bind="click:onInspectionSelect, invisible:inspectionAddressOnMap">
+				<span style="visibility:hidden">#:id#</span>
+			</a>
+			<a 
+				data-role="detailbutton" data-icon="rowdelete"
+				data-bind="click:onInspectionSelect, visible:inspectionAddressOnMap">
+				<span style="visibility:hidden">#:id#</span>
+			</a>
+		</div>
+	</script>
+
+
 	<!--Contacts-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-contacts" data-title="Contacts">
 		<ul data-role="listview">
