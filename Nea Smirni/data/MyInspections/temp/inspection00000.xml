@@ -1,0 +1,524 @@
+<?xml version="1.0"?>
+<Inspection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ScheduledDate>2013-06-07T07:00:00</ScheduledDate>
+  <ParentDocID>45865</ParentDocID>
+  <DocID>49323</DocID>
+  <Type>Insulation (V/B)</Type>
+  <RequestDate>2013-06-05T07:00:00</RequestDate>
+  <ApprovedDate>0001-01-01T00:00:00</ApprovedDate>
+  <TimeOfDay>Afternoon</TimeOfDay>
+  <Notes>705-732-4644 MR. JORDI</Notes>
+  <OfficeDocID>000019884</OfficeDocID>
+  <WorkFlowStatus>INCOMPLETE</WorkFlowStatus>
+  <CheckListItems>
+    <CheckListItem>
+      <ID>364469</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Resistance to forced entry (blocking)</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>FRAMING</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364470</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Notching and drilling of joists</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>FRAMING</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364451</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Air barrier materials, check location</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364452</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>3</Checked>
+      <Status>Incomplete</Status>
+      <Description>Areas to be insulated</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364453</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Eave baffels evenly distributed</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364454</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Electrical boxes tight</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364455</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Installation of air barrier system</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364456</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Installation of insulation</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364457</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>3</Checked>
+      <Status>Incomplete</Status>
+      <Description>Installation of vapour barrier</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364458</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>3</Checked>
+      <Status>Incomplete</Status>
+      <Description>Insulated foundation walls</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364459</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>3</Checked>
+      <Status>Incomplete</Status>
+      <Description>Insulation materials and specs</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364460</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Insulation materials per plans</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364461</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Insulation value</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364462</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Polyethylene vapour barrier</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364463</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Pot lights</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364464</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Prevent blockage of soffit vents</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364465</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>3</Checked>
+      <Status>Incomplete</Status>
+      <Description>Required overlap of vapour barrier</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364466</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Sloped ceilings batt insulation</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364467</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>1</Checked>
+      <Status>OK</Status>
+      <Description>Vapour barrier materials/installation</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>INSUL/VB</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+    <CheckListItem>
+      <ID>364468</ID>
+      <DocID>49323</DocID>
+      <IsRequired>true</IsRequired>
+      <Checked>3</Checked>
+      <Status>Incomplete</Status>
+      <Description>Other</Description>
+      <Notes />
+      <IsNew>false</IsNew>
+      <IsChanged>true</IsChanged>
+      <IsDeletable>false</IsDeletable>
+      <IsDeleted>false</IsDeleted>
+      <GroupTitle>OTHER</GroupTitle>
+      <OriginalNotes />
+    </CheckListItem>
+  </CheckListItems>
+  <PermitInspections>
+    <PermitInspection>
+      <Id>51226</Id>
+      <OfficeDocID>000020887</OfficeDocID>
+      <Inspected>2013-11-18T07:00:00</Inspected>
+      <InspectionType>Insulation (V/B)</InspectionType>
+      <InspectedBy>BUSBY, CHRIS</InspectedBy>
+      <Status>CONDITIONAL</Status>
+      <Notes>Note from 000019884: 705-732-4644 MR. JORDI
+
+Areas to be insulated: 
+Installation of vapour barrier: 
+Insulated foundation walls: 
+Insulation materials and specs: 
+Required overlap of vapour barrier: 
+Other:</Notes>
+    </PermitInspection>
+    <PermitInspection>
+      <Id>49323</Id>
+      <OfficeDocID>000019884</OfficeDocID>
+      <Inspected>2013-06-07T07:00:00</Inspected>
+      <InspectionType>Insulation (V/B)</InspectionType>
+      <InspectedBy>BUSBY, CHRIS</InspectedBy>
+      <Status>INCOMPLETE</Status>
+      <Notes>705-732-4644 MR. JORDI</Notes>
+    </PermitInspection>
+    <PermitInspection>
+      <Id>49110</Id>
+      <OfficeDocID>000019763</OfficeDocID>
+      <Inspected>2013-05-22T07:00:00</Inspected>
+      <InspectionType>Plumbing-AG-Residential</InspectionType>
+      <InspectedBy>VANDERMEER, MARK</InspectedBy>
+      <Status>PASSED</Status>
+      <Notes>GLENNA JORDI  705-732-4644</Notes>
+    </PermitInspection>
+    <PermitInspection>
+      <Id>46731</Id>
+      <OfficeDocID>000018703</OfficeDocID>
+      <Inspected>2012-10-31T06:00:00</Inspected>
+      <InspectionType>Framing - Residential</InspectionType>
+      <InspectedBy>VANKOUGHNETT, ERNIE</InspectedBy>
+      <Status>PASSED</Status>
+      <Notes />
+    </PermitInspection>
+    <PermitInspection>
+      <Id>46388</Id>
+      <OfficeDocID>000018516</OfficeDocID>
+      <Inspected>2012-10-05T07:00:00</Inspected>
+      <InspectionType>Pre-Backfill</InspectionType>
+      <InspectedBy>VANDERMEER, MARK</InspectedBy>
+      <Status>PASSED</Status>
+      <Notes>705-732-4644</Notes>
+    </PermitInspection>
+    <PermitInspection>
+      <Id>46255</Id>
+      <OfficeDocID>000018434</OfficeDocID>
+      <Inspected>2012-09-18T07:00:00</Inspected>
+      <InspectionType>Pre-Footings</InspectionType>
+      <InspectedBy>VANKOUGHNETT, ERNIE</InspectedBy>
+      <Status>PASSED</Status>
+      <Notes>705-732-4644</Notes>
+    </PermitInspection>
+  </PermitInspections>
+  <AssignedToName>BUSBY, CHRIS</AssignedToName>
+  <Property>
+    <RollNumber>49-03-040-005-01445-0000</RollNumber>
+    <CurrentAddress>JORDI GLENNA</CurrentAddress>
+    <CivicAddress>52 MUSKRAT TRAIL</CivicAddress>
+    <OwnerName>JORDI CHRISTIAN</OwnerName>
+    <PostalCode>P2A 2W8</PostalCode>
+    <LegalDescription>CON 3 PT LOT 30 PLAN;PSR-1441 PART 20 PCL 14073;S/S</LegalDescription>
+  </Property>
+  <Document xsi:type="Permit">
+    <DocID>45865</DocID>
+    <OfficeDocID>2012-5235 </OfficeDocID>
+    <AppDate>14/08/2012 07:00:00</AppDate>
+    <Notes />
+    <Type>Residential</Type>
+    <SubClass>Building Permit</SubClass>
+    <IsPermit>true</IsPermit>
+    <Description>CONSTRUCT A 2 STOREY GARAGE WITH LINING SPACE IN THE SECOND STOREY ATTACHED TO COTTAGE</Description>
+    <Contacts>
+      <Contact>
+        <IsReg>false</IsReg>
+        <RegNumber />
+        <OrgRegNumber />
+        <Verified />
+        <RegCaption />
+        <DocID>45865</DocID>
+        <PersonGroupID>2</PersonGroupID>
+        <Name>JORDI CHRISTIAN</Name>
+        <LastName />
+        <FirstName />
+        <Corporation />
+        <Address>JORDI GLENNA</Address>
+        <UnitNumber>52 MUSKRAT TRAIL</UnitNumber>
+        <Province>ON</Province>
+        <PostalCode>P2A 2W8</PostalCode>
+        <Municipality>SEGUIN</Municipality>
+        <Email />
+        <Telephone>7057324644</Telephone>
+        <Fax />
+        <Cell>4165266048</Cell>
+        <PersonGroup>Owner</PersonGroup>
+      </Contact>
+      <Contact>
+        <IsReg>false</IsReg>
+        <RegNumber />
+        <OrgRegNumber />
+        <Verified />
+        <RegCaption />
+        <DocID>45865</DocID>
+        <PersonGroupID>3</PersonGroupID>
+        <Name>JORDI CHRISTIAN</Name>
+        <LastName />
+        <FirstName />
+        <Corporation />
+        <Address>JORDI GLENNA</Address>
+        <UnitNumber>52 MUSKRAT TRAIL</UnitNumber>
+        <Province>ON</Province>
+        <PostalCode>P2A 2W8</PostalCode>
+        <Municipality>SEGUIN</Municipality>
+        <Email />
+        <Telephone>7057324644</Telephone>
+        <Fax />
+        <Cell>4165266048</Cell>
+        <PersonGroup>Applicant</PersonGroup>
+      </Contact>
+      <Contact>
+        <IsReg>true</IsReg>
+        <RegNumber>22097</RegNumber>
+        <OrgRegNumber>29648</OrgRegNumber>
+        <Verified />
+        <RegCaption>BCIN</RegCaption>
+        <DocID>45865</DocID>
+        <PersonGroupID>16</PersonGroupID>
+        <Name>KELLY, MICHAEL</Name>
+        <LastName />
+        <FirstName />
+        <Corporation>MICHAEL KELLY ARCH. DESIGN</Corporation>
+        <Address>125 SUGAR LAKE RD.</Address>
+        <UnitNumber>P.O. BOX 278</UnitNumber>
+        <Province>ONTARIO</Province>
+        <PostalCode>P2A 2W9</PostalCode>
+        <Municipality>PARRY SOUND</Municipality>
+        <Email />
+        <Telephone>7057324675</Telephone>
+        <Fax>7057324675</Fax>
+        <Cell />
+        <PersonGroup>Designer</PersonGroup>
+      </Contact>
+      <Contact>
+        <IsReg>true</IsReg>
+        <RegNumber>P. Eng</RegNumber>
+        <OrgRegNumber />
+        <Verified />
+        <RegCaption>BCIN</RegCaption>
+        <DocID>45865</DocID>
+        <PersonGroupID>16</PersonGroupID>
+        <Name>FURSTNER, NANDOR</Name>
+        <LastName />
+        <FirstName />
+        <Corporation />
+        <Address>4 LAKEVIEW DR</Address>
+        <UnitNumber />
+        <Province>ONTARIO</Province>
+        <PostalCode>P0C 1J0</PostalCode>
+        <Municipality>ROSSEAU</Municipality>
+        <Email />
+        <Telephone>7057321484</Telephone>
+        <Fax />
+        <Cell />
+        <PersonGroup>Designer</PersonGroup>
+      </Contact>
+    </Contacts>
+    <WorkValue>50000.0000</WorkValue>
+    <WorkArea>756 (70)</WorkArea>
+    <ConstructionType>Addition</ConstructionType>
+    <CurrentUse>Cottages</CurrentUse>
+    <ConditionalPermit />
+    <IntendedUse>Cottages</IntendedUse>
+    <IsONNewHome>false</IsONNewHome>
+    <RegistrationNumber />
+  </Document>
+  <AssignedToPerson>
+    <PersonID>2789</PersonID>
+    <FirstName>CHRIS</FirstName>
+    <MiddleName />
+    <LastName>BUSBY</LastName>
+    <FullName>BUSBY, CHRIS</FullName>
+    <FirstAddress />
+    <SecondAddress />
+    <City />
+    <Province />
+    <PostalCode />
+    <FirstPhoneNumber />
+    <SecondPhoneNumber />
+    <Fax />
+    <Email />
+    <StatusID>0</StatusID>
+    <RegNum />
+  </AssignedToPerson>
+  <LogoPath>styles/images/MY_Municipality.png</LogoPath>
+  <MunicipalityName>TOWNSHIP OF SEGUIN</MunicipalityName>
+  <MunicipalityAddress>5 HUMPHREY DRIVE
+SEGUIN, ON
+P2A 2W8
+(705) 732-4300
+</MunicipalityAddress>
+</Inspection>

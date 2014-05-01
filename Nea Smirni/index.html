@@ -11,6 +11,8 @@
     <script src="kendo/js/kendo.mobile.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
+	<script src="scripts/html2canvas.debug.js"></script>
+	<script src="scripts/jspdf.debug.js"></script>
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
 
@@ -243,7 +245,6 @@
 			]
 		})
     </script>
-	
 	<script type="text/x-kendo-template" id="pix-list-template">
 		<p><img height="100" width="100" src="#: fname #">   <span class="idetail-d"> #= fname#   </span></p>
 		<a href="mailto:likoudis@hotmail.com?subject=My Inspections">
@@ -361,12 +362,45 @@
 	
 	<!--Report-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-report" data-title="Reports">
-		<ul data-role="listview">
-			<li data-icon="trash">Untitled message 4</li>
-			<li data-icon="trash">Untitled message 5</li>
-		</ul>
 	</div>
-	
+
+	 <script type = "text/javascript">
+		var xml = new XMLHttpRequest();
+		xml.open("GET", "data/MyInspections/temp/inspection00000.xml",false);
+		xml.send("");
+		var xsl = new XMLHttpRequest();
+		xsl.open("GET", "data/MyInspections/Reports/CheckList.xsl",false);
+		xsl.send("");
+		xsltProcessor = new XSLTProcessor();
+		xsltProcessor.importStylesheet(xsl.responseXML);
+		resultDocument = xsltProcessor.transformToFragment(xml.responseXML, document);
+		document.getElementById("drawer-report").appendChild(resultDocument);
+	 </script>
+
+	<script>
+		var doc = new jsPDF();
+
+// We'll make our own renderer to skip this editor
+		var specialElementHandlers = {
+			'#editor': function(element, renderer){return true;}
+		};
+
+// All units are in the set measurement for the document
+// This can be changed to "pt" (points), "mm" (Default), "cm", "in"
+		doc.fromHTML($('drawer-report').get(0), 15, 15, {
+			'width': 170, 
+			'elementHandlers': specialElementHandlers
+		});
+		
+		var pdf = new jsPDF('p','pt','a4');
+
+		pdf.addHTML(document.body,function() {
+		var string = pdf.output('datauristring');
+			$('.preview-pane').attr('src', string);
+		});
+
+    </script>
+
 	<!--Email-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-email" data-title="E-mail">
 		<ul data-role="listview">
