@@ -11,8 +11,6 @@
     <script src="kendo/js/kendo.mobile.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
 
-	<script src="scripts/html2canvas.debug.js"></script>
-	<script src="scripts/jspdf.debug.js"></script>
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
 
@@ -126,11 +124,6 @@
 			</div>
 		</header>
 	</div>
-
-	<script>
-    // reset global drawer instance, for demo purposes
-    //	kendo.mobile.ui.Drawer.current = null;
-	</script>
 
 	<!--Inspections-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-inspxions" data-title="Inspection List">
@@ -315,20 +308,42 @@
 
 	<!--Contacts-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-contacts" data-title="Contacts">
-		<ul data-role="listview">
-			<li data-icon="contacts">Build enterprise apps</li>
-			<li>Fw: Regarding Multiline textbox</li>
-			<li>Away next week</li>
-			<li>Fw: Your Costume is ready</li>
-			<li>Update completed</li>
-			<li>Survey</li>
-			<li>Problem with this account</li>
-			<li>Advice For Designers</li>
-			<li>Fw: Missing Book</li>
-			<li>Fun & useful reading</li>
+		<ul class="filterList" data-role="listview" data-template="contact-template" data-source="contactDataSource">
 		</ul>
 	</div>
 	
+	<script>
+		var contactDataSource = new kendo.data.DataSource ({
+			transport: {
+				read: {
+					url: "data/MyInspections/temp/inspection00000.xml",
+					dataType: "xml"
+                }
+            },
+			schema: {
+				type: "xml",
+				data: "/Inspection/Document/Contacts/Contact",
+				model: {
+					fields: {
+						name:	   "Name/text()",
+						unitNumber: "UnitNumber/text()",
+						province:   "Province/text()",
+						postalCode: "PostalCode/text()"
+                    }
+                }
+            }
+        })
+		contactDataSource.fetch();
+    </script>
+	<script type="text/x-kendo-template" id="contact-template">
+		<p data-icon="contacts">
+			<span class="idetail-d"> #= name # </span>
+			<span class="idetail-d"> #= (unitNumber === undefined) ? '' : unitNumber #   </span>
+			<span class="idetail-d"> #= province #   </span>
+			<span class="idetail-d"> #= postalCode #   </span>
+		</p>
+	</script>
+
 	<!--Settings-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-settings" data-title="Settings">
 		<ul data-role="listview">
@@ -364,7 +379,7 @@
 	<div data-role="view" data-layout="drawer-layout" id="drawer-report" data-title="Reports">
 	</div>
 
-	 <script type = "text/javascript">
+	 <script>
 		var xml = new XMLHttpRequest();
 		xml.open("GET", "data/MyInspections/temp/inspection00000.xml",false);
 		xml.send("");
@@ -376,30 +391,6 @@
 		resultDocument = xsltProcessor.transformToFragment(xml.responseXML, document);
 		document.getElementById("drawer-report").appendChild(resultDocument);
 	 </script>
-
-	<script>
-		var doc = new jsPDF();
-
-// We'll make our own renderer to skip this editor
-		var specialElementHandlers = {
-			'#editor': function(element, renderer){return true;}
-		};
-
-// All units are in the set measurement for the document
-// This can be changed to "pt" (points), "mm" (Default), "cm", "in"
-		doc.fromHTML($('drawer-report').get(0), 15, 15, {
-			'width': 170, 
-			'elementHandlers': specialElementHandlers
-		});
-		
-		var pdf = new jsPDF('p','pt','a4');
-
-		pdf.addHTML(document.body,function() {
-		var string = pdf.output('datauristring');
-			$('.preview-pane').attr('src', string);
-		});
-
-    </script>
 
 	<!--Email-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-email" data-title="E-mail">

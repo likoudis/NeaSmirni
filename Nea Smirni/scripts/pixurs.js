@@ -253,10 +253,7 @@ function updateSrc(e) {
 }
 
 function createImage(data) {
-    var domain = data.domain,
-        subreddit = data.subreddit,
-        thumbnail = data.thumbnail,
-        url = data.url,
+    var url = data.url,
         imageTemplate = kendo.template('<div class="item-img faded" data-url="#= urlProxy(data) #"></div>');
 
     if(url.match(imgExtensionRegex)) {
@@ -304,7 +301,7 @@ function createTile(data) {
 //});
 
 function showAbout(e) {
-    if (e.item.text() == "About") {
+    if (e.item.text() === "About") {
         $("#drawer").data("kendoMobileDrawer").hide();
         setTimeout( function () {
             kendo.mobile.application.navigate('#about');

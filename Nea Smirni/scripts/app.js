@@ -8,6 +8,7 @@
 	app.application = new kendo.mobile.Application(document.body, {});
 
 	app.isLoggedIn = false;
+	app.isConnected = false;
 	
 	app.imageCount = 0;
 
@@ -67,6 +68,22 @@
 	
 	function resOnError(error) {
 		alert(error.code);
+	}
+
+	// Connection related stuff
+
+	document.addEventListener("online", onOnline, false);
+
+	function onOnline() {
+    	app.isConnected = true;
+		alert("online")
+	}
+
+	document.addEventListener("offline", onOffline, false);
+
+	function onOffline() {
+    	app.isConnected = false;
+		alert("offline")
 	}
 
 })(window);

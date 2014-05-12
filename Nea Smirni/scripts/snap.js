@@ -18,7 +18,7 @@ function onPhotoDataSuccess(imageURI) {
         // The inline CSS rules are used to resize the image
         //
         imgProfile.src = imageURI;
-        if(sessionStorage.isprofileimage==1){
+        if(sessionStorage.isprofileimage===1){
             getLocation();
         }
         movePic(imageURI);

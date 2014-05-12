@@ -39,7 +39,7 @@
         checkEnter: function (e) {
             var that = this;
 
-            if (e.keyCode == 13) {
+            if (e.keyCode === 13) {
                 $(e.target).blur();
                 that.onLogin();
             }
