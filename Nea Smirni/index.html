@@ -98,9 +98,9 @@
 	</div>
 	
 	<!--Right drawer-->
-	<div data-role="drawer" id="right-drawer" data-position="right"
+	<div data-role="drawer" id="right-drawer0" data-position="right"
 		data-views="[
-		'drawer-inspxions','inspx-details','drawer-pixurs','drawer-contacts','drawer-settings',
+		'drawer-inspxions','drawer-pixurs','drawer-contacts','drawer-settings',
 		'drawer-search','drawer-snap','drawer-report','drawer-email','drawer-addinspx','drawer-sync']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="flat">
@@ -113,6 +113,17 @@
 		</ul>
 	</div>
 	
+	<!--Right drawer-->
+	<div data-role="drawer" id="right-drawer1" data-position="right"
+		data-views="[
+		'inspx-details']"
+		style="width: 200px">
+		<ul data-role="listview" data-type="flat">
+			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"    >Smile</a> </li>
+			<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>
+		</ul>
+	</div>
+	
 	<!--Drawer Layout-->
 	<div data-role="layout" data-id="drawer-layout">
 		<header data-role="header">
@@ -120,7 +131,19 @@
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
 				<span data-role="view-title" style="visibility: visible"></span>
 				<a data-role="button" data-align="right" class="nav-button" href="#view-welcome" data-icon="home">Home</a>
-				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer" data-icon="share">Actions</a>    
+				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="share">Actions</a>    
+			</div>
+		</header>
+	</div>
+
+	<!--Drawer Layout-->
+	<div data-role="layout" data-id="drawer-layout1">
+		<header data-role="header">
+			<div data-role="navbar">
+				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
+				<span data-role="view-title" style="visibility: visible"></span>
+				<a data-role="button" data-align="right" class="nav-button" href="#view-welcome" data-icon="home">Home</a>
+				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="share">Actions</a>    
 			</div>
 		</header>
 	</div>
@@ -161,7 +184,7 @@
 	</script>
 	
 	<!--Inspection details-->
-	<div id="inspx-details" data-title="Inspection details" data-role="view" data-layout="drawer-layout">
+	<div id="inspx-details" data-title="Inspection details" data-role="view" data-layout="drawer-layout1">
 		<header data-role="header">
 			<div data-role="navbar">
 				<a data-role="backbutton" data-align="left">Back</a>
