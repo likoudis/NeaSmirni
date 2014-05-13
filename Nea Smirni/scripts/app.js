@@ -86,4 +86,9 @@
 		alert("offline")
 	}
 
+	app.closeAssessModalView = function (e) {
+        $("#modal-psfc").kendoMobileModalView("close");
+    };
+	
+
 })(window);

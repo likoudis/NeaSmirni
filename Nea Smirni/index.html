@@ -97,7 +97,7 @@
 		</ul>
 	</div>
 	
-	<!--Right drawer-->
+	<!--Right drawer0-->
 	<div data-role="drawer" id="right-drawer0" data-position="right"
 		data-views="[
 		'drawer-inspxions','drawer-pixurs','drawer-contacts','drawer-settings',
@@ -113,14 +113,15 @@
 		</ul>
 	</div>
 	
-	<!--Right drawer-->
+	<!--Right drawer1-->
 	<div data-role="drawer" id="right-drawer1" data-position="right"
 		data-views="[
 		'inspx-details']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="flat">
-			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"    >Smile</a> </li>
-			<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>
+			<li data-icon="featured"><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
+			<li data-icon="bookmarks"><a data-transition="none" href="#drawer-sync"    >Report</a></li>
+			<li data-icon="action"><a data-transition="none" href="#drawer-sync"    >E-mail</a></li>
 		</ul>
 	</div>
 	
@@ -136,11 +137,11 @@
 		</header>
 	</div>
 
-	<!--Drawer Layout-->
+	<!--Drawer Layout1-->
 	<div data-role="layout" data-id="drawer-layout1">
 		<header data-role="header">
 			<div data-role="navbar">
-				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
+				<a data-role="backbutton" data-align="left">Back</a>
 				<span data-role="view-title" style="visibility: visible"></span>
 				<a data-role="button" data-align="right" class="nav-button" href="#view-welcome" data-icon="home">Home</a>
 				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="share">Actions</a>    
@@ -185,18 +186,6 @@
 	
 	<!--Inspection details-->
 	<div id="inspx-details" data-title="Inspection details" data-role="view" data-layout="drawer-layout1">
-		<header data-role="header">
-			<div data-role="navbar">
-				<a data-role="backbutton" data-align="left">Back</a>
-				<span data-role="view-title"></span>
-				<ul style="float:right" data-role="buttongroup" data-index="2">
-					<li>Pass</li>
-					<li>Fail</li>
-					<li>Notes</li>
-					<li>e-mail</li>
-				</ul>
-			</div>
-		</header>
 		<ul id="i-detail-list" data-role="listview" data-style="inset" data-type="group">
 			<li>Insection Information
 				<ul>
@@ -431,7 +420,7 @@
 		</ul>
 	</div>
 	
-	<!--Synchrtonize-->
+	<!--Synchronize-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-sync" data-title="Synch with Server">
 		<ul data-role="listview">
 			<li data-icon="trash">Untitled message 4</li>
@@ -439,5 +428,28 @@
 		</ul>
 	</div>
 
+	<!--Assess (pass/fail)-->
+	<div data-role="modalview" id="modal-psfc" data-width="400" data-height="430" data-modal="false">
+		<div data-role="header">
+			<div data-role="navbar">
+				<span>Assessment</span>
+			</div>
+		</div>
+
+ 		<ul data-role="listview">
+			<li style="text-align:center"> Date: today</li>
+			<li data-role="button"><span data-icon="featured" >Pass</span></li>
+			<li data-role="button"><span data-icon="downloads" >Fail</span></li>
+			<li data-role="button"><span data-icon="more" >Conditional</span></li>
+		</ul>
+
+		<div data-role="footer">
+			<div data-role="navbar">
+				<a id="cancel-login" data-click="app.closeAssessModalView" data-align="right" data-role="button">Cancel</a>
+			</div>
+		</div>
+
+	</div>
+ 
 </body>
 </html>
