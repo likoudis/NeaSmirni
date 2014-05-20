@@ -13,7 +13,7 @@
     <iOSStatusBarStyle>Default</iOSStatusBarStyle>
     <AndroidHardwareAcceleration>false</AndroidHardwareAcceleration>
     <WP8SupportedResolutions>ID_RESOLUTION_WVGA;ID_RESOLUTION_WXGA;ID_RESOLUTION_HD720P</WP8SupportedResolutions>
-    <BundleVersion>1.0</BundleVersion>
+    <BundleVersion>1.1</BundleVersion>
     <DisplayName />
     <Author />
     <Description>Nea Smirni</Description>

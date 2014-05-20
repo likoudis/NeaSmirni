@@ -46,7 +46,7 @@
                 This is the Welcome page.
             </p>
             <div class="img"></div>
-			<div style="text-align:center; margin: 5%">
+			<div style="text-align:center; margin: 3%">
             <a id="openHomePage" 
 				data-role="button"
 				data-enable="false"
@@ -54,6 +54,9 @@
 				Open Inspections
             </a>
 			</div>
+			<div>
+	        	<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Flat</a>
+            </div>
         </div>
     </div>
 
@@ -83,74 +86,80 @@
     </div>
 
 	<!--Left drawer-->
+	<!-- map should not be included here, if it should not respond to swipe -->
 	<div data-role="drawer" id="left-drawer" data-position="left"
 		data-views="[
-		'drawer-inspxions','inspx-details','drawer-pixurs','drawer-contacts','drawer-settings',
-		'drawer-search','drawer-snap','drawer-report','drawer-email','drawer-addinspx','drawer-sync']"
-		style="width: 200px"> 
+		'drawer-inspxions','drawer-filter','drawer-pixurs','drawer-map','drawer-addinspx','drawer-sync','drawer-settings',
+		'drawer-snap','drawer-report','drawer-email',
+		'inspx-details','inspx-notes']"
+		style="width: 290px"> 
 		<ul data-role="listview" data-type="flat">
-			<li data-icon="featured"><a data-transition="none" href="#drawer-inspxions">Inspections</a></li>
-			<li data-icon="camera">  <a data-transition="none" href="#drawer-pixurs"   >Pictures</a></li>
-			<li data-icon="contacts"><a data-transition="none" href="#drawer-contacts" >Contacts</a></li>
-			<li data-icon="globe">   <a data-transition="none" href="#drawer-map"      >Map</a></li>
-			<li data-icon="settings"><a data-transition="none" href="#drawer-settings" >Settings</a></li>
+			<li data-icon="home">     <a data-transition="none" href="#view-welcome">Home</a></li>
+			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=all">All Inspections</a></li>
+			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=today">Today's Inspections</a></li>
+			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=weeks">This Week's Inspections</a></li>
+			<li data-icon="featured"> <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li>
+			<li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs"   >Pictures</a></li>
+			<li data-icon="globe">    <a data-transition="none" href="#drawer-map"      >Map</a></li>
+			<li></li>
+			<li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li>
+			<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>
+			<li data-icon="settings"> <a data-transition="none" href="#drawer-settings" >Settings</a></li>
 		</ul>
 	</div>
 	
-	<!--Right drawer0-->
+	<!--Right drawer 4 inspx lists-->
+	<!-- map should not be included here, if it should not respond to swipe -->
 	<div data-role="drawer" id="right-drawer0" data-position="right"
-		data-views="[
-		'drawer-inspxions','drawer-pixurs','drawer-contacts','drawer-settings',
-		'drawer-search','drawer-snap','drawer-report','drawer-email','drawer-addinspx','drawer-sync']"
+		data-views="['drawer-inspxions','drawer-filter']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="flat">
-			<li data-icon="search">   <a data-transition="none" href="#drawer-search"  >Search</a></li>
 			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"    >Smile</a> </li>
 			<li data-icon="organize"> <a data-transition="none" href="#drawer-report"  >Report</a></li>
 			<li data-icon="share">    <a data-transition="none" href="#drawer-email"   >E-mail</a></li>
-			<li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li>
-			<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>
 		</ul>
 	</div>
 	
-	<!--Right drawer1-->
+	<!--Right drawer 4 single inspx-->
 	<div data-role="drawer" id="right-drawer1" data-position="right"
 		data-views="[
-		'inspx-details']"
+		'inspx-details','inspx-notes']"
 		style="width: 200px">
-		<ul data-role="listview" data-type="flat">
-			<li data-icon="featured"><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
-			<li data-icon="bookmarks"><a data-transition="none" href="#drawer-sync"    >Report</a></li>
-			<li data-icon="action"><a data-transition="none" href="#drawer-sync"    >E-mail</a></li>
+		<ul data-role="listview" data-type="inset" >
+			<li data-icon="featured" ><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
+			<li data-icon="info"     ><a data-transition="none" href="#inspx-details" >Details</a></li>
+			<li data-icon="bookmarks"><a data-transition="none" href="#inspx-notes"   >Notes</a></li>
+			<li></li>
+			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"   >Smile</a> </li>
+			<li data-icon="organize"> <a data-transition="none" href="#drawer-report" >Report</a></li>
+			<li data-icon="share"    ><a data-transition="none" href="#drawer-email"  >E-mail</a></li>
 		</ul>
 	</div>
 	
-	<!--Drawer Layout-->
+	<!--Drawer Layout 4 not-leaf views-->
 	<div data-role="layout" data-id="drawer-layout">
 		<header data-role="header">
-			<div data-role="navbar">
+			<div data-role="navbar" id="inspxListViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
-				<span data-role="view-title" style="visibility: visible"></span>
-				<a data-role="button" data-align="right" class="nav-button" href="#view-welcome" data-icon="home">Home</a>
-				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="share">Actions</a>    
-			</div>
-		</header>
-	</div>
-
-	<!--Drawer Layout1-->
-	<div data-role="layout" data-id="drawer-layout1">
-		<header data-role="header">
-			<div data-role="navbar">
-				<a data-role="backbutton" data-align="left">Back</a>
-				<span data-role="view-title" style="visibility: visible"></span>
-				<a data-role="button" data-align="right" class="nav-button" href="#view-welcome" data-icon="home">Home</a>
+				<span data-role="view-title"></span>
 				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="share">Actions</a>    
 			</div>
 		</header>
 	</div>
 
+	<!--Drawer Layout 4 leaf views-->
+	<div data-role="layout" data-id="drawer-layout1">
+		<header data-role="header">
+			<div data-role="navbar">
+				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
+				<span data-role="view-title"></span>
+				<a data-role="backbutton" data-align="right">Back</a>
+			</div>
+		</header>
+	</div>
+
 	<!--Inspections-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-inspxions" data-title="Inspection List">
+	<div data-role="view" data-layout="drawer-layout" id="drawer-inspxions" data-title="All Inspections" data-show="app.onInspectionShow">
 		<div id="map-search-wrap">
 			<button id="map-navigate-home"></button>
 			<form onsubmit="return false;">
@@ -161,7 +170,6 @@
 		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="inspxDataList">
 		</ul>
 	</div>
-
 	<script>
 		var inspxDataList = [
 			{date: "03/02/2014", address: "Shcawsi Trail",    comment:"Second floor addition and new screened-in porch."},
@@ -179,15 +187,66 @@
 				<h3 class="time">#: date #</h3> <h2>#: address #</h2>
 				<p>#: comment #</p>
 			</div>
-		<a class="item-link" href="\#inspx-details" data-role="button" data-icon="details" style="border-style:none" > 
+		<a class="item-link" href="\#inspx-notes" data-role="button" data-icon="details" style="border-style:none" > 
 		</a>
 		</div>
 	</script>
 	
+	<!--Inspection Notes-->
+	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout">
+		<div data-role="scroller" style="height: 30%">
+			<form>
+				<div style="display:inline-block; text-align:top">
+					<p>New Note</p>
+					<div data-role="button">Append</div>
+                </div>
+				<textarea rows=6 cols="50" style="width:85%; padding: 3px; border: 1px solid">Enter you comments here,
+also here
+and this is line 3,
+4,
+5,
+6,
+7,
+8...
+</textarea>
+			</form>
+		</div>
+		<div data-role="scroller" style="height: 300px">
+			<ul class="filterList" data-role="listview" data-template="notes-template" data-source="notesDataSource">
+			</ul>
+		</div>
+	</div>
+	<script>
+		var notesDataSource = new kendo.data.DataSource ({
+			transport: {
+				read: {
+					url: "data/MyInspections/temp/inspection00000.xml",
+					dataType: "xml"
+                }
+            },
+			schema: {
+				type: "xml",
+				data: "/Inspection/PermitInspections/PermitInspection",
+				model: {
+					fields: {
+						date:	   "Inspected/text()",
+						note:	   "Notes/text()"
+                    }
+                }
+            }
+        })
+		notesDataSource.fetch();
+    </script>
+	<script type="text/x-kendo-template" id="notes-template">
+
+			<h3 class="time"> #= new Date(date).toUTCString().replace("GMT","") # </h3>
+			<p> #= note === undefined? "&lt;no notes&gt;" : note # </p>
+	</script>
+
 	<!--Inspection details-->
-	<div id="inspx-details" data-title="Inspection details" data-role="view" data-layout="drawer-layout1">
+	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout">
 		<ul id="i-detail-list" data-role="listview" data-style="inset" data-type="group">
-			<li>Insection Information
+			<li>Inspection Information
 				<ul>
 					<li><span>Number        </span><span class="i-detail-list-data">000020958   </span></li>
 					<li><span>Assigned To   </span><span class="i-detail-list-data">BUSBY, CHRIS</span></li>
@@ -212,16 +271,16 @@
             </li>
 			<li>Permit Information
 				<ul>
-					<li>   <span>Construction Type</span><span class="i-detail-list-data">Renovation/Addition    </span>   </li>
-					<li>   <span>Current Use      </span><span class="i-detail-list-data">Single Family Residence</span>   </li>
-					<li>   <span>Intended Use     </span><span class="i-detail-list-data">Single Family Residence</span>   </li>
-					<li>   <span>Conditional Pemit</span><span class="i-detail-list-data">                       </span>   </li>
-					<li><a><span>Permit Notes     </span><span class="i-detail-list-data">                       </span></a></li>
+					<li>   <span>Construction Type </span><span class="i-detail-list-data">Renovation/Addition    </span>    </li>
+					<li>   <span>Current Use       </span><span class="i-detail-list-data">Single Family Residence</span>    </li>
+					<li>   <span>Intended Use      </span><span class="i-detail-list-data">Single Family Residence</span>    </li>
+					<li>   <span>Conditional Pemit </span><span class="i-detail-list-data">                       </span>    </li>
+					<li><a><span>Permit Notes      </span><span class="i-detail-list-data">                       </span></a></li>
+					<li><a><span>Permit Inspections</span><span class="i-detail-list-data">                       </span></a></li>
                </ul>
             </li>
         </ul>
 	</div>
-
 	<style>
 		.i-detail-list-data {
 			float:right;
@@ -230,8 +289,53 @@
         }
     </style>
 
+	<!--Assess (pass/fail)-->
+	<div data-role="modalview" id="modal-psfc" data-width="400" data-height="430" data-modal="false">
+		<div data-role="header">
+			<div data-role="navbar">
+				<span>Assessment</span>
+			</div>
+		</div>
+
+		<ul data-role="listview">
+			<li style="text-align:center"> Date: today</li>
+			<li data-role="button"><span data-icon="featured" >Pass</span></li>
+			<li data-role="button"><span data-icon="downloads" >Fail</span></li>
+			<li data-role="button"><span data-icon="more" >Conditional</span></li>
+		</ul>
+
+		<div data-role="footer">
+			<div data-role="navbar">
+				<a id="cancel-login" data-click="app.closeAssessModalView" data-align="right" data-role="button">Cancel</a>
+			</div>
+		</div>
+
+	</div>
+ 
+	<!--Filter-->
+	<div data-role="view" data-title="Inspection List Filter" id="drawer-filter" data-layout="drawer-layout" >
+		<label>
+	        From-date:
+ 			<input type="datetime-local" value="2014-01-22T20:15" />
+		</label>
+		<label>
+    	    To-date:
+ 			<input type="datetime-local" value="2014-03-22T20:15" />
+		</label>
+		<label>Inspection Status
+			<select  id="dropdown">
+				<option value="All">All</option>
+				<option value="Pass">Pass</option>
+				<option value="Fail">Fail</option>
+				<option value="Conditional">Conditional</option>
+			</select>
+		</label>
+		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="inspxDataList">
+		</ul>
+    </div>
+
 	<!--Pictures-->
-	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs" data-layout="drawer-layout" >
+	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs" data-layout="drawer-layout1" >
 		<ul id="gallery-listview"
 			data-role="listview" 
 			data-template="pix-list-template" 
@@ -239,7 +343,6 @@
 			data-click="showDetail">
 		</ul>
 	</div>
-	
 	<script>
 		var galleryDataSource = new kendo.data.DataSource({
 			data: [
@@ -258,7 +361,7 @@
 	</script>
 
 	<!--Map-->
-	<div data-role="view" data-layout="map-layout" id="drawer-map" data-title="Map"
+	<div data-role="view" data-layout="drawer-layout1" id="drawer-map" data-title="Map"
 		data-init="app.locationService.initLocation"
 		data-show="app.locationService.show"
 		data-hide="app.locationService.hide"
@@ -266,38 +369,25 @@
 		data-stretch="true">
 
 		<div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
-			Location requires internet connection to display the map.
+			This view requires internet connection to display the map.
 		</div>
 		<div>
 		<div id="map-search-wrap">
-            <div>
-                <button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
-                <input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
-                <button id="map-search" class="map-tools-button search" data-bind="click: onSearchAddress"></button>
-            </div>
-		</div>
+				<div>
+                	<button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
+                	<input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
+                	<button id="map-search" class="map-tools-button search" data-bind="click: onSearchAddress"></button>
+            	</div>
+			</div>
 			<ul id="listview-permitsToday" 
-				style="width: 32%; float:left"
 				data-role="listview"
 				data-bind="source: permitsTodayDataSource"
 				data-template="location-inspections-template">
 			</ul>
 			<p id="map-canvas"
-				style="width: 66%; float:right" 
 				data-bind="visible: isGoogleMapsInitialized">
 			</p>
 		</div>
-	</div>
-
-	<!--Map Layout-->
-	<div data-role="layout" data-id="map-layout">
-		<header data-role="header">
-			<div data-role="navbar">
-				<a data-role="backbutton" data-align="left" data-icon="rewind">Back</a>
-				<span data-role="view-title" style="visibility: visible"></span>
-				<a data-role="button" data-align="right" class="nav-button" href="#view-welcome" data-icon="home">Home</a>
-			</div>
-		</header>
 	</div>
 
 	<!--Inspection Address List template-->
@@ -317,13 +407,108 @@
 		</div>
 	</script>
 
+	<!--Settings-->
+	<div data-role="view" data-layout="drawer-layout" id="drawer-settings" data-title="Settings">
+	</div>
+	
+	<!--Snap-->
+	<div data-role="view" data-layout="drawer-layout1" id="drawer-snap" data-title="Take Pictures">
+		Add a picture to current inspetion
+		<a data-role="button" data-click="app.onSnapShow">
+			Snap
+        </a>
+		<div>
+			<img height="100" width="100" id="snap-thumb"> <span id="snap-fname"></span>
+        </div>
+	</div>
+	
+	<!--Report-->
+	<div data-role="view" data-layout="drawer-layout1" id="drawer-report" data-title="Reports">
+		<div data-role="scroller" id="scroller-report">
+		</div>
+		<a  style="position:fixed; bottom: 40px; right: 30px" data-role="button">
+			Print
+        </a>
+	</div>
+	<script>
+		var xml = new XMLHttpRequest();
+		xml.open("GET", "data/MyInspections/temp/inspection00000.xml",false);
+		xml.send("");
+		var xsl = new XMLHttpRequest();
+		xsl.open("GET", "data/MyInspections/Reports/CheckList.xsl",false);
+		xsl.send("");
+		xsltProcessor = new XSLTProcessor();
+		xsltProcessor.importStylesheet(xsl.responseXML);
+		resultDocument = xsltProcessor.transformToFragment(xml.responseXML, document);
+		document.getElementById("scroller-report").appendChild(resultDocument);
+	 </script>
+
+	<!--Email-->
+	<div data-role="view" data-layout="drawer-layout1" id="drawer-email" data-title="E-mail">
+		<div data-role="scroller">
+			<form>
+				<ul data-role="listview" data-style="inset">
+					<li>
+						<label>To:
+							<input type="email" style="width:85%; text-align:left" value="someone@domain.ca" />
+						</label>
+					</li>
+					<li>
+						<label>Subject:
+							<input type="text" style="width:85%; text-align:left" value="Re: Inspection ###########" />
+						</label>
+					</li>
+					<li>
+						<label>Message
+							<textarea rows="10" cols="60" style="width:85%; padding: 3px; border: 1px solid">Enter you comments here,
+also here
+and this is line 3,
+4,
+5,
+6,
+7,
+8...
+</textarea>
+						</label>
+					</li>
+					<li>
+						<p>Attachment: /storage/sdcard0/My_Inspections/###########.jpg</p>
+						<p>Attachment: /storage/sdcard0/My_Inspections/###########.rpt</p>
+						<p>Attachment: /storage/sdcard0/My_Inspections/###########.eml</p>
+                    </li>
+				</ul>
+			</form>
+		</div>
+		<a style="position:fixed; bottom: 40px; right: 30px" data-role="button">
+			Submit
+        </a>
+	</div>
+	
+	<!--Add Inspection-->
+	<div data-role="view" data-layout="drawer-layout" id="drawer-addinspx" data-title="Add an Inspection">
+	</div>
+	
+	<!--Synchronize-->
+	<div data-role="view" data-layout="drawer-layout" id="drawer-sync" data-title="Synch with Server">
+	</div>
+
+<!-- Unused code -->
+<div>
+	<!--Map Layout-->
+	<div data-role="layout" data-id="map-layout">
+		<header data-role="header">
+			<div data-role="navbar">
+				<span data-role="view-title"></span>
+				<a data-role="backbutton" data-align="left" data-icon="drawer-button">Back</a>
+			</div>
+		</header>
+	</div>
 
 	<!--Contacts-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-contacts" data-title="Contacts">
 		<ul class="filterList" data-role="listview" data-template="contact-template" data-source="contactDataSource">
 		</ul>
 	</div>
-	
 	<script>
 		var contactDataSource = new kendo.data.DataSource ({
 			transport: {
@@ -356,14 +541,6 @@
 		</p>
 	</script>
 
-	<!--Settings-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-settings" data-title="Settings">
-		<ul data-role="listview">
-			<li data-icon="trash">Untitled message 4</li>
-			<li data-icon="trash">Untitled message 5</li>
-		</ul>
-	</div>
-	
 	<!--Search-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-search" data-title="Search">
 		<ul data-role="listview">
@@ -375,81 +552,6 @@
 			Sync with server
 		</a>
 	</div>
-		
-	<!--Snap-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-snap" data-title="Take Pictures">
-		Add a picture to current inspetion
-		<a data-role="button" data-click="app.onSnapShow">
-			Snap
-        </a>
-		<div>
-			<img height="100" width="100" id="snap-thumb"> <span id="snap-fname"></span>
-        </div>
-	</div>
-	
-	<!--Report-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-report" data-title="Reports">
-	</div>
-
-	 <script>
-		var xml = new XMLHttpRequest();
-		xml.open("GET", "data/MyInspections/temp/inspection00000.xml",false);
-		xml.send("");
-		var xsl = new XMLHttpRequest();
-		xsl.open("GET", "data/MyInspections/Reports/CheckList.xsl",false);
-		xsl.send("");
-		xsltProcessor = new XSLTProcessor();
-		xsltProcessor.importStylesheet(xsl.responseXML);
-		resultDocument = xsltProcessor.transformToFragment(xml.responseXML, document);
-		document.getElementById("drawer-report").appendChild(resultDocument);
-	 </script>
-
-	<!--Email-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-email" data-title="E-mail">
-		<ul data-role="listview">
-			<li data-icon="trash">Untitled message 4</li>
-			<li data-icon="trash">Untitled message 5</li>
-		</ul>
-	</div>
-	
-	<!--Add Inspection-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-addinspx" data-title="Add an Inspection">
-		<ul data-role="listview">
-			<li data-icon="trash">Untitled message 4</li>
-			<li data-icon="trash">Untitled message 5</li>
-		</ul>
-	</div>
-	
-	<!--Synchronize-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-sync" data-title="Synch with Server">
-		<ul data-role="listview">
-			<li data-icon="trash">Untitled message 4</li>
-			<li data-icon="trash">Untitled message 5</li>
-		</ul>
-	</div>
-
-	<!--Assess (pass/fail)-->
-	<div data-role="modalview" id="modal-psfc" data-width="400" data-height="430" data-modal="false">
-		<div data-role="header">
-			<div data-role="navbar">
-				<span>Assessment</span>
-			</div>
-		</div>
-
- 		<ul data-role="listview">
-			<li style="text-align:center"> Date: today</li>
-			<li data-role="button"><span data-icon="featured" >Pass</span></li>
-			<li data-role="button"><span data-icon="downloads" >Fail</span></li>
-			<li data-role="button"><span data-icon="more" >Conditional</span></li>
-		</ul>
-
-		<div data-role="footer">
-			<div data-role="navbar">
-				<a id="cancel-login" data-click="app.closeAssessModalView" data-align="right" data-role="button">Cancel</a>
-			</div>
-		</div>
-
-	</div>
- 
+</div>		
 </body>
 </html>

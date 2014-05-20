@@ -5,7 +5,8 @@
         navigator.splashscreen.hide();
     }, false);
 
-	app.application = new kendo.mobile.Application(document.body, {});
+	app.application = new kendo.mobile.Application(document.body, {
+		platform: !0 ? !0 ? "android" : "ios" : "ios7"});
 
 	app.isLoggedIn = false;
 	app.isConnected = false;
@@ -76,19 +77,42 @@
 
 	function onOnline() {
     	app.isConnected = true;
-		alert("online")
+		//alert("online")
 	}
 
 	document.addEventListener("offline", onOffline, false);
 
 	function onOffline() {
     	app.isConnected = false;
-		alert("offline")
+		//alert("offline")
 	}
 
 	app.closeAssessModalView = function (e) {
         $("#modal-psfc").kendoMobileModalView("close");
     };
 	
+	app.onInspectionShow = function(e) {
+		var filterParam = e.view.params.filter;
+		
+		$("#inspxListViewNavBar").data("kendoMobileNavBar").title( 
+			filterParam === "all" ? "All Inspections" :
+			filterParam === "today" ? "Today's Inspections" :
+			filterParam === "weeks" ? "This week's Inspections" : "All Inspections"
+		);
+    }
+
+	app.changeSkin = function (e) {
+		var mobileSkin = "";
+
+		if (e.sender.element.text() === "Flat") {
+			mobileSkin = "flat";
+			e.sender.element.text("Native");
+		} else {
+			mobileSkin = "";
+			e.sender.element.text("Flat");
+		}
+		app.application.skin(mobileSkin);
+	};
+
 
 })(window);

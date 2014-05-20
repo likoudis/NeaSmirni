@@ -2,6 +2,7 @@ body, html {
     margin: 0;
     height: 100%;
     width: 100%;
+	font-size: 100%  !important;
 }
 
 /* portrait */
@@ -33,6 +34,13 @@ body, html {
     font-size: 1.2em;
 }
 
+/* For DirectIT applications 
+Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in Kendo documentation */
+.km-android .km-navbar .km-view-title /* After Q2 2012 SP1 */
+{
+    visibility: visible;
+}
+
 /* IMAGE STYLES*/
 .img {
     background-image: url(../styles/images/My_municipality.png);
@@ -43,41 +51,51 @@ body, html {
     margin: auto auto;
 }
 
-.logo {
-    background-image: url(../styles/images/logo.png);
-    background-repeat: no-repeat;
-    width: 319px;
-    height: 60px;
-    margin: 40px auto;
-}
-
 /* BUTTON STYLES*/
 .buttonArea {
     text-align: center;
 }
 
-.login-button {
-    width: 20%;
-    font-size: 3em;
-    -webkit-appearance: none;
-}
-
 /* MAP STYLES*/
 #no-map {
-    position: absolute;
-    margin: 0 auto;
-    top: 40%;    
+	position: absolute;
+	margin: auto 0;
+    bottom: 10%;
     text-align: center;
+}
+
+#listview-permitsToday {
+	width: 32%;
 }
 
 #map-canvas {
     position: absolute;
-    top: 0;
     bottom: 0;
-    left: 1;
     right: 0;
 }
+@media all and (orientation:landscape) {
+	#listview-permitsToday {
+		width: 32%;
+	}
 
+	#map-canvas {
+	width: 66%;
+    top: 0;
+	left: 1;
+}
+}
+@media all and (orientation:portrait) {
+	#listview-permitsToday {
+		width: 100%;
+	}
+
+	#map-canvas {
+	/*width: 100%;*/
+	height: 65%;
+    top: 1;
+	left: 0;
+}
+}
 #map-search-wrap {
     position: relative;
     z-index: 1;
@@ -146,40 +164,6 @@ body, html {
     padding-top:50px;
 }
 
-.weather .weather-title {
-    color: #fff;
-    font-size: 1.5em;
-    line-height: 1.2em;
-    text-shadow: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-    position: absolute;
-    top: 10px;
-    left: 0;
-    width: 100%;
-}
-
-.weather-info {
-    color: #fff;
-    font-size: 1.2em;
-    text-shadow: none;
-    line-height: 1.8em;
-    display: inline-block;
-}
-
-.weather-info.date {
-    margin-top: 7px;
-}
-
-.weather-info.temperature {
-    margin-left: 5px;
-}
-
-.weather-info.temperature.low {
-    color: rgba(0,0,0,0.5);
-}
-
 /* Weather Icons*/
 .weather-icon {
     width: 64px;
@@ -190,34 +174,6 @@ body, html {
     position: relative;
     top: -6px;
     left: -10px;
-}
-
-.weather-icon.sunny {
-    background-position: 0px 0px;
-}
-
-.weather-icon.cloudy {
-    background-position: 0px -64px;
-}
-
-.weather-icon.partly-cloudy {
-    background-position: 0px -128px;
-}
-
-.weather-icon.partly-sunny {
-    background-position: 0px -192px;
-}
-
-.weather-icon.shower {
-    background-position: 0px -256px;
-}
-
-.weather-icon.foggy {
-    background-position: 0px -320px;
-}
-
-.weather-icon.storm {
-    background-position: 0px -384px;
 }
 
 .position-left {
@@ -328,12 +284,6 @@ body, html {
         background-size: 100%;
     }
 
-    .logo {
-        background-image: url(../styles/images/logo2x.png);
-        background-repeat: no-repeat;
-        background-size: 100%;
-    }
-
     #map-search {
         background-image: url(../styles/images/search2x.png);
         background-repeat: no-repeat;
@@ -358,30 +308,9 @@ body, html {
         background-size: 100%;
     }
 
-    .weather-icon {
-        background-image: url(../styles/images/sprite-weather2x.png);
-        background-repeat: no-repeat;
-        background-size: 100%;
-    }
 }
 
 /* Drawer styles */
-
-.km-ios #my-drawer .km-content,                  .km-android #my-drawer .km-content,                  .km-blackberry #my-drawer .km-content,
-.km-ios #my-drawer .km-list > li,                .km-android #my-drawer .km-list > li,                .km-blackberry #my-drawer .km-list > li,
-.km-ios #my-drawer .km-listview-link > .km-icon, .km-android #my-drawer .km-listview-link > .km-icon, .km-blackberry #my-drawer .km-listview-link > .km-icon,
-.km-ios #my-drawer .km-list li > .km-icon,       .km-android #my-drawer .km-list li > .km-icon,       .km-blackberry #my-drawer .km-list li > .km-icon
-{
-	background-color: #4e4e4e;
-	color: #fff;
-}
-
-.km-ios #my-drawer .km-group-title,
-.km-blackberry #my-drawer .km-group-title
-{
-	background-color: #6e6e6e;
-	color: #fff;
-}
 
 .km-drawer-button:before  { content: "\E078"; }
 .km-drawer-button:after  { content: "\E077"; }
@@ -408,7 +337,13 @@ body, html {
 .filterList p,
 .filterList h3
 {
-	color: #777;
+	color: #333;
+}
+
+.km-android .filterList p,
+.km-android .filterList h3
+{
+	color: #eee;
 }
 
 .filterList h3.time
@@ -417,15 +352,15 @@ body, html {
 	float: left;
 	margin-right: 15px;
 }
+@media screen and (orientation:portrait) {
+.filterList h3.time
+{
+	width: 30%;
+}
+
+}
 
 /* Inspection list */
-.item {
-    font-size: 11px;
-    display: table;
-    width: 100%;
-    font-weight: normal;
-    padding: 5px;
-}
 
 .loading-thumb {
     width: 70px;
@@ -453,4 +388,26 @@ body, html {
 .item-summary {
     width: 100%;
     padding-left: 1em;
+}
+
+/* Views under construction */
+.km-android #drawer-settings .km-content,
+.km-android #drawer-addinspx .km-content,
+.km-android #drawer-sync .km-content,
+.km-flat #drawer-settings .km-content,
+.km-flat #drawer-addinspx .km-content,
+.km-flat #drawer-sync .km-content {
+	background: url(images/android_404.jpg) no-repeat center;
+}
+.km-ios #drawer-settings .km-content,
+.km-ios #drawer-addinspx .km-content ,
+.km-ios #drawer-sync .km-content,
+.km-ios7 #drawer-settings .km-content,
+.km-ios7 #drawer-addinspx .km-content ,
+.km-ios7 #drawer-sync .km-content {
+	background: url(images/ios_404.jpg) no-repeat center;
+}
+
+.km-android #drawer-filter label select, .km-android #drawer-filter label input {
+	background-color: black;
 }
