@@ -3,6 +3,7 @@
 	
     document.addEventListener('deviceready', function () {
         navigator.splashscreen.hide();
+		app.application.skin("flat");
     }, false);
 
 	app.application = new kendo.mobile.Application(document.body, {
@@ -12,6 +13,10 @@
 	app.isConnected = false;
 	
 	app.imageCount = 0;
+	
+	app.settings = new kendo.observable({
+		serviceHostURL: "http://dctlt063:8000/directit.permitting/service"
+    });
 
 	app.closeLoginModalView = function (e) {
         $("#loginModalView").kendoMobileModalView("close");
@@ -102,7 +107,7 @@
     }
 
 	app.changeSkin = function (e) {
-		var mobileSkin = "";
+		var mobileSkin = "flat";
 
 		if (e.sender.element.text() === "Flat") {
 			mobileSkin = "flat";
@@ -114,5 +119,17 @@
 		app.application.skin(mobileSkin);
 	};
 
+	app.inspxDataList = new kendo.data.DataSource({
+		transport: {
+			read: {
+				url: "data/InspxList_all.json",
+				dataType: "json"
+			}
+		}
+	});
 
+	app.initInspxs = function () {
+		app.inspxDataList.read();
+
+    }
 })(window);

@@ -55,7 +55,7 @@
             </a>
 			</div>
 			<div>
-	        	<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Flat</a>
+	        	<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Native</a>
             </div>
         </div>
     </div>
@@ -89,7 +89,7 @@
 	<!-- map should not be included here, if it should not respond to swipe -->
 	<div data-role="drawer" id="left-drawer" data-position="left"
 		data-views="[
-		'drawer-inspxions','drawer-filter','drawer-pixurs','drawer-map','drawer-addinspx','drawer-sync','drawer-settings',
+		'drawer-inspxions','drawer-filter','drawer-pixurs','drawer-map','drawer-sync','drawer-settings',
 		'drawer-snap','drawer-report','drawer-email',
 		'inspx-details','inspx-notes']"
 		style="width: 290px"> 
@@ -102,7 +102,6 @@
 			<li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs"   >Pictures</a></li>
 			<li data-icon="globe">    <a data-transition="none" href="#drawer-map"      >Map</a></li>
 			<li></li>
-			<li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li>
 			<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>
 			<li data-icon="settings"> <a data-transition="none" href="#drawer-settings" >Settings</a></li>
 		</ul>
@@ -123,10 +122,11 @@
 	<!--Right drawer 4 single inspx-->
 	<div data-role="drawer" id="right-drawer1" data-position="right"
 		data-views="[
-		'inspx-details','inspx-notes']"
+		'inspx-details','inspx-notes','drawer-addinspx']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="inset" >
 			<li data-icon="featured" ><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
+			<li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li>
 			<li data-icon="info"     ><a data-transition="none" href="#inspx-details" >Details</a></li>
 			<li data-icon="bookmarks"><a data-transition="none" href="#inspx-notes"   >Notes</a></li>
 			<li></li>
@@ -159,7 +159,8 @@
 	</div>
 
 	<!--Inspections-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-inspxions" data-title="All Inspections" data-show="app.onInspectionShow">
+	<div data-role="view" data-layout="drawer-layout" id="drawer-inspxions" data-title="All Inspections"
+		data-show="app.onInspectionShow">
 		<div id="map-search-wrap">
 			<button id="map-navigate-home"></button>
 			<form onsubmit="return false;">
@@ -167,7 +168,7 @@
 				<input id="map-search" type="submit" value="" />
 			</form>
 		</div>
-		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="inspxDataList">
+		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.inspxDataList">
 		</ul>
 	</div>
 	<script>
@@ -179,15 +180,15 @@
 		]
     </script>
 	<script type="text/x-kendo-template" id="inspx-template">
-		<div>
+		<div >
 			<div class="item-thumb">
 				<img class="loading-thumb" src="styles/images/My_municipality.png" />
 			</div>
 			<div class="item-summary">
-				<h3 class="time">#: date #</h3> <h2>#: address #</h2>
-				<p>#: comment #</p>
+				<h3 class="time">#: InspectionDate #</h3> <h3>#: PropertyAddress #</h3>
+				<p>#: InspectionType #</p>
 			</div>
-		<a class="item-link" href="\#inspx-notes" data-role="button" data-icon="details" style="border-style:none" > 
+		<a class="item-link" href="\#inspx-notes" >&nbsp;&nbsp;&nbsp;&nbsp;
 		</a>
 		</div>
 	</script>
@@ -200,9 +201,9 @@
 					<p>New Note</p>
 					<div data-role="button">Append</div>
                 </div>
-				<textarea rows=6 cols="50" style="width:85%; padding: 3px; border: 1px solid">Enter you comments here,
-also here
-and this is line 3,
+				<textarea rows="8" style="width:75%; padding: 3px; border: 1px solid">Enter you comments here,
+123456789112345678921234567893123456789412345678951234567896
+and this is line 3
 4,
 5,
 6,
@@ -372,12 +373,12 @@ and this is line 3,
 			This view requires internet connection to display the map.
 		</div>
 		<div>
-		<div id="map-search-wrap">
+			<div id="map-search-wrap">
 				<div>
-                	<button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
-                	<input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
-                	<button id="map-search" class="map-tools-button search" data-bind="click: onSearchAddress"></button>
-            	</div>
+					<button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
+    				<input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
+					<button id="map-search" class="map-tools-button search" data-bind="click: onSearchAddress"></button>
+				</div>
 			</div>
 			<ul id="listview-permitsToday" 
 				data-role="listview"
@@ -408,7 +409,19 @@ and this is line 3,
 	</script>
 
 	<!--Settings-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-settings" data-title="Settings">
+	<div data-role="view" data-layout="drawer-layout" id="drawer-settings" data-title="Settings" data-use-native-scrolling="true">
+		<form action="javascript:history.back()">
+			<ul data-role="listview" data-style="inset">
+				<li>
+					<label for="">Service host URL: 
+						<input type="url" placeholder="http://server:port/service/program(?.....)"
+							data-bind="value:serviceHostURL"
+							value="http://dctlt063:8000/directit.permitting/service">
+					</label>
+                </li>
+			
+			</ul>
+        </form>
 	</div>
 	
 	<!--Snap-->
