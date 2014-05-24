@@ -1,21 +1,50 @@
 (function (global) {
     var app = global.app = global.app || {};
-	
-    document.addEventListener('deviceready', function () {
-        navigator.splashscreen.hide();
-		app.application.skin("flat");
-    }, false);
 
-	app.application = new kendo.mobile.Application(document.body, {
+    document.addEventListener('deviceready', function () {
+
+		app.application = new kendo.mobile.Application(document.body, {
 		platform: !0 ? !0 ? "android" : "ios" : "ios7"});
 
+        navigator.splashscreen.show();
+		app.application.skin("flat");
+		
+		if (localStorage.getItem("settings") === null) {
+			app.settings.hostName = "dctlt063"
+			app.settings.serviceHostURL= "http://" +
+				app.settings.hostName +
+				":8000/directit.permitting/service/permitservice"
+			app.settings.deviceId = device.uuid
+			app.settings.InetConnected = true
+        }
+		kendo.bind($("#settingsListView"), app.settings);
+		kendo.bind($("#loginDeviceId"), app.settings);
+		kendo.bind($("#no-host"), app.settings);
+		
+		app.hostDataSource.transport.options.read.url = app.settings.serviceHostURL
+		app.hostDataSource.fetch();
+		app.hostData = app.hostDataSource.data();
+    }, false);
+
 	app.isLoggedIn = false;
-	app.isConnected = false;
-	
+	app.isInetConnected = false;
+	app.isHostConnected = true;
+
 	app.imageCount = 0;
-	
+
 	app.settings = new kendo.observable({
-		serviceHostURL: "http://dctlt063:8000/directit.permitting/service"
+		serviceHostURL: "ffff",
+		deviceId: "noDeviceId"
+    });
+	
+	app.hostDataSource = new kendo.data.DataSource ({
+		transport: {
+			read: {
+				url: app.settings.serviceHostURL,
+				dataType: "json"
+			}
+		}
+		
     });
 
 	app.closeLoginModalView = function (e) {
@@ -81,14 +110,14 @@
 	document.addEventListener("online", onOnline, false);
 
 	function onOnline() {
-    	app.isConnected = true;
+    	app.isInetConnected = true;
 		//alert("online")
 	}
 
 	document.addEventListener("offline", onOffline, false);
 
 	function onOffline() {
-    	app.isConnected = false;
+    	app.isHostConnected = false;
 		//alert("offline")
 	}
 
@@ -128,8 +157,12 @@
 		}
 	});
 
-	app.initInspxs = function () {
-		app.inspxDataList.read();
+	app.clearLS = function () {
+		localStorage.clear()
+	}
 
+	app.getHostName = function () {
+		//hostName =this.get("hostName")
+		alert("HostName: " + app.settings.hostName)
     }
 })(window);

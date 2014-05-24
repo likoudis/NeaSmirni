@@ -46,17 +46,25 @@
                 This is the Welcome page.
             </p>
             <div class="img"></div>
-			<div style="text-align:center; margin: 3%">
-            <a id="openHomePage" 
-				data-role="button"
-				data-enable="false"
-				href="#drawer-inspxions">
-				Open Inspections
-            </a>
+			<div style="text-align:center; margin: 10px">
+            	<a id="openHomePage" 
+					data-role="button"
+					data-enable="false"
+					href="#drawer-inspxions">
+					Open Inspections
+            	</a>
 			</div>
 			<div>
 	        	<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Native</a>
+				<a id="clearLocalStorage" data-role="button" data-align="right" data-click="app.clearLS">Clear LS</a>
+			</div>
+			<div id="no-host" data-bind="invisible: isHostConnected">
+					<label for="hostName"> Host name not setup or invalid, please re-enter:
+						<input type="text" id="hostName" data-bind="value: hostName">
+						<a id="submitbutton" data-role="button" data-click="app.getHostName">Enter</a>
+					</label>
             </div>
+			Device ID: <span id="loginDeviceId" data-bind="text: deviceId"> </span>
         </div>
     </div>
 
@@ -171,14 +179,6 @@
 		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.inspxDataList">
 		</ul>
 	</div>
-	<script>
-		var inspxDataList = [
-			{date: "03/02/2014", address: "Shcawsi Trail",    comment:"Second floor addition and new screened-in porch."},
-			{date: "05/04/2013", address: "41 LAKEVIEW DR",   comment:"Support beam, size, span, bearing, splicing..."},
-			{date: "29/11/2013", address: "101 BURGESS RD",   comment:"Electrical system certificate:"},
-			{date: "05/04/2013", address: "459 STAR LAKE RD", comment:"Floor pad: Tye/ must be grouted."}
-		]
-    </script>
 	<script type="text/x-kendo-template" id="inspx-template">
 		<div >
 			<div class="item-thumb">
@@ -411,12 +411,12 @@ and this is line 3
 	<!--Settings-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-settings" data-title="Settings" data-use-native-scrolling="true">
 		<form action="javascript:history.back()">
-			<ul data-role="listview" data-style="inset">
+			<ul data-role="listview" data-style="inset" id="settingsListView">
 				<li>
-					<label for="">Service host URL: 
+					<label>Service host URL: 
 						<input type="url" placeholder="http://server:port/service/program(?.....)"
 							data-bind="value:serviceHostURL"
-							value="http://dctlt063:8000/directit.permitting/service">
+							value="http://dctlt063:8000/directit.permitting">
 					</label>
                 </li>
 			
