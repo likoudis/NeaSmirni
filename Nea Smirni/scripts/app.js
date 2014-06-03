@@ -4,29 +4,38 @@
     document.addEventListener('deviceready', function () {
 
 		app.application = new kendo.mobile.Application(document.body, {
-		platform: !0 ? !0 ? "android" : "ios" : "ios7"});
+			platform: !0 ? !0 ? "android" : "ios" : "ios7",
+			initial: "view-welcome"
+		});
 
-        navigator.splashscreen.show();
+        navigator.splashscreen.hide();
 		app.application.skin("flat");
 		
-		if (localStorage.getItem("settings") === null) {
-			app.settings.hostName = "dctlt063"
-			app.settings.serviceHostURL= "http://" +
-				app.settings.hostName +
-				":8000/directit.permitting/service/permitservice"
-			app.settings.deviceId = device.uuid
-			app.settings.InetConnected = true
-        }
+		app.settings.deviceId = device.uuid
+		app.settings.hostName = "192.168.2.6"
+
+		app.settings.serviceHostURL= "http://" +
+			app.settings.hostName +
+			":8000/permitservice"
+		
+		app.settings.headersURL = app.settings.serviceHostURL + "/GetInspectionHeaders?deviceid=" + app.settings.deviceId
+		app.settings.insbaseURL = app.settings.serviceHostURL + "/GetInspection?deviceid=" + app.settings.deviceId
+		
+		app.currentInspectionId = ""
+		
+		app.settings.InetConnected = true
+
+		app.headersDataSource.transport.options.read.url = app.settings.headersURL
+		app.headersDataSource.read();
+
+		app.isLoggedIn = true;
+		
 		kendo.bind($("#settingsListView"), app.settings);
 		kendo.bind($("#loginDeviceId"), app.settings);
 		kendo.bind($("#no-host"), app.settings);
-		
-		app.hostDataSource.transport.options.read.url = app.settings.serviceHostURL
-		app.hostDataSource.fetch();
-		app.hostData = app.hostDataSource.data();
     }, false);
 
-	app.isLoggedIn = false;
+
 	app.isInetConnected = false;
 	app.isHostConnected = true;
 
@@ -37,16 +46,94 @@
 		deviceId: "noDeviceId"
     });
 	
-	app.hostDataSource = new kendo.data.DataSource ({
+	app.headersDataSource = new kendo.data.DataSource ({
 		transport: {
 			read: {
-				url: app.settings.serviceHostURL,
-				dataType: "json"
+				url: "",
+				dataType: "jsonp"
+			}
+		},
+		schema: {
+			model: {
+				id: "InspectionId",
+				fields: {
+					InspectionId:    {type: "Number"},
+					InspectionDate:  {type: "String"},
+					PropertyAddress: {type: "String"},
+					InspectionNo:    {type: "String"}
+				}
 			}
 		}
-		
     });
 
+	app.detailsDataSource = new kendo.data.DataSource ({
+		transport: {
+			read: {
+				url: "",
+				dataType: "jsonp"
+			}
+		},
+		schema: {
+			model: {
+				id: "InspectionNo",
+				fields: {
+						"AssignedInspector": {type: "String"},
+						"ConstructionType":  {type: "String"},
+						"CurrentUse":        {type: "String"},
+						"InspectionDate":    {type: "String"},
+						"InspectionId":      {type: "Number"},
+						"InspectionNo":      {type: "String"},
+						"InspectionStatus":  {type: "String"},
+						"InspectionType":    {type: "String"},
+						"IntendedUse":       {type: "String"},
+						"LegalDescription":  {type: "String"},
+						"Owner":             {type: "String"},
+						"PermitDate":        {type: "String"},
+						"PermitDescription": {type: "String"},
+						"PermitDocId":       {type: "Number"},
+						"PermitNo":          {type: "String"},
+						"PermitType":        {type: "String"},
+						"PropertyAddress":   {type: "String"},
+						"RequestDate":       {type: "String"},
+						"RollNo":            {type: "String"},
+						"RollNoDisplay":     {type: "String"},
+				}
+			}
+		}
+    });
+
+	app.detailsViewModel = new kendo.observable({
+		detailsGroupedList: [ {
+		header: "Inspection Information",
+		fields: [
+			{desc: "Inspected", ix: "InspectionDate"},
+			{desc: "Assigned To", ix: "AssignedInspector"},
+			{desc: "Status", ix: "InspectionStatus"},
+			{desc: "Type", ix: "InspectionType"},
+			{desc: "Requested", ix: "RequestDate"},
+			{desc: "Number", ix: "InspectionNo"}
+		]}, {
+		header: "Property Information",
+		fields: [
+			{desc: "Address", ix: "PropertyAddress"},
+			{desc: "Owner", ix: "Owner"},
+			{desc: "Legal Description", ix: "LegalDescription"},
+			{desc: "Rol #", ix: "RollNoDisplay"}
+		]},  {
+		header: "Permit Information",
+		fields: [
+			{desc: "Description", ix: "PermitDescription"},
+			{desc: "Doc. Date", ix: "PermitDate"},
+			{desc: "Construction type", ix: "ConstructionType"},
+			{desc: "Permit type", ix: "PermitType"},
+			{desc: "Current use", ix: "CurrentUse"},
+			{desc: "Intended use", ix: "IntendedUse"},
+			{desc: "Conditional permit", ix: ""},
+			{desc: "Permit notes", ix: ""},
+			{desc: "Permit inspections", ix: ""},
+		]}]
+	})
+	
 	app.closeLoginModalView = function (e) {
         $("#loginModalView").kendoMobileModalView("close");
 		if (e.sender.element.text().trim() !== "Cancel") {
@@ -69,10 +156,11 @@
 	function onPhotoDataSuccess(imageURI) { 
 		window.resolveLocalFileSystemURI(imageURI, resolveOnSuccess, resOnError); 
 	}
-		function onFail(message) {
+
+	function onFail(message) {
 		alert('Failed because: ' + message);
 	}
-		//Callback function when the file system uri has been resolved
+	//Callback function when the file system uri has been resolved
 	function resolveOnSuccess(entry){ 
 		//new file name
 		var fname = app.imageCount;
@@ -92,7 +180,6 @@
 		},
 		resOnError);
 	}
-	
 	//Callback function when the file has been moved successfully - inserting the complete path
 	function successMove(entry) {
 		app.imageCount = app.imageCount < 999 ? app.imageCount + 1 : 0;
@@ -106,16 +193,13 @@
 	}
 
 	// Connection related stuff
-
 	document.addEventListener("online", onOnline, false);
-
 	function onOnline() {
     	app.isInetConnected = true;
 		//alert("online")
 	}
 
 	document.addEventListener("offline", onOffline, false);
-
 	function onOffline() {
     	app.isHostConnected = false;
 		//alert("offline")
@@ -157,12 +241,26 @@
 		}
 	});
 
-	app.clearLS = function () {
-		localStorage.clear()
-	}
-
 	app.getHostName = function () {
-		//hostName =this.get("hostName")
-		alert("HostName: " + app.settings.hostName)
+		//app.hostDataSource.read();
+		//app.hostData = app.hostDataSource.data()
+		//alert(JSON.stringify(app.hostData.length))
+		app.settings.serviceHostURL= "http://" +
+			app.settings.hostName +
+			":8000/permitservice/GetInspectionHeaders?deviceid=" + app.settings.deviceId
+		alert(app.settings.serviceHostURL)
+		app.headersDataSource.transport.options.read.url = app.settings.serviceHostURL
+		app.headersDataSource.read()
     }
+	
+	app.onNotesShow = function (e) {
+		app.currentInspectionId = e.view.params.inspectionId
+		app.detailsDataSource.transport.options.read.url = app.settings.insbaseURL + "&inspectionid=" + app.currentInspectionId
+		app.detailsDataSource.read()
+    }
+	
+	app.onDetailsShow = function () {
+		$("#i-detail-section").data("kendoMobileListView").refresh()
+    }
+	
 })(window);

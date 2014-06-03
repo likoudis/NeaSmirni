@@ -279,7 +279,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 /* RETINA DISPLAY STYLES*/
 @media only screen and (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi) {
     .img {
-        background-image: url(../styles/images/appbuilder2x.png);
+        background-image: url(../styles/images/My_municipality.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
@@ -410,4 +410,15 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 
 .km-android #drawer-filter label select, .km-android #drawer-filter label input {
 	background-color: black;
+}
+
+#drawer-settings label {
+	width:150px;
+	display:inline-block;
+	background-color: Red;
+}
+
+#drawer-settings input {
+	width:75%;
+	background-color: Green;
 }

@@ -35,13 +35,6 @@
 
         <div class="view-content">
             <h1>Welcome!</h1>
-            <a id="openLoginModalView" 
-				data-role="button"
-				data-rel="modalview" 
-				href="#loginModalView"
-				style="margin: 5%">
-				Login
-            </a>
             <p>
                 This is the Welcome page.
             </p>
@@ -49,48 +42,22 @@
 			<div style="text-align:center; margin: 10px">
             	<a id="openHomePage" 
 					data-role="button"
-					data-enable="false"
+					data-enable="true"
 					href="#drawer-inspxions">
 					Open Inspections
             	</a>
 			</div>
 			<div>
 	        	<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Native</a>
-				<a id="clearLocalStorage" data-role="button" data-align="right" data-click="app.clearLS">Clear LS</a>
 			</div>
 			<div id="no-host" data-bind="invisible: isHostConnected">
-					<label for="hostName"> Host name not setup or invalid, please re-enter:
-						<input type="text" id="hostName" data-bind="value: hostName">
-						<a id="submitbutton" data-role="button" data-click="app.getHostName">Enter</a>
+					<label for="hostName"> Enter another hostname here:
+						<a style="float:right" id="submitbutton" data-role="button" data-click="app.getHostName">Enter</a>
+						<input style="float:right" type="text" id="hostName" data-bind="value: hostName">
 					</label>
             </div>
 			Device ID: <span id="loginDeviceId" data-bind="text: deviceId"> </span>
         </div>
-    </div>
-
-    <!--Login-->
-	<div id="loginModalView" data-role="modalview" data-width="300" data-height="250" data-modal="false">
-        <div data-role="header">
-            <div data-role="navbar">
-				<span>Login</span>
-				<a id="cancel-login" data-click="app.closeLoginModalView" data-role="button" data-align="right">Cancel</a>
-			</div>
-        </div>    
-        <ul data-role="listview" data-style="inset">
-            <li>
-                <label>Username
-                    <input type="text" id="username" value="username" />
-                </label>
-            </li>
-            <li>
-                <label>Password
-                    <input type="password" id="password" value="password" />
-                </label>
-            </li>
-        </ul>
-		<div style="text-align:center">
-    	    <a data-role="button" data-rel="modalview" data-click="app.closeLoginModalView">Login</a>
-		</div>
     </div>
 
 	<!--Left drawer-->
@@ -176,7 +143,7 @@
 				<input id="map-search" type="submit" value="" />
 			</form>
 		</div>
-		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.inspxDataList">
+		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.headersDataSource">
 		</ul>
 	</div>
 	<script type="text/x-kendo-template" id="inspx-template">
@@ -185,16 +152,17 @@
 				<img class="loading-thumb" src="styles/images/My_municipality.png" />
 			</div>
 			<div class="item-summary">
-				<h3 class="time">#: InspectionDate #</h3> <h3>#: PropertyAddress #</h3>
-				<p>#: InspectionType #</p>
+				<h3 class="time">#= InspectionDate === null ? "No date" : new Date(InspectionDate).toDateString() #</h3>
+				<h3>#= PropertyAddress #</h3>
+				<p>#= InspectionType #</p>
 			</div>
-		<a class="item-link" href="\#inspx-notes" >&nbsp;&nbsp;&nbsp;&nbsp;
+		<a class="item-link" href="\#inspx-notes?inspectionId=#=InspectionId#" >&nbsp;&nbsp;&nbsp;&nbsp;
 		</a>
 		</div>
 	</script>
 	
 	<!--Inspection Notes-->
-	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout">
+	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout" data-show="app.onNotesShow">
 		<div data-role="scroller" style="height: 30%">
 			<form>
 				<div style="display:inline-block; text-align:top">
@@ -240,48 +208,26 @@ and this is line 3
     </script>
 	<script type="text/x-kendo-template" id="notes-template">
 
-			<h3 class="time"> #= new Date(date).toUTCString().replace("GMT","") # </h3>
+			<h3 class="time"> #= date === null ? "No date" : new Date(date).toDateString()  # </h3>
 			<p> #= note === undefined? "&lt;no notes&gt;" : note # </p>
 	</script>
 
-	<!--Inspection details-->
-	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout">
-		<ul id="i-detail-list" data-role="listview" data-style="inset" data-type="group">
-			<li>Inspection Information
-				<ul>
-					<li><span>Number        </span><span class="i-detail-list-data">000020958   </span></li>
-					<li><span>Assigned To   </span><span class="i-detail-list-data">BUSBY, CHRIS</span></li>
-					<li><span>Type          </span><span class="i-detail-list-data">Final       </span></li>
-					<li><span>Date Requested</span><span class="i-detail-list-data">28/11/2013  </span></li>
-                </ul>
-            </li>
-			<li>Property Information
-				<ul>
-					<li><a><span>Owner            </span><span class="i-detail-list-data">MILLS BRUCE BEVERLEY                            </span></a></li>
-					<li>   <span>Legal Description</span><span class="i-detail-list-data">PLAN M73 PT LOT 2 PCL 7253;S/S RP 42R4637 PART 4</span>   </li>
-					<li>   <span>Rol #            </span><span class="i-detail-list-data">49-03-010-001-19000-0000                        </span>   </li>
-                </ul>
-            </li>
-			<li>Building Permit Information
-				<ul>
-					<li><span>Document # </span><span class="i-detail-list-data">2013-5143                         </span></li>
-					<li><span>Type       </span><span class="i-detail-list-data">Residential                       </span></li>
-					<li><span>Doc. Date  </span><span class="i-detail-list-data">04/06/2013 07:00:00               </span></li>
-					<li><span>Description</span><span class="i-detail-list-data">ENLARGE BEDROOM AND FRONT ENTRANCE</span></li>
-                </ul>
-            </li>
-			<li>Permit Information
-				<ul>
-					<li>   <span>Construction Type </span><span class="i-detail-list-data">Renovation/Addition    </span>    </li>
-					<li>   <span>Current Use       </span><span class="i-detail-list-data">Single Family Residence</span>    </li>
-					<li>   <span>Intended Use      </span><span class="i-detail-list-data">Single Family Residence</span>    </li>
-					<li>   <span>Conditional Pemit </span><span class="i-detail-list-data">                       </span>    </li>
-					<li><a><span>Permit Notes      </span><span class="i-detail-list-data">                       </span></a></li>
-					<li><a><span>Permit Inspections</span><span class="i-detail-list-data">                       </span></a></li>
-               </ul>
-            </li>
-        </ul>
+	<!--Inspection Details-->
+	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout" 
+		data-after-show="app.onDetailsShow" data-model="app.detailsViewModel" data-pull-to-refresh="true" >
+		<ul id="i-detail-section" data-role="listview"  data-template="details-section-template" data-bind="source:detailsGroupedList">
+		</ul>
 	</div>
+	<script type="text/x-kendo-template" id="details-section-template">
+		<h2>#: header #</h2>
+			<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source:fields">
+			</ul>
+	</script>
+	<script type="text/x-kendo-template" id="details-template">
+		<span style="font-weight: bold">#= desc # </span>
+		<span style="float:right">#= app.detailsDataSource.data()[0][ix]# </span>
+	</script>
+
 	<style>
 		.i-detail-list-data {
 			float:right;
@@ -355,7 +301,7 @@ and this is line 3
 		})
     </script>
 	<script type="text/x-kendo-template" id="pix-list-template">
-		<p><img height="100" width="100" src="#: fname #">   <span class="idetail-d"> #= fname#   </span></p>
+		<p><img height="100" width="100" src="#= fname #">   <span class="idetail-d"> #= fname#   </span></p>
 		<a href="mailto:likoudis@hotmail.com?subject=My Inspections">
 			Email Me
 		</a>
@@ -394,16 +340,16 @@ and this is line 3
 	<!--Inspection Address List template-->
 	<script type="text/x-kendo-tmpl" id="location-inspections-template">
 		<div>
-			#:address#
+			#=address#
 			<a 
 				data-role="detailbutton" data-icon="contactadd"
 				data-bind="click:onInspectionSelect, invisible:inspectionAddressOnMap">
-				<span style="visibility:hidden">#:id#</span>
+				<span style="visibility:hidden">#=id#</span>
 			</a>
 			<a 
 				data-role="detailbutton" data-icon="rowdelete"
 				data-bind="click:onInspectionSelect, visible:inspectionAddressOnMap">
-				<span style="visibility:hidden">#:id#</span>
+				<span style="visibility:hidden">#=id#</span>
 			</a>
 		</div>
 	</script>
@@ -412,6 +358,26 @@ and this is line 3
 	<div data-role="view" data-layout="drawer-layout" id="drawer-settings" data-title="Settings" data-use-native-scrolling="true">
 		<form action="javascript:history.back()">
 			<ul data-role="listview" data-style="inset" id="settingsListView">
+				<li>
+					<label>Service host URL: 
+						<input type="url" placeholder="http://server:port/service/program(?.....)"
+							data-bind="value:serviceHostURL"
+							value="http://dctlt063:8000/directit.permitting">
+					</label>
+                </li>
+				<li>
+					<label>Service host URL: 
+						<input type="url" placeholder="http://server:port/service/program(?.....)"
+							data-bind="value:serviceHostURL"
+							value="http://dctlt063:8000/directit.permitting">
+					</label>
+                </li>
+				<li>
+					<label>Service host URL:</label>
+						<input type="url" placeholder="http://server:port/service/program(?.....)"
+							data-bind="value:serviceHostURL"
+							value="http://dctlt063:8000/directit.permitting">
+                </li>
 				<li>
 					<label>Service host URL: 
 						<input type="url" placeholder="http://server:port/service/program(?.....)"
@@ -507,6 +473,77 @@ and this is line 3,
 
 <!-- Unused code -->
 <div>
+			<!-- a id="openLoginModalView" 
+				data-role="button"
+				data-rel="modalview" 
+				href="#loginModalView"
+				style="margin: 5%">
+				Login
+            </a -->
+
+    <!--Login-->
+	<!-- div id="loginModalView" data-role="modalview" data-width="300" data-height="250" data-modal="false">
+        <div data-role="header">
+            <div data-role="navbar">
+				<span>Login</span>
+				<a id="cancel-login" data-click="app.closeLoginModalView" data-role="button" data-align="right">Cancel</a>
+			</div>
+        </div>    
+        <ul data-role="listview" data-style="inset">
+            <li>
+                <label>Username
+                    <input type="text" id="username" value="username" />
+                </label>
+            </li>
+            <li>
+                <label>Password
+                    <input type="password" id="password" value="password" />
+                </label>
+            </li>
+        </ul>
+		<div style="text-align:center">
+    	    <a data-role="button" data-rel="modalview" data-click="app.closeLoginModalView">Login</a>
+		</div>
+    </div -->
+	
+	<div>		<!-- ul id="i-detail-list" data-role="listview" data-style="inset" data-type="group">
+			<li>Inspection Information
+				<ul>
+					<li><span>Number        </span><span class="i-detail-list-data">000020958   </span></li>
+					<li><span>Assigned To   </span><span class="i-detail-list-data">BUSBY, CHRIS</span></li>
+					<li><span>Type          </span><span class="i-detail-list-data">Final       </span></li>
+					<li><span>Date Requested</span><span class="i-detail-list-data">28/11/2013  </span></li>
+                </ul>
+            </li>
+			<li>Property Information
+				<ul>
+					<li><a><span>Owner            </span><span class="i-detail-list-data">MILLS BRUCE BEVERLEY                            </span></a></li>
+					<li>   <span>Legal Description</span><span class="i-detail-list-data">PLAN M73 PT LOT 2 PCL 7253;S/S RP 42R4637 PART 4</span>   </li>
+					<li>   <span>Rol #            </span><span class="i-detail-list-data">49-03-010-001-19000-0000                        </span>   </li>
+                </ul>
+            </li>
+			<li>Building Permit Information
+				<ul>
+					<li><span>Document # </span><span class="i-detail-list-data">2013-5143                         </span></li>
+					<li><span>Type       </span><span class="i-detail-list-data">Residential                       </span></li>
+					<li><span>Doc. Date  </span><span class="i-detail-list-data">04/06/2013 07:00:00               </span></li>
+					<li><span>Description</span><span class="i-detail-list-data">ENLARGE BEDROOM AND FRONT ENTRANCE</span></li>
+                </ul>
+            </li>
+			<li>Permit Information
+				<ul>
+					<li>   <span>Construction Type </span><span class="i-detail-list-data">Renovation/Addition    </span>    </li>
+					<li>   <span>Current Use       </span><span class="i-detail-list-data">Single Family Residence</span>    </li>
+					<li>   <span>Intended Use      </span><span class="i-detail-list-data">Single Family Residence</span>    </li>
+					<li>   <span>Conditional Pemit </span><span class="i-detail-list-data">                       </span>    </li>
+					<li><a><span>Permit Notes      </span><span class="i-detail-list-data">                       </span></a></li>
+					<li><a><span>Permit Inspections</span><span class="i-detail-list-data">                       </span></a></li>
+               </ul>
+            </li>
+        </ul -->
+</div>
+
+
 	<!--Map Layout-->
 	<div data-role="layout" data-id="map-layout">
 		<header data-role="header">
