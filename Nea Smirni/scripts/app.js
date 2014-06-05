@@ -11,47 +11,78 @@
         navigator.splashscreen.hide();
 		app.application.skin("flat");
 		
-		app.settings.deviceId = device.uuid
-		app.settings.hostName = "192.168.2.6"
+		app.settings.set("deviceId", device.uuid)
+		app.settings.set("hostName", "192.168.2.6")
 
-		app.settings.serviceHostURL= "http://" +
-			app.settings.hostName +
-			":8000/permitservice"
-		
-		app.settings.headersURL = app.settings.serviceHostURL + "/GetInspectionHeaders?deviceid=" + app.settings.deviceId
-		app.settings.insbaseURL = app.settings.serviceHostURL + "/GetInspection?deviceid=" + app.settings.deviceId
-		
 		app.currentInspectionId = ""
 		
-		app.settings.InetConnected = true
-
-		app.headersDataSource.transport.options.read.url = app.settings.headersURL
+		app.settings.isInetConnected = true
+		app.headersDataSource.transport.options.read.url = app.settings.get("headersURL()")
 		app.headersDataSource.read();
-
 		app.isLoggedIn = true;
 		
 		kendo.bind($("#settingsListView"), app.settings);
 		kendo.bind($("#loginDeviceId"), app.settings);
+		kendo.bind($("#openHomePage"), app.settings);
 		kendo.bind($("#no-host"), app.settings);
+		
+		app.settings.set("isHostConnected", false)
+
+		app.headersDataSource.bind("error", function (e) {
+			app.settings.set("isHostConnected", false)
+		});
+	
     }, false);
 
 
 	app.isInetConnected = false;
-	app.isHostConnected = true;
 
 	app.imageCount = 0;
 
-	app.settings = new kendo.observable({
-		serviceHostURL: "ffff",
+	app.settings = new kendo.data.ObservableObject({
 		deviceId: "noDeviceId"
+		, hostName: "noHostName"
+		, serviceHostURL: function () {
+			return "http://" + this.get("hostName") + ":8000/permitservice"
+        }
+		, headersURL: function () {
+			return this.get("serviceHostURL()") + "/GetInspectionHeaders?deviceid=" + this.get("deviceId")
+		}
+		, insbaseURL: function () {
+			return this.get("serviceHostURL()") + "/GetInspection?deviceid=" + this.get("deviceId")
+		}
+		, dsDataType: "jsonp"
+		, isHostConnected: false
+
     });
 	
 	app.headersDataSource = new kendo.data.DataSource ({
 		transport: {
 			read: {
-				url: "",
-				dataType: "jsonp"
-			}
+				//url: "http://192.168.2.5:8000/permitservice/GetInspectionHeaders?deviceid=b32f2b6527524b5c"
+				url: ""
+				, dataType: "jsonp"
+				, timeout: 5000
+				, complete: function(e) {app.settings.set("isHostConnected", !!app.headersDataSource.data().length); app.application.hideLoading()}
+				, beforeSend: function(e) {app.application.showLoading()}
+            }
+			//read:function(options) {
+			//	$.ajax({
+			//		url: app.settings.get("headersURL()")
+			//		, dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
+			//		, success: function(result) {
+			//			console.log("success")
+			//			console.log(result)
+			//			options.success(result);
+			//		}
+			//		, timeout: 3000
+			//		, error: function(x, t, m) {
+			//			if(t==="timeout") {
+			//				console.log("timeout")
+ 	   	//			}
+			//		}
+			//	})
+			//}
 		},
 		schema: {
 			model: {
@@ -138,7 +169,7 @@
         $("#loginModalView").kendoMobileModalView("close");
 		if (e.sender.element.text().trim() !== "Cancel") {
 			app.isLoggedIn = !app.isLoggedIn;
-			$("#openHomePage").data("kendoMobileButton").enable(app.isLoggedIn);
+			//$("#openHomePage").data("kendoMobileButton").enable(app.isLoggedIn);
         }
     };
 	
@@ -201,7 +232,8 @@
 
 	document.addEventListener("offline", onOffline, false);
 	function onOffline() {
-    	app.isHostConnected = false;
+    	app.settings.set("isHostConnected", false);
+		app.headersDataSource.data([])
 		//alert("offline")
 	}
 
@@ -245,12 +277,12 @@
 		//app.hostDataSource.read();
 		//app.hostData = app.hostDataSource.data()
 		//alert(JSON.stringify(app.hostData.length))
-		app.settings.serviceHostURL= "http://" +
-			app.settings.hostName +
-			":8000/permitservice/GetInspectionHeaders?deviceid=" + app.settings.deviceId
-		alert(app.settings.serviceHostURL)
-		app.headersDataSource.transport.options.read.url = app.settings.serviceHostURL
-		app.headersDataSource.read()
+		//app.settings.serviceHostURL= "http://" +
+		//	app.settings.hostName +
+		//	":8000/permitservice/GetInspectionHeaders?deviceid=" + app.settings.deviceId
+		//alert(app.settings.get("headersURL()"))
+		app.headersDataSource.transport.options.read.url = app.settings.get("headersURL()")
+		app.headersDataSource.read();
     }
 	
 	app.onNotesShow = function (e) {
@@ -262,5 +294,23 @@
 	app.onDetailsShow = function () {
 		$("#i-detail-section").data("kendoMobileListView").refresh()
     }
+
+	app.getHostName1 = function () {
+		var ds = new kendo.data.DataSource({
+			transport:{
+				read: {
+					url:"http://192.168.2.5:8000/permitservice/GetInspectionHeaders?deviceid=b32f2b6527524b5c"
+					//, dataType: "jsonp"
+                }
+            }
+        })
+		function dataSource_error(e) {
+			console.log(e.status); // displays "error"
+		}
+		dataSource_error({status: "status"});
+		ds.bind("error", dataSource_error);
+		ds.fetch();		
+    }
 	
+
 })(window);

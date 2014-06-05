@@ -42,7 +42,7 @@
 			<div style="text-align:center; margin: 10px">
             	<a id="openHomePage" 
 					data-role="button"
-					data-enable="true"
+					data-bind="visible: isHostConnected"
 					href="#drawer-inspxions">
 					Open Inspections
             	</a>
@@ -51,7 +51,7 @@
 	        	<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Native</a>
 			</div>
 			<div id="no-host" data-bind="invisible: isHostConnected">
-					<label for="hostName"> Enter another hostname here:
+					<label for="hostName"> There is no connection or the server URL is invalid:
 						<a style="float:right" id="submitbutton" data-role="button" data-click="app.getHostName">Enter</a>
 						<input style="float:right" type="text" id="hostName" data-bind="value: hostName">
 					</label>
@@ -117,7 +117,7 @@
 			<div data-role="navbar" id="inspxListViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
 				<span data-role="view-title"></span>
-				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="share">Actions</a>    
+				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="share">Actions</a>    
 			</div>
 		</header>
 	</div>
