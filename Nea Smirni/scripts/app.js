@@ -10,9 +10,12 @@
 
         navigator.splashscreen.hide();
 		app.application.skin("flat");
-		
+
 		app.settings.set("deviceId", device.uuid)
-		app.settings.set("hostName", "192.168.2.6")
+		app.settings.set("hostName", "qqw.directit.ca:8000")
+		app.settings.set("hostName", "89.210.253.91:8000")
+		app.settings.set("hostName", "dctlt060:8000")
+		app.settings.set("hostName", "qqw.directit.ca:8000")
 
 		app.currentInspectionId = ""
 		
@@ -43,7 +46,7 @@
 		deviceId: "noDeviceId"
 		, hostName: "noHostName"
 		, serviceHostURL: function () {
-			return "http://" + this.get("hostName") + ":8000/permitservice"
+			return "http://" + this.get("hostName") + "/permitservice"
         }
 		, headersURL: function () {
 			return this.get("serviceHostURL()") + "/GetInspectionHeaders?deviceid=" + this.get("deviceId")
@@ -66,23 +69,6 @@
 				, complete: function(e) {app.settings.set("isHostConnected", !!app.headersDataSource.data().length); app.application.hideLoading()}
 				, beforeSend: function(e) {app.application.showLoading()}
             }
-			//read:function(options) {
-			//	$.ajax({
-			//		url: app.settings.get("headersURL()")
-			//		, dataType: "json" // "jsonp" is required for cross-domain requests; use "json" for same-domain requests
-			//		, success: function(result) {
-			//			console.log("success")
-			//			console.log(result)
-			//			options.success(result);
-			//		}
-			//		, timeout: 3000
-			//		, error: function(x, t, m) {
-			//			if(t==="timeout") {
-			//				console.log("timeout")
- 	   	//			}
-			//		}
-			//	})
-			//}
 		},
 		schema: {
 			model: {
@@ -97,6 +83,11 @@
 		}
     });
 
+	app.notesDataSource = new kendo.data.DataSource ({
+		data: []
+		,sort: { field: "CreateDate", dir: "desc" }
+	})
+	
 	app.detailsDataSource = new kendo.data.DataSource ({
 		transport: {
 			read: {
@@ -108,26 +99,26 @@
 			model: {
 				id: "InspectionNo",
 				fields: {
-						"AssignedInspector": {type: "String"},
-						"ConstructionType":  {type: "String"},
-						"CurrentUse":        {type: "String"},
-						"InspectionDate":    {type: "String"},
-						"InspectionId":      {type: "Number"},
-						"InspectionNo":      {type: "String"},
-						"InspectionStatus":  {type: "String"},
-						"InspectionType":    {type: "String"},
-						"IntendedUse":       {type: "String"},
-						"LegalDescription":  {type: "String"},
-						"Owner":             {type: "String"},
-						"PermitDate":        {type: "String"},
-						"PermitDescription": {type: "String"},
-						"PermitDocId":       {type: "Number"},
-						"PermitNo":          {type: "String"},
-						"PermitType":        {type: "String"},
-						"PropertyAddress":   {type: "String"},
-						"RequestDate":       {type: "String"},
-						"RollNo":            {type: "String"},
-						"RollNoDisplay":     {type: "String"},
+						 "AssignedInspector": {type: "String"}
+						,"ConstructionType":  {type: "String"}
+						,"CurrentUse":        {type: "String"}
+						,"InspectionDate":    {type: "String"}
+						,"InspectionId":      {type: "Number"}
+						,"InspectionNo":      {type: "String"}
+						,"InspectionStatus":  {type: "String"}
+						,"InspectionType":    {type: "String"}
+						,"IntendedUse":       {type: "String"}
+						,"LegalDescription":  {type: "String"}
+						,"Owner":             {type: "String"}
+						,"PermitDate":        {type: "String"}
+						,"PermitDescription": {type: "String"}
+						,"PermitDocId":       {type: "Number"}
+						,"PermitNo":          {type: "String"}
+						,"PermitType":        {type: "String"}
+						,"PropertyAddress":   {type: "String"}
+						,"RequestDate":       {type: "String"}
+						,"RollNo":            {type: "String"}
+						,"RollNoDisplay":     {type: "String"}
 				}
 			}
 		}
@@ -160,8 +151,8 @@
 			{desc: "Current use", ix: "CurrentUse"},
 			{desc: "Intended use", ix: "IntendedUse"},
 			{desc: "Conditional permit", ix: ""},
-			{desc: "Permit notes", ix: ""},
-			{desc: "Permit inspections", ix: ""},
+			{desc: "Permit notes", ix: function(){return app.detailsDataSource.data()[0].InspectionNotes.length || "No notes"}},
+			{desc: "Permit inspections", ix: function(){return app.detailsDataSource.data()[0].HistoricalInspections.length || "None"}}
 		]}]
 	})
 	
@@ -264,31 +255,17 @@
 		app.application.skin(mobileSkin);
 	};
 
-	app.inspxDataList = new kendo.data.DataSource({
-		transport: {
-			read: {
-				url: "data/InspxList_all.json",
-				dataType: "json"
-			}
-		}
-	});
-
 	app.getHostName = function () {
-		//app.hostDataSource.read();
-		//app.hostData = app.hostDataSource.data()
-		//alert(JSON.stringify(app.hostData.length))
-		//app.settings.serviceHostURL= "http://" +
-		//	app.settings.hostName +
-		//	":8000/permitservice/GetInspectionHeaders?deviceid=" + app.settings.deviceId
-		//alert(app.settings.get("headersURL()"))
 		app.headersDataSource.transport.options.read.url = app.settings.get("headersURL()")
 		app.headersDataSource.read();
     }
-	
+
 	app.onNotesShow = function (e) {
-		app.currentInspectionId = e.view.params.inspectionId
-		app.detailsDataSource.transport.options.read.url = app.settings.insbaseURL + "&inspectionid=" + app.currentInspectionId
-		app.detailsDataSource.read()
+		app.currentInspectionId = e.view.params.inspectionId || app.currentInspectionId // In case the drawer is used
+		app.detailsDataSource.transport.options.read.url = app.settings.insbaseURL() + "&inspectionid=" + app.currentInspectionId
+		app.detailsDataSource.fetch(function () {
+			app.notesDataSource.data(app.detailsDataSource.data()[0].InspectionNotes)
+        })
     }
 	
 	app.onDetailsShow = function () {

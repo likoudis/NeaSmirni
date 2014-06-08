@@ -384,6 +384,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 }
 .item-link {
 	vertical-align: middle;
+	text-decoration: none
 }
 .item-summary {
     width: 100%;

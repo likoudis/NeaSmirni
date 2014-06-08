@@ -117,7 +117,7 @@
 			<div data-role="navbar" id="inspxListViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
 				<span data-role="view-title"></span>
-				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="share">Actions</a>    
+				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="share">Actions</a>    
 			</div>
 		</header>
 	</div>
@@ -156,7 +156,7 @@
 				<h3>#= PropertyAddress #</h3>
 				<p>#= InspectionType #</p>
 			</div>
-		<a class="item-link" href="\#inspx-notes?inspectionId=#=InspectionId#" >&nbsp;&nbsp;&nbsp;&nbsp;
+		<a class="item-link" href="\#inspx-notes?inspectionId=#=InspectionId#" > &gt;
 		</a>
 		</div>
 	</script>
@@ -171,7 +171,7 @@
                 </div>
 				<textarea rows="8" style="width:75%; padding: 3px; border: 1px solid">Enter you comments here,
 123456789112345678921234567893123456789412345678951234567896
-and this is line 3
+and this is line 3 
 4,
 5,
 6,
@@ -181,35 +181,13 @@ and this is line 3
 			</form>
 		</div>
 		<div data-role="scroller" style="height: 300px">
-			<ul class="filterList" data-role="listview" data-template="notes-template" data-source="notesDataSource">
+			<ul class="filterList" data-role="listview" data-template="notes-template" data-source="app.notesDataSource">
 			</ul>
 		</div>
 	</div>
-	<script>
-		var notesDataSource = new kendo.data.DataSource ({
-			transport: {
-				read: {
-					url: "data/MyInspections/temp/inspection00000.xml",
-					dataType: "xml"
-                }
-            },
-			schema: {
-				type: "xml",
-				data: "/Inspection/PermitInspections/PermitInspection",
-				model: {
-					fields: {
-						date:	   "Inspected/text()",
-						note:	   "Notes/text()"
-                    }
-                }
-            }
-        })
-		notesDataSource.fetch();
-    </script>
 	<script type="text/x-kendo-template" id="notes-template">
-
-			<h3 class="time"> #= date === null ? "No date" : new Date(date).toDateString()  # </h3>
-			<p> #= note === undefined? "&lt;no notes&gt;" : note # </p>
+		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  # </h3>
+		<p> #= Note || "&lt;no notes&gt;" # </p>
 	</script>
 
 	<!--Inspection Details-->
@@ -220,12 +198,12 @@ and this is line 3
 	</div>
 	<script type="text/x-kendo-template" id="details-section-template">
 		<h2>#: header #</h2>
-			<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source:fields">
-			</ul>
+		<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source:fields">
+		</ul>
 	</script>
 	<script type="text/x-kendo-template" id="details-template">
 		<span style="font-weight: bold">#= desc # </span>
-		<span style="float:right">#= app.detailsDataSource.data()[0][ix]# </span>
+		<span style="float:right">#= typeof(ix) === "function" ? ix() : app.detailsDataSource.data()[0][ix]# </span>
 	</script>
 
 	<style>
