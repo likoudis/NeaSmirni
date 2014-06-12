@@ -134,13 +134,13 @@
 	</div>
 
 	<!--Inspections-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-inspxions" data-title="All Inspections"
+	<div id="drawer-inspxions" data-role="view" data-layout="drawer-layout" data-title="All Inspections"
 		data-show="app.onInspectionShow">
-		<div id="map-search-wrap">
+		<div class="map-search-wrap">
 			<button id="map-navigate-home"></button>
 			<form onsubmit="return false;">
 				<input id="map-address" type="search" placeholder="Address" />
-				<input id="map-search" type="submit" value="" />
+				<input class="map-search" type="submit" value="" />
 			</form>
 		</div>
 		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.headersDataSource">
@@ -153,14 +153,14 @@
 			</div>
 			<div class="item-summary">
 				<h3 class="time">#= InspectionDate === null ? "No date" : new Date(InspectionDate).toDateString() #</h3>
-				<h3>#= PropertyAddress #</h3>
+				<h3>#= PropertyAddress #</h3><p>No: #= InspectionNo #</p>
 				<p>#= InspectionType #</p>
 			</div>
 		<a class="item-link" href="\#inspx-notes?inspectionId=#=InspectionId#" > &gt;
 		</a>
 		</div>
 	</script>
-	
+
 	<!--Inspection Notes-->
 	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout" data-show="app.onNotesShow">
 		<div data-role="scroller" style="height: 30%">
@@ -197,14 +197,34 @@ and this is line 3
 		</ul>
 	</div>
 	<script type="text/x-kendo-template" id="details-section-template">
-		<h2>#: header #</h2>
-		<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source:fields">
-		</ul>
+		# if (header !== "History") { #
+			<h2>#: header #</h2>
+			<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source:fields">
+			</ul>
+		# } else { #
+			<a  href="\#inspx-hist">
+				<h2> #: header # </h2>
+			</a>
+		# } #
 	</script>
 	<script type="text/x-kendo-template" id="details-template">
 		<span style="font-weight: bold">#= desc # </span>
 		<span style="float:right">#= typeof(ix) === "function" ? ix() : app.detailsDataSource.data()[0][ix]# </span>
 	</script>
+
+	<!--Inspection History-->
+	<div id="inspx-hist" data-role="view" data-layout="drawer-layout" data-title="Past Inspections"
+		data-show="app.onHistoryShow">
+		<div class="map-search-wrap">
+			<button id="map-navigate-home"></button>
+			<form onsubmit="return false;">
+				<input id="map-address" type="search" placeholder="Address" />
+				<input class="map-search" type="submit" value="" />
+			</form>
+		</div>
+		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.historyDataSource">
+		</ul>
+	</div>
 
 	<style>
 		.i-detail-list-data {
@@ -297,11 +317,11 @@ and this is line 3
 			This view requires internet connection to display the map.
 		</div>
 		<div>
-			<div id="map-search-wrap">
+			<div class="map-search-wrap">
 				<div>
 					<button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
     				<input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
-					<button id="map-search" class="map-tools-button search" data-bind="click: onSearchAddress"></button>
+					<button class="map-search" class="map-tools-button search" data-bind="click: onSearchAddress"></button>
 				</div>
 			</div>
 			<ul id="listview-permitsToday" 

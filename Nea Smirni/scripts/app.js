@@ -15,7 +15,6 @@
 		app.settings.set("hostName", "qqw.directit.ca:8000")
 		app.settings.set("hostName", "89.210.253.91:8000")
 		app.settings.set("hostName", "dctlt060:8000")
-		app.settings.set("hostName", "qqw.directit.ca:8000")
 
 		app.currentInspectionId = ""
 		
@@ -124,6 +123,11 @@
 		}
     });
 
+	app.historyDataSource = new kendo.data.DataSource ({
+		data: []
+		,sort: { field: "InspectionDate", dir: "desc" }
+	})
+	
 	app.detailsViewModel = new kendo.observable({
 		detailsGroupedList: [ {
 		header: "Inspection Information",
@@ -147,13 +151,21 @@
 			{desc: "Description", ix: "PermitDescription"},
 			{desc: "Doc. Date", ix: "PermitDate"},
 			{desc: "Construction type", ix: "ConstructionType"},
+			{desc: "Permit Number", ix: "PermitNo"},
 			{desc: "Permit type", ix: "PermitType"},
 			{desc: "Current use", ix: "CurrentUse"},
 			{desc: "Intended use", ix: "IntendedUse"},
 			{desc: "Conditional permit", ix: ""},
 			{desc: "Permit notes", ix: function(){return app.detailsDataSource.data()[0].InspectionNotes.length || "No notes"}},
 			{desc: "Permit inspections", ix: function(){return app.detailsDataSource.data()[0].HistoricalInspections.length || "None"}}
-		]}]
+		]},  {
+		header: "History"}
+		],
+			
+	hasHistory: function () {
+		return !!app.detailsDataSource.data()[0].HistoricalInspections.length
+    }
+
 	})
 	
 	app.closeLoginModalView = function (e) {
@@ -268,6 +280,12 @@
         })
     }
 	
+	app.onHistoryShow = function (e) {
+		app.historyDataSource.fetch(function () {
+			app.historyDataSource.data(app.detailsDataSource.data()[0].HistoricalInspections)
+        })
+    }
+	
 	app.onDetailsShow = function () {
 		$("#i-detail-section").data("kendoMobileListView").refresh()
     }
@@ -288,6 +306,4 @@
 		ds.bind("error", dataSource_error);
 		ds.fetch();		
     }
-	
-
 })(window);

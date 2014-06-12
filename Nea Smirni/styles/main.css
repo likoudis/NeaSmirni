@@ -96,7 +96,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 	left: 0;
 }
 }
-#map-search-wrap {
+.map-search-wrap {
     position: relative;
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.5);
@@ -125,7 +125,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
     background-clip: border-box;
 }
 
-#map-search {
+.map-search {
     float: right;
     width: 40px;
     height: 40px;
@@ -137,7 +137,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
     background-position: center center;
 }
 
-#map-search:active {
+.map-search:active {
     background-image: url(../styles/images/search_active.png);
     background-repeat: no-repeat;
 }
@@ -284,13 +284,13 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
         background-size: 100%;
     }
 
-    #map-search {
+    .map-search {
         background-image: url(../styles/images/search2x.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
 
-    #map-search:active {
+    .map-search:active {
         background-image: url(../styles/images/search_active2x.png);
         background-repeat: no-repeat;
         background-size: 100%;
@@ -384,7 +384,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 }
 .item-link {
 	vertical-align: middle;
-	text-decoration: none
+	text-decoration: none;
 }
 .item-summary {
     width: 100%;
