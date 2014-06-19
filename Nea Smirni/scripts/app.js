@@ -15,6 +15,7 @@
 		app.settings.set("hostName", "qqw.directit.ca:8000")
 		app.settings.set("hostName", "89.210.253.91:8000")
 		app.settings.set("hostName", "dctlt060:8000")
+		app.settings.set("hostName", "192.168.2.6:8000")
 
 		app.currentInspectionId = ""
 		
@@ -34,6 +35,8 @@
 			app.settings.set("isHostConnected", false)
 		});
 	
+		initInspectionDataSources()
+
     }, false);
 
 
@@ -51,7 +54,7 @@
 			return this.get("serviceHostURL()") + "/GetInspectionHeaders?deviceid=" + this.get("deviceId")
 		}
 		, insbaseURL: function () {
-			return this.get("serviceHostURL()") + "/GetInspection?deviceid=" + this.get("deviceId")
+			return this.get("serviceHostURL()") + "/GetInspection" //?deviceid=" + this.get("deviceId")
 		}
 		, dsDataType: "jsonp"
 		, isHostConnected: false
@@ -65,117 +68,26 @@
 				url: ""
 				, dataType: "jsonp"
 				, timeout: 5000
-				, complete: function(e) {app.settings.set("isHostConnected", !!app.headersDataSource.data().length); app.application.hideLoading()}
 				, beforeSend: function(e) {app.application.showLoading()}
+				, complete: function(e) {
+					app.settings.set("isHostConnected", !!app.headersDataSource.data().length)
+					app.application.hideLoading()
+				}
             }
 		},
 		schema: {
 			model: {
 				id: "InspectionId",
 				fields: {
-					InspectionId:    {type: "Number"},
-					InspectionDate:  {type: "String"},
-					PropertyAddress: {type: "String"},
-					InspectionNo:    {type: "String"}
+					InspectionId:    {type: "Number"}
+					, InspectionDate:  {type: "String"}
+					, PropertyAddress: {type: "String"}
+					, InspectionNo:    {type: "String"}
 				}
 			}
 		}
     });
 
-	app.notesDataSource = new kendo.data.DataSource ({
-		data: []
-		,sort: { field: "CreateDate", dir: "desc" }
-	})
-	
-	app.detailsDataSource = new kendo.data.DataSource ({
-		transport: {
-			read: {
-				url: "",
-				dataType: "jsonp"
-			}
-		},
-		schema: {
-			model: {
-				id: "InspectionNo",
-				fields: {
-						 "AssignedInspector": {type: "String"}
-						,"ConstructionType":  {type: "String"}
-						,"CurrentUse":        {type: "String"}
-						,"InspectionDate":    {type: "String"}
-						,"InspectionId":      {type: "Number"}
-						,"InspectionNo":      {type: "String"}
-						,"InspectionStatus":  {type: "String"}
-						,"InspectionType":    {type: "String"}
-						,"IntendedUse":       {type: "String"}
-						,"LegalDescription":  {type: "String"}
-						,"Owner":             {type: "String"}
-						,"PermitDate":        {type: "String"}
-						,"PermitDescription": {type: "String"}
-						,"PermitDocId":       {type: "Number"}
-						,"PermitNo":          {type: "String"}
-						,"PermitType":        {type: "String"}
-						,"PropertyAddress":   {type: "String"}
-						,"RequestDate":       {type: "String"}
-						,"RollNo":            {type: "String"}
-						,"RollNoDisplay":     {type: "String"}
-				}
-			}
-		}
-    });
-
-	app.historyDataSource = new kendo.data.DataSource ({
-		data: []
-		,sort: { field: "InspectionDate", dir: "desc" }
-	})
-	
-	app.detailsViewModel = new kendo.observable({
-		detailsGroupedList: [ {
-		header: "Inspection Information",
-		fields: [
-			{desc: "Inspected", ix: "InspectionDate"},
-			{desc: "Assigned To", ix: "AssignedInspector"},
-			{desc: "Status", ix: "InspectionStatus"},
-			{desc: "Type", ix: "InspectionType"},
-			{desc: "Requested", ix: "RequestDate"},
-			{desc: "Number", ix: "InspectionNo"}
-		]}, {
-		header: "Property Information",
-		fields: [
-			{desc: "Address", ix: "PropertyAddress"},
-			{desc: "Owner", ix: "Owner"},
-			{desc: "Legal Description", ix: "LegalDescription"},
-			{desc: "Rol #", ix: "RollNoDisplay"}
-		]},  {
-		header: "Permit Information",
-		fields: [
-			{desc: "Description", ix: "PermitDescription"},
-			{desc: "Doc. Date", ix: "PermitDate"},
-			{desc: "Construction type", ix: "ConstructionType"},
-			{desc: "Permit Number", ix: "PermitNo"},
-			{desc: "Permit type", ix: "PermitType"},
-			{desc: "Current use", ix: "CurrentUse"},
-			{desc: "Intended use", ix: "IntendedUse"},
-			{desc: "Conditional permit", ix: ""},
-			{desc: "Permit notes", ix: function(){return app.detailsDataSource.data()[0].InspectionNotes.length || "No notes"}},
-			{desc: "Permit inspections", ix: function(){return app.detailsDataSource.data()[0].HistoricalInspections.length || "None"}}
-		]},  {
-		header: "History"}
-		],
-			
-	hasHistory: function () {
-		return !!app.detailsDataSource.data()[0].HistoricalInspections.length
-    }
-
-	})
-	
-	app.closeLoginModalView = function (e) {
-        $("#loginModalView").kendoMobileModalView("close");
-		if (e.sender.element.text().trim() !== "Cancel") {
-			app.isLoggedIn = !app.isLoggedIn;
-			//$("#openHomePage").data("kendoMobileButton").enable(app.isLoggedIn);
-        }
-    };
-	
 	app.onSnapShow = function (e) {
 		// Take picture using device camera and retrieve image file
 		navigator.camera.getPicture(
@@ -272,38 +184,13 @@
 		app.headersDataSource.read();
     }
 
-	app.onNotesShow = function (e) {
-		app.currentInspectionId = e.view.params.inspectionId || app.currentInspectionId // In case the drawer is used
-		app.detailsDataSource.transport.options.read.url = app.settings.insbaseURL() + "&inspectionid=" + app.currentInspectionId
-		app.detailsDataSource.fetch(function () {
-			app.notesDataSource.data(app.detailsDataSource.data()[0].InspectionNotes)
-        })
-    }
-	
-	app.onHistoryShow = function (e) {
-		app.historyDataSource.fetch(function () {
-			app.historyDataSource.data(app.detailsDataSource.data()[0].HistoricalInspections)
-        })
-    }
-	
-	app.onDetailsShow = function () {
-		$("#i-detail-section").data("kendoMobileListView").refresh()
+	app.setAndReadFor = function (InspectionId) {
+		if (app.currentInspectionId !== InspectionId) {
+			
+			app.currentInspectionId = InspectionId || app.currentInspectionId
+			app.detailsViewModel.detailsDataSource.read()
+        }
+		return true
     }
 
-	app.getHostName1 = function () {
-		var ds = new kendo.data.DataSource({
-			transport:{
-				read: {
-					url:"http://192.168.2.5:8000/permitservice/GetInspectionHeaders?deviceid=b32f2b6527524b5c"
-					//, dataType: "jsonp"
-                }
-            }
-        })
-		function dataSource_error(e) {
-			console.log(e.status); // displays "error"
-		}
-		dataSource_error({status: "status"});
-		ds.bind("error", dataSource_error);
-		ds.fetch();		
-    }
 })(window);

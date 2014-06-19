@@ -13,6 +13,7 @@
 
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
+	<script src="scripts/i-details.js"></script>
 
 	<style>
         html .km-wp-light .km-content,
@@ -156,13 +157,24 @@
 				<h3>#= PropertyAddress #</h3><p>No: #= InspectionNo #</p>
 				<p>#= InspectionType #</p>
 			</div>
-		<a class="item-link" href="\#inspx-notes?inspectionId=#=InspectionId#" > &gt;
+		<!-- a class="item-link" href="\#inspx-notes?inspectionId=#=InspectionId#" > &gt; -->
+		<a class="item-link" href="\#inspx-notes" onclick="return app.setAndReadFor(#=InspectionId#);"> &gt;
 		</a>
 		</div>
 	</script>
 
+	<!-- Brand new View -->
+	<div id="inspx-notes1" data-role="view" data-layout="drawer-layout">
+		<ul data-role="listview" data-template="debug-template"  data-source="app.detailsDataSource">
+        </ul>
+    </div>
+	<script type="text/x-kendo-template" id="debug-template">
+		#= InspectionId #
+    </script>
+
 	<!--Inspection Notes-->
-	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout" data-show="app.onNotesShow">
+	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout"
+		data-model="app.detailsViewModel" data-show="app.onNotesShow">
 		<div data-role="scroller" style="height: 30%">
 			<form>
 				<div style="display:inline-block; text-align:top">
@@ -181,10 +193,18 @@ and this is line 3
 			</form>
 		</div>
 		<div data-role="scroller" style="height: 300px">
-			<ul class="filterList" data-role="listview" data-template="notes-template" data-source="app.notesDataSource">
+			<ul class="filterList" data-role="listview" data-template="notes-template1" data-bind="source: detailsDataSource"
+				 data-auto-bind="false">
 			</ul>
 		</div>
 	</div>
+	<script type="text/x-kendo-template" id="notes-template1">	
+		#=InspectionId#<br>
+		#=InspectionNotes[0].Note#<br>
+		#=InspectionNotes[1].Note#<br>
+		#=InspectionNotes[2].Note#<br>
+		#=InspectionNotes[3].Note#<br>
+    </script>
 	<script type="text/x-kendo-template" id="notes-template">
 		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  # </h3>
 		<p> #= Note || "&lt;no notes&gt;" # </p>
@@ -192,7 +212,7 @@ and this is line 3
 
 	<!--Inspection Details-->
 	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout" 
-		data-after-show="app.onDetailsShow" data-model="app.detailsViewModel" data-pull-to-refresh="true" >
+		data-show="app.onDetailsShow" data-model="app.detailsViewModel" data-pull-to-refresh="true" >
 		<ul id="i-detail-section" data-role="listview"  data-template="details-section-template" data-bind="source:detailsGroupedList">
 		</ul>
 	</div>
@@ -209,7 +229,7 @@ and this is line 3
 	</script>
 	<script type="text/x-kendo-template" id="details-template">
 		<span style="font-weight: bold">#= desc # </span>
-		<span style="float:right">#= typeof(ix) === "function" ? ix() : app.detailsDataSource.data()[0][ix]# </span>
+		<span style="float:right">#= typeof(ix) === "function" ? ix() : app.detailsViewModel.detailsDataSource.data()[0][ix]# </span>
 	</script>
 
 	<!--Inspection History-->
@@ -321,7 +341,7 @@ and this is line 3
 				<div>
 					<button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
     				<input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
-					<button class="map-search" class="map-tools-button search" data-bind="click: onSearchAddress"></button>
+					<button class="map-tools-button search" data-bind="click: onSearchAddress"></button>
 				</div>
 			</div>
 			<ul id="listview-permitsToday" 
@@ -468,138 +488,5 @@ and this is line 3,
 	<!--Synchronize-->
 	<div data-role="view" data-layout="drawer-layout" id="drawer-sync" data-title="Synch with Server">
 	</div>
-
-<!-- Unused code -->
-<div>
-			<!-- a id="openLoginModalView" 
-				data-role="button"
-				data-rel="modalview" 
-				href="#loginModalView"
-				style="margin: 5%">
-				Login
-            </a -->
-
-    <!--Login-->
-	<!-- div id="loginModalView" data-role="modalview" data-width="300" data-height="250" data-modal="false">
-        <div data-role="header">
-            <div data-role="navbar">
-				<span>Login</span>
-				<a id="cancel-login" data-click="app.closeLoginModalView" data-role="button" data-align="right">Cancel</a>
-			</div>
-        </div>    
-        <ul data-role="listview" data-style="inset">
-            <li>
-                <label>Username
-                    <input type="text" id="username" value="username" />
-                </label>
-            </li>
-            <li>
-                <label>Password
-                    <input type="password" id="password" value="password" />
-                </label>
-            </li>
-        </ul>
-		<div style="text-align:center">
-    	    <a data-role="button" data-rel="modalview" data-click="app.closeLoginModalView">Login</a>
-		</div>
-    </div -->
-	
-	<div>		<!-- ul id="i-detail-list" data-role="listview" data-style="inset" data-type="group">
-			<li>Inspection Information
-				<ul>
-					<li><span>Number        </span><span class="i-detail-list-data">000020958   </span></li>
-					<li><span>Assigned To   </span><span class="i-detail-list-data">BUSBY, CHRIS</span></li>
-					<li><span>Type          </span><span class="i-detail-list-data">Final       </span></li>
-					<li><span>Date Requested</span><span class="i-detail-list-data">28/11/2013  </span></li>
-                </ul>
-            </li>
-			<li>Property Information
-				<ul>
-					<li><a><span>Owner            </span><span class="i-detail-list-data">MILLS BRUCE BEVERLEY                            </span></a></li>
-					<li>   <span>Legal Description</span><span class="i-detail-list-data">PLAN M73 PT LOT 2 PCL 7253;S/S RP 42R4637 PART 4</span>   </li>
-					<li>   <span>Rol #            </span><span class="i-detail-list-data">49-03-010-001-19000-0000                        </span>   </li>
-                </ul>
-            </li>
-			<li>Building Permit Information
-				<ul>
-					<li><span>Document # </span><span class="i-detail-list-data">2013-5143                         </span></li>
-					<li><span>Type       </span><span class="i-detail-list-data">Residential                       </span></li>
-					<li><span>Doc. Date  </span><span class="i-detail-list-data">04/06/2013 07:00:00               </span></li>
-					<li><span>Description</span><span class="i-detail-list-data">ENLARGE BEDROOM AND FRONT ENTRANCE</span></li>
-                </ul>
-            </li>
-			<li>Permit Information
-				<ul>
-					<li>   <span>Construction Type </span><span class="i-detail-list-data">Renovation/Addition    </span>    </li>
-					<li>   <span>Current Use       </span><span class="i-detail-list-data">Single Family Residence</span>    </li>
-					<li>   <span>Intended Use      </span><span class="i-detail-list-data">Single Family Residence</span>    </li>
-					<li>   <span>Conditional Pemit </span><span class="i-detail-list-data">                       </span>    </li>
-					<li><a><span>Permit Notes      </span><span class="i-detail-list-data">                       </span></a></li>
-					<li><a><span>Permit Inspections</span><span class="i-detail-list-data">                       </span></a></li>
-               </ul>
-            </li>
-        </ul -->
-</div>
-
-
-	<!--Map Layout-->
-	<div data-role="layout" data-id="map-layout">
-		<header data-role="header">
-			<div data-role="navbar">
-				<span data-role="view-title"></span>
-				<a data-role="backbutton" data-align="left" data-icon="drawer-button">Back</a>
-			</div>
-		</header>
-	</div>
-
-	<!--Contacts-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-contacts" data-title="Contacts">
-		<ul class="filterList" data-role="listview" data-template="contact-template" data-source="contactDataSource">
-		</ul>
-	</div>
-	<script>
-		var contactDataSource = new kendo.data.DataSource ({
-			transport: {
-				read: {
-					url: "data/MyInspections/temp/inspection00000.xml",
-					dataType: "xml"
-                }
-            },
-			schema: {
-				type: "xml",
-				data: "/Inspection/Document/Contacts/Contact",
-				model: {
-					fields: {
-						name:	   "Name/text()",
-						unitNumber: "UnitNumber/text()",
-						province:   "Province/text()",
-						postalCode: "PostalCode/text()"
-                    }
-                }
-            }
-        })
-		contactDataSource.fetch();
-    </script>
-	<script type="text/x-kendo-template" id="contact-template">
-		<p data-icon="contacts">
-			<span class="idetail-d"> #= name # </span>
-			<span class="idetail-d"> #= (unitNumber === undefined) ? '' : unitNumber #   </span>
-			<span class="idetail-d"> #= province #   </span>
-			<span class="idetail-d"> #= postalCode #   </span>
-		</p>
-	</script>
-
-	<!--Search-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-search" data-title="Search">
-		<ul data-role="listview">
-			<li>90% Discount!</li>
-			<li>90% Discount!</li>
-			<li>One time offer!</li>
-		</ul>
-		<a data-role="button" style="background-color: darkred; display: block; margin: 2em; font-size: 1.4em;">
-			Sync with server
-		</a>
-	</div>
-</div>		
 </body>
 </html>
