@@ -14,8 +14,9 @@
 		app.settings.set("deviceId", device.uuid)
 		app.settings.set("hostName", "qqw.directit.ca:8000")
 		app.settings.set("hostName", "89.210.253.91:8000")
-		app.settings.set("hostName", "dctlt060:8000")
 		app.settings.set("hostName", "192.168.2.6:8000")
+		app.settings.set("hostName", "dctlt060:8000")
+		app.settings.set("hostName", "dctlt063:8000")
 
 		app.currentInspectionId = ""
 		
@@ -34,10 +35,8 @@
 		app.headersDataSource.bind("error", function (e) {
 			app.settings.set("isHostConnected", false)
 		});
-	
-		initInspectionDataSources()
 
-    }, false);
+	}, false);
 
 
 	app.isInetConnected = false;
@@ -54,7 +53,10 @@
 			return this.get("serviceHostURL()") + "/GetInspectionHeaders?deviceid=" + this.get("deviceId")
 		}
 		, insbaseURL: function () {
-			return this.get("serviceHostURL()") + "/GetInspection" //?deviceid=" + this.get("deviceId")
+			return this.get("serviceHostURL()") + "/GetInspection"
+		}
+		, notesURL: function () {
+			return this.get("serviceHostURL()") + "/GetInspectionNotes"
 		}
 		, dsDataType: "jsonp"
 		, isHostConnected: false
@@ -181,14 +183,15 @@
 
 	app.getHostName = function () {
 		app.headersDataSource.transport.options.read.url = app.settings.get("headersURL()")
-		app.headersDataSource.read();
+		app.headersDataSource. read();
     }
 
 	app.setAndReadFor = function (InspectionId) {
 		if (app.currentInspectionId !== InspectionId) {
 			
 			app.currentInspectionId = InspectionId || app.currentInspectionId
-			app.detailsViewModel.detailsDataSource.read()
+			//app.detailsDataSource.read()
+			//app.notesDataSource.read()
         }
 		return true
     }

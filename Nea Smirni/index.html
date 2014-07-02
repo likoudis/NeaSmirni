@@ -14,6 +14,8 @@
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
 	<script src="scripts/i-details.js"></script>
+	<script src="scripts/i-notes.js"></script>
+	<script src="scripts/i-history.js"></script>
 
 	<style>
         html .km-wp-light .km-content,
@@ -35,7 +37,7 @@
         data-title="Welcome">
 
         <div class="view-content">
-            <h1>Welcome!</h1>
+            <h1>Welcome to V1 of 2-Jul-2014!</h1>
             <p>
                 This is the Welcome page.
             </p>
@@ -163,18 +165,9 @@
 		</div>
 	</script>
 
-	<!-- Brand new View -->
-	<div id="inspx-notes1" data-role="view" data-layout="drawer-layout">
-		<ul data-role="listview" data-template="debug-template"  data-source="app.detailsDataSource">
-        </ul>
-    </div>
-	<script type="text/x-kendo-template" id="debug-template">
-		#= InspectionId #
-    </script>
-
 	<!--Inspection Notes-->
 	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout"
-		data-model="app.detailsViewModel" data-show="app.onNotesShow">
+		data-show="app.onNotesShow">
 		<div data-role="scroller" style="height: 30%">
 			<form>
 				<div style="display:inline-block; text-align:top">
@@ -192,19 +185,12 @@ and this is line 3
 </textarea>
 			</form>
 		</div>
-		<div data-role="scroller" style="height: 300px">
-			<ul class="filterList" data-role="listview" data-template="notes-template1" data-bind="source: detailsDataSource"
+		<div data-role="scroller" style="height: 700px">
+			<ul id="i-notes-section" data-role="listview" data-template="notes-template" data-source="app.notesDataSource"
 				 data-auto-bind="false">
 			</ul>
 		</div>
 	</div>
-	<script type="text/x-kendo-template" id="notes-template1">	
-		#=InspectionId#<br>
-		#=InspectionNotes[0].Note#<br>
-		#=InspectionNotes[1].Note#<br>
-		#=InspectionNotes[2].Note#<br>
-		#=InspectionNotes[3].Note#<br>
-    </script>
 	<script type="text/x-kendo-template" id="notes-template">
 		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  # </h3>
 		<p> #= Note || "&lt;no notes&gt;" # </p>
@@ -212,14 +198,15 @@ and this is line 3
 
 	<!--Inspection Details-->
 	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout" 
-		data-show="app.onDetailsShow" data-model="app.detailsViewModel" data-pull-to-refresh="true" >
-		<ul id="i-detail-section" data-role="listview"  data-template="details-section-template" data-bind="source:detailsGroupedList">
+		data-show="app.onDetailsShow" data-model="app.detailsViewModel" >
+		<ul id="i-detail-section" data-role="listview"  data-template="details-section-template" data-bind="source: detailsGroupedList"
+			data-auto-bind="false">
 		</ul>
 	</div>
 	<script type="text/x-kendo-template" id="details-section-template">
 		# if (header !== "History") { #
 			<h2>#: header #</h2>
-			<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source:fields">
+			<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source: fields">
 			</ul>
 		# } else { #
 			<a  href="\#inspx-hist">
