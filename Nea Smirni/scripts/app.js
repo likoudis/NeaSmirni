@@ -17,12 +17,11 @@
 		app.settings.set("hostName", "192.168.2.6:8000")
 		app.settings.set("hostName", "dctlt060:8000")
 		app.settings.set("hostName", "dctlt063:8000")
+		app.settings.set("hostName", "192.168.2.50:8000")
 
 		app.currentInspectionId = ""
 		
 		app.settings.isInetConnected = true
-		app.headersDataSource.transport.options.read.url = app.settings.get("headersURL()")
-		app.headersDataSource.read();
 		app.isLoggedIn = true;
 		
 		kendo.bind($("#settingsListView"), app.settings);
@@ -32,14 +31,24 @@
 		
 		app.settings.set("isHostConnected", false)
 
-		app.headersDataSource.bind("error", function (e) {
-			app.settings.set("isHostConnected", false)
-		});
+		$.ajax({
+			url: app.settings.devValidURL()
+			, success: function (data) {
+				app.settings.set("isDeviceValid", data)
+			}
+			, error: function (x,s,e) {
+				app.settings.set("isDeviceValid", undefined)
+			}
+
+        })
 
 	}, false);
 
 
 	app.isInetConnected = false;
+	app.isDeviceValid   = false;
+	
+	app.newNoteText ="Note text";
 
 	app.imageCount = 0;
 
@@ -49,8 +58,11 @@
 		, serviceHostURL: function () {
 			return "http://" + this.get("hostName") + "/permitservice"
         }
+		, devValidURL: function () {
+			return this.get("serviceHostURL()") + "/IsDeviceValid?deviceid=" + this.get("deviceId")
+        }
 		, headersURL: function () {
-			return this.get("serviceHostURL()") + "/GetInspectionHeaders?deviceid=" + this.get("deviceId")
+			return this.get("serviceHostURL()") + "/GetInspectionHeaders"
 		}
 		, insbaseURL: function () {
 			return this.get("serviceHostURL()") + "/GetInspection"
@@ -58,38 +70,16 @@
 		, notesURL: function () {
 			return this.get("serviceHostURL()") + "/GetInspectionNotes"
 		}
+		, addNoteURL: function () {
+			return this.get("serviceHostURL()") + "/AddInspectionNote"
+		}
 		, dsDataType: "jsonp"
 		, isHostConnected: false
+		, isInetConnected: false
+		, isDeviceValid: false
 
     });
 	
-	app.headersDataSource = new kendo.data.DataSource ({
-		transport: {
-			read: {
-				//url: "http://192.168.2.5:8000/permitservice/GetInspectionHeaders?deviceid=b32f2b6527524b5c"
-				url: ""
-				, dataType: "jsonp"
-				, timeout: 5000
-				, beforeSend: function(e) {app.application.showLoading()}
-				, complete: function(e) {
-					app.settings.set("isHostConnected", !!app.headersDataSource.data().length)
-					app.application.hideLoading()
-				}
-            }
-		},
-		schema: {
-			model: {
-				id: "InspectionId",
-				fields: {
-					InspectionId:    {type: "Number"}
-					, InspectionDate:  {type: "String"}
-					, PropertyAddress: {type: "String"}
-					, InspectionNo:    {type: "String"}
-				}
-			}
-		}
-    });
-
 	app.onSnapShow = function (e) {
 		// Take picture using device camera and retrieve image file
 		navigator.camera.getPicture(
@@ -158,16 +148,6 @@
         $("#modal-psfc").kendoMobileModalView("close");
     };
 	
-	app.onInspectionShow = function(e) {
-		var filterParam = e.view.params.filter;
-		
-		$("#inspxListViewNavBar").data("kendoMobileNavBar").title( 
-			filterParam === "all" ? "All Inspections" :
-			filterParam === "today" ? "Today's Inspections" :
-			filterParam === "weeks" ? "This week's Inspections" : "All Inspections"
-		);
-    }
-
 	app.changeSkin = function (e) {
 		var mobileSkin = "flat";
 
@@ -179,19 +159,18 @@
 			e.sender.element.text("Flat");
 		}
 		app.application.skin(mobileSkin);
+		navigator.splashscreen.show()
+		setTimeout(function() {navigator.splashscreen.hide()}, 3000)
 	};
 
 	app.getHostName = function () {
-		app.headersDataSource.transport.options.read.url = app.settings.get("headersURL()")
-		app.headersDataSource. read();
+		//app.headersDataSource.transport.options.read.url = app.settings.get("headersURL()")
+		//app.headersDataSource. read();
     }
 
 	app.setAndReadFor = function (InspectionId) {
 		if (app.currentInspectionId !== InspectionId) {
-			
 			app.currentInspectionId = InspectionId || app.currentInspectionId
-			//app.detailsDataSource.read()
-			//app.notesDataSource.read()
         }
 		return true
     }

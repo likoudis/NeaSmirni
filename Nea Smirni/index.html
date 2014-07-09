@@ -13,6 +13,7 @@
 
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
+	<script src="scripts/i-headers.js"></script>
 	<script src="scripts/i-details.js"></script>
 	<script src="scripts/i-notes.js"></script>
 	<script src="scripts/i-history.js"></script>
@@ -45,7 +46,7 @@
 			<div style="text-align:center; margin: 10px">
             	<a id="openHomePage" 
 					data-role="button"
-					data-bind="visible: isHostConnected"
+					data-bind="visible: isDeviceValid"
 					href="#drawer-inspxions">
 					Open Inspections
             	</a>
@@ -53,11 +54,11 @@
 			<div>
 	        	<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Native</a>
 			</div>
-			<div id="no-host" data-bind="invisible: isHostConnected">
-					<label for="hostName"> There is no connection or the server URL is invalid:
-						<a style="float:right" id="submitbutton" data-role="button" data-click="app.getHostName">Enter</a>
-						<input style="float:right" type="text" id="hostName" data-bind="value: hostName">
-					</label>
+			<div id="no-host" data-bind="invisible: isDeviceValid">
+				<label for="hostName"> There is no connection or the server URL is invalid:
+					<a style="float:right" id="submitbutton" data-role="button" data-click="app.getHostName">Enter</a>
+					<input style="float:right" type="text" id="hostName" data-bind="value: hostName">
+				</label>
             </div>
 			Device ID: <span id="loginDeviceId" data-bind="text: deviceId"> </span>
         </div>
@@ -69,7 +70,7 @@
 		data-views="[
 		'drawer-inspxions','drawer-filter','drawer-pixurs','drawer-map','drawer-sync','drawer-settings',
 		'drawer-snap','drawer-report','drawer-email',
-		'inspx-details','inspx-notes']"
+		'inspx-details','inspx-notes', 'inspx-hist']"
 		style="width: 290px"> 
 		<ul data-role="listview" data-type="flat">
 			<li data-icon="home">     <a data-transition="none" href="#view-welcome">Home</a></li>
@@ -77,8 +78,8 @@
 			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=today">Today's Inspections</a></li>
 			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=weeks">This Week's Inspections</a></li>
 			<li data-icon="featured"> <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li>
-			<li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs"   >Pictures</a></li>
-			<li data-icon="globe">    <a data-transition="none" href="#drawer-map"      >Map</a></li>
+			<li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li>
+			<li data-icon="globe">    <a data-transition="none" href="#drawer-map"   >Map</a></li>
 			<li></li>
 			<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>
 			<li data-icon="settings"> <a data-transition="none" href="#drawer-settings" >Settings</a></li>
@@ -100,7 +101,7 @@
 	<!--Right drawer 4 single inspx-->
 	<div data-role="drawer" id="right-drawer1" data-position="right"
 		data-views="[
-		'inspx-details','inspx-notes','drawer-addinspx']"
+		'inspx-details','inspx-notes','drawer-addinspx', 'inspx-hist']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="inset" >
 			<li data-icon="featured" ><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
@@ -120,7 +121,8 @@
 			<div data-role="navbar" id="inspxListViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
 				<span data-role="view-title"></span>
-				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="share">Actions</a>    
+				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="share">Actions</a>
+				<a data-role="backbutton" data-align="right">Back</a>
 			</div>
 		</header>
 	</div>
@@ -131,12 +133,24 @@
 			<div data-role="navbar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
 				<span data-role="view-title"></span>
+				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="share">Actions</a>
 				<a data-role="backbutton" data-align="right">Back</a>
 			</div>
 		</header>
 	</div>
 
-	<!--Inspections-->
+	<!--Drawer Layout 4 leaf views-->
+	<div data-role="layout" data-id="drawer-layout2">
+		<header data-role="header">
+			<div data-role="navbar">
+				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
+				<span data-role="view-title"></span>
+				<a data-role="backbutton" data-align="right">Back</a>
+			</div>
+		</header>
+	</div>
+
+	<!--Inspection headers-->
 	<div id="drawer-inspxions" data-role="view" data-layout="drawer-layout" data-title="All Inspections"
 		data-show="app.onInspectionShow">
 		<div class="map-search-wrap">
@@ -146,7 +160,8 @@
 				<input class="map-search" type="submit" value="" />
 			</form>
 		</div>
-		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.headersDataSource">
+		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.headersDataSource"
+				 data-auto-bind="true">
 		</ul>
 	</div>
 	<script type="text/x-kendo-template" id="inspx-template">
@@ -159,22 +174,21 @@
 				<h3>#= PropertyAddress #</h3><p>No: #= InspectionNo #</p>
 				<p>#= InspectionType #</p>
 			</div>
-		<!-- a class="item-link" href="\#inspx-notes?inspectionId=#=InspectionId#" > &gt; -->
 		<a class="item-link" href="\#inspx-notes" onclick="return app.setAndReadFor(#=InspectionId#);"> &gt;
 		</a>
 		</div>
 	</script>
 
 	<!--Inspection Notes-->
-	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout"
+	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout1"
 		data-show="app.onNotesShow">
 		<div data-role="scroller" style="height: 30%">
 			<form>
 				<div style="display:inline-block; text-align:top">
 					<p>New Note</p>
-					<div data-role="button">Append</div>
+					<div data-role="button" data-click="app.onAddNote">Append</div>
                 </div>
-				<textarea rows="8" style="width:75%; padding: 3px; border: 1px solid">Enter you comments here,
+				<textarea id="newNoteText" rows="8" style="width:75%; padding: 3px; border: 1px solid">Enter you comments here,
 123456789112345678921234567893123456789412345678951234567896
 and this is line 3 
 4,
@@ -197,10 +211,10 @@ and this is line 3
 	</script>
 
 	<!--Inspection Details-->
-	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout" 
-		data-show="app.onDetailsShow" data-model="app.detailsViewModel" >
+	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout1" 
+		data-model="app.detailsViewModel" data-before-show="app.onDetailsShow" >
 		<ul id="i-detail-section" data-role="listview"  data-template="details-section-template" data-bind="source: detailsGroupedList"
-			data-auto-bind="false">
+			data-auto-bind="true">
 		</ul>
 	</div>
 	<script type="text/x-kendo-template" id="details-section-template">
@@ -287,7 +301,7 @@ and this is line 3
     </div>
 
 	<!--Pictures-->
-	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs" data-layout="drawer-layout1" >
+	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs" data-layout="drawer-layout2" >
 		<ul id="gallery-listview"
 			data-role="listview" 
 			data-template="pix-list-template" 
@@ -313,7 +327,7 @@ and this is line 3
 	</script>
 
 	<!--Map-->
-	<div data-role="view" data-layout="drawer-layout1" id="drawer-map" data-title="Map"
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-map" data-title="Map"
 		data-init="app.locationService.initLocation"
 		data-show="app.locationService.show"
 		data-hide="app.locationService.hide"
@@ -360,7 +374,7 @@ and this is line 3
 	</script>
 
 	<!--Settings-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-settings" data-title="Settings" data-use-native-scrolling="true">
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-settings" data-title="Settings" data-use-native-scrolling="true">
 		<form action="javascript:history.back()">
 			<ul data-role="listview" data-style="inset" id="settingsListView">
 				<li>
@@ -396,7 +410,7 @@ and this is line 3
 	</div>
 	
 	<!--Snap-->
-	<div data-role="view" data-layout="drawer-layout1" id="drawer-snap" data-title="Take Pictures">
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-snap" data-title="Take Pictures">
 		Add a picture to current inspetion
 		<a data-role="button" data-click="app.onSnapShow">
 			Snap
@@ -407,7 +421,7 @@ and this is line 3
 	</div>
 	
 	<!--Report-->
-	<div data-role="view" data-layout="drawer-layout1" id="drawer-report" data-title="Reports">
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-report" data-title="Reports">
 		<div data-role="scroller" id="scroller-report">
 		</div>
 		<a  style="position:fixed; bottom: 40px; right: 30px" data-role="button">
@@ -428,7 +442,7 @@ and this is line 3
 	 </script>
 
 	<!--Email-->
-	<div data-role="view" data-layout="drawer-layout1" id="drawer-email" data-title="E-mail">
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-email" data-title="E-mail">
 		<div data-role="scroller">
 			<form>
 				<ul data-role="listview" data-style="inset">
@@ -469,11 +483,11 @@ and this is line 3,
 	</div>
 	
 	<!--Add Inspection-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-addinspx" data-title="Add an Inspection">
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-addinspx" data-title="Add an Inspection">
 	</div>
 	
 	<!--Synchronize-->
-	<div data-role="view" data-layout="drawer-layout" id="drawer-sync" data-title="Synch with Server">
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-sync" data-title="Synch with Server">
 	</div>
 </body>
 </html>

@@ -34,7 +34,7 @@ app.detailsViewModel = new kendo.observable({
 	, detailsDataSource: new kendo.data.DataSource ({
 		transport: {
 			read: {
-				url: function () { return app.settings.insbaseURL()} // "http://192.168.2.6:8000/permitservice/GetInspection" // 
+				url: function () { return app.settings.insbaseURL()}
 				, dataType: "jsonp"
 				, data: {
 					deviceid: function () { return app.settings.deviceId}
@@ -74,5 +74,6 @@ app.detailsViewModel = new kendo.observable({
 
 app.onDetailsShow = function () {
 	app.detailsViewModel.detailsDataSource.read()
-	$("#i-detail-section").data("kendoMobileListView").refresh()
+	//$("#i-detail-section").data("kendoMobileListView").refresh()
+	//console.log(app.detailsViewModel.detailsDataSource.data())
 }
