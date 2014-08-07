@@ -7,10 +7,15 @@ body, html {
 
 /* portrait */
 @media screen and (orientation:portrait) {
-
+#headerListScroller {
+/*	height:909px; 
+*/}
 }
 /* landscape */
 @media screen and (orientation:landscape) {
+#headerListScroller {
+/*	height: 489px;
+*/}
 
 }
 
@@ -43,11 +48,11 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 
 /* IMAGE STYLES*/
 .img {
-    background-image: url(../styles/images/My_municipality.png);
+    background-image: url(../styles/images/DctSplash-Larger.png);
     background-size: cover;
     text-align: center;
-    width: 290px;
-    height: 290px;
+    width: 388px;
+    height: 221px;
     margin: auto auto;
 }
 
@@ -82,7 +87,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 	width: 66%;
     top: 0;
 	left: 1;
-}
+	}
 }
 @media all and (orientation:portrait) {
 	#listview-permitsToday {
@@ -90,14 +95,17 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 	}
 
 	#map-canvas {
-	/*width: 100%;*/
-	height: 65%;
-    top: 1;
-	left: 0;
-}
+		/*width: 100%;*/
+		height: 65%;
+    	top: 1;
+		left: 0;
+	}
 }
 .map-search-wrap {
-    position: relative;
+    position: fixed;
+    width: 100%;
+    height: 45px;
+	margin: 0;
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.5);
     padding: 3px;
@@ -279,7 +287,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 /* RETINA DISPLAY STYLES*/
 @media only screen and (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi) {
     .img {
-        background-image: url(../styles/images/My_municipality.png);
+        background-image: url(../styles/images/DctSplash-Larger.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
@@ -325,6 +333,8 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 .filterList
 {
 	font-size: 1.1em;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 .filterList p,
@@ -346,25 +356,18 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 	color: #eee;
 }
 
-.filterList h3.time
-{
+h3.time {
 	color: #369;
 	float: left;
 	margin-right: 15px;
-}
-@media screen and (orientation:portrait) {
-.filterList h3.time
-{
-	width: 30%;
-}
-
+	width: 110px;
 }
 
 /* Inspection list */
 
 .loading-thumb {
-    width: 70px;
-    height: 70px;
+    width: 126px;
+    height: 72px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100% 100%;

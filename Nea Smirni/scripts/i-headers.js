@@ -5,14 +5,15 @@ app.headersDataSource = new kendo.data.DataSource ({
 			, dataType: "jsonp"
 			, data: {
 				deviceid: function () { return app.settings.deviceId}
+				, daterange: function () { return app.settings.get("headerDateRange")}
 			}
 			, timeout: 5000
 			, beforeSend: function(e) {app.application.showLoading()}
 			, complete:   function(e) {app.application.hideLoading()
 			}
         }
-	},
-	schema: {
+	}
+	, schema: {
 		model: {
 			id: "InspectionId",
 			fields: {
@@ -22,18 +23,37 @@ app.headersDataSource = new kendo.data.DataSource ({
 				, InspectionNo:    {type: "String"}
 			}
 		}
+
+	//,  filter: { field: "PropertyAddress", operator: "contains", value: "Paul" }
+
 	}
 });
 
 app.onInspectionShow = function(e) {
 	var filterParam = e.view.params.filter;
-	
+	//console.log(filterParam)
 	$("#inspxListViewNavBar").data("kendoMobileNavBar").title( 
-		filterParam === "all" ? "All Inspections" :
 		filterParam === "today" ? "Today's Inspections" :
-		filterParam === "weeks" ? "This week's Inspections" : "All Inspections"
+		filterParam === "yesterday" ? "Yesterday's Inspections" :
+		filterParam === "thisWeek" ? "This week's Inspections" :
+		filterParam === "lastWeek" ? "Last week's Inspections" : "All Inspections"
 	);
-
-	//app.headersDataSource.read(); // no need if auto-bind
+	//console.log(filterParam)
+	app.settings.set ("headerDateRange", filterParam)
+	app.headersDataSource.read(); // no need if auto-bind
 }
 
+app.mobileListViewFiltering = function (e) {
+	$("#filterList").kendoMobileListView({
+		template: $("#inspx-template").text()
+		, dataSource: app.headersDataSource
+		//, filterable: true
+		//, filterable: {
+		//	field: "PropertyAddress"
+		//	, operator:"contains"
+		//	, placeholder: "Search addresses..."
+		//	, ignoreCase: true
+		//	, autoFilter: true
+		//}
+	})
+}

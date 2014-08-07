@@ -57,7 +57,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				<h2>
 					Check List Items: <xsl:value-of select="Inspection/OfficeDocID"/>
 				</h2>
-				<table border = "0">
+				<table border = "0" width = "100%">
 					<tr class="header">
 						<td>Status</td>
 						<td>Description</td>

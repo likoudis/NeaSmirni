@@ -20,16 +20,6 @@ app.notesDataSource = new kendo.data.DataSource ({
 			}
 			//, timeout: 5000
         }
-		//, parameterMap: function(data, type) {
-		//	console.log(data,type)
-		//	if (type === "create") {
-		//		// send the created data items as the "models" service parameter encoded in JSON
-		//		console.log("Using parameteMap")
-		//		return { models: kendo.stringify(data.models) }
-		//	} else {
-		//		return data
-        //    }
-		//}
 	}
 	, schema: {
 		model: { 
@@ -41,15 +31,6 @@ app.notesDataSource = new kendo.data.DataSource ({
 		}
 	}
 	, sort: { field: "CreateDate", dir: "desc" }
-	//, change: function(e) {
-    //	//var data = this.data();
-    //	//console.log(data);
-    //	console.log(e);
-	//}
-	//,  sync: function(e) {
-	//	console.log("sync complete");
-	//}
-
 })
 
 app.onNotesShow = function (e) {

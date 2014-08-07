@@ -17,6 +17,7 @@
 	<script src="scripts/i-details.js"></script>
 	<script src="scripts/i-notes.js"></script>
 	<script src="scripts/i-history.js"></script>
+	<script src="scripts/i-snap.js"></script>
 
 	<style>
         html .km-wp-light .km-content,
@@ -38,7 +39,7 @@
         data-title="Welcome">
 
         <div class="view-content">
-            <h1>Welcome to V1 of 2-Jul-2014!</h1>
+            <h1>Welcome to V1 of 7-Aug-2014!</h1>
             <p>
                 This is the Welcome page.
             </p>
@@ -56,7 +57,7 @@
 			</div>
 			<div id="no-host" data-bind="invisible: isDeviceValid">
 				<label for="hostName"> There is no connection or the server URL is invalid:
-					<a style="float:right" id="submitbutton" data-role="button" data-click="app.getHostName">Enter</a>
+					<a style="float:right" id="submitbutton" data-role="button" data-click="app.checkValidDevice">Enter</a>
 					<input style="float:right" type="text" id="hostName" data-bind="value: hostName">
 				</label>
             </div>
@@ -68,7 +69,7 @@
 	<!-- map should not be included here, if it should not respond to swipe -->
 	<div data-role="drawer" id="left-drawer" data-position="left"
 		data-views="[
-		'drawer-inspxions','drawer-filter','drawer-pixurs','drawer-map','drawer-sync','drawer-settings',
+		'drawer-inspxions','drawer-filter','drawer-map','drawer-sync','drawer-settings',
 		'drawer-snap','drawer-report','drawer-email',
 		'inspx-details','inspx-notes', 'inspx-hist']"
 		style="width: 290px"> 
@@ -76,9 +77,11 @@
 			<li data-icon="home">     <a data-transition="none" href="#view-welcome">Home</a></li>
 			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=all">All Inspections</a></li>
 			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=today">Today's Inspections</a></li>
-			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=weeks">This Week's Inspections</a></li>
-			<li data-icon="featured"> <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li>
-			<li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li>
+			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=yesterday">Yesterday's Inspections</a></li>
+			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=thisWeek">This Week's Inspections</a></li>
+			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=lastWeek">Last Week's Inspections</a></li>
+			<!--li data-icon="featured"> <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li -->
+			<!--li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li -->
 			<li data-icon="globe">    <a data-transition="none" href="#drawer-map"   >Map</a></li>
 			<li></li>
 			<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>
@@ -92,7 +95,7 @@
 		data-views="['drawer-inspxions','drawer-filter']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="flat">
-			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"    >Smile</a> </li>
+			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"    >Snap</a> </li>
 			<li data-icon="organize"> <a data-transition="none" href="#drawer-report"  >Report</a></li>
 			<li data-icon="share">    <a data-transition="none" href="#drawer-email"   >E-mail</a></li>
 		</ul>
@@ -101,15 +104,16 @@
 	<!--Right drawer 4 single inspx-->
 	<div data-role="drawer" id="right-drawer1" data-position="right"
 		data-views="[
-		'inspx-details','inspx-notes','drawer-addinspx', 'inspx-hist']"
+		'inspx-details','inspx-notes','drawer-pixurs','drawer-addinspx', 'inspx-hist']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="inset" >
 			<li data-icon="featured" ><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
 			<li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li>
 			<li data-icon="info"     ><a data-transition="none" href="#inspx-details" >Details</a></li>
 			<li data-icon="bookmarks"><a data-transition="none" href="#inspx-notes"   >Notes</a></li>
+			<li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li>
 			<li></li>
-			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"   >Smile</a> </li>
+			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"   >Snap</a> </li>
 			<li data-icon="organize"> <a data-transition="none" href="#drawer-report" >Report</a></li>
 			<li data-icon="share"    ><a data-transition="none" href="#drawer-email"  >E-mail</a></li>
 		</ul>
@@ -152,22 +156,25 @@
 
 	<!--Inspection headers-->
 	<div id="drawer-inspxions" data-role="view" data-layout="drawer-layout" data-title="All Inspections"
+		data-init="app.mobileListViewFiltering" 
 		data-show="app.onInspectionShow">
-		<div class="map-search-wrap">
+		<!-- div class="map-search-wrap">
 			<button id="map-navigate-home"></button>
 			<form onsubmit="return false;">
 				<input id="map-address" type="search" placeholder="Address" />
 				<input class="map-search" type="submit" value="" />
 			</form>
-		</div>
-		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.headersDataSource"
-				 data-auto-bind="true">
-		</ul>
+		</div -->
+		<div id="headerListScroller" data-role="scroller"
+			style="width:100%">
+		    <ul id="filterList" class="filterList" data-role="listview">
+		    </ul>
+        </div>
 	</div>
 	<script type="text/x-kendo-template" id="inspx-template">
 		<div >
 			<div class="item-thumb">
-				<img class="loading-thumb" src="styles/images/My_municipality.png" />
+				<img class="loading-thumb" src="styles/images/IconLogoOrange.jpg" />
 			</div>
 			<div class="item-summary">
 				<h3 class="time">#= InspectionDate === null ? "No date" : new Date(InspectionDate).toDateString() #</h3>
@@ -188,15 +195,8 @@
 					<p>New Note</p>
 					<div data-role="button" data-click="app.onAddNote">Append</div>
                 </div>
-				<textarea id="newNoteText" rows="8" style="width:75%; padding: 3px; border: 1px solid">Enter you comments here,
-123456789112345678921234567893123456789412345678951234567896
-and this is line 3 
-4,
-5,
-6,
-7,
-8...
-</textarea>
+				<textarea id="newNoteText" rows="8" placeholder="Your comments here..."
+					style="width:75%; padding: 3px; border: 1px solid"></textarea>
 			</form>
 		</div>
 		<div data-role="scroller" style="height: 700px">
@@ -206,8 +206,10 @@ and this is line 3
 		</div>
 	</div>
 	<script type="text/x-kendo-template" id="notes-template">
+		<div class="item-summary">
 		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  # </h3>
 		<p> #= Note || "&lt;no notes&gt;" # </p>
+		</div>
 	</script>
 
 	<!--Inspection Details-->
@@ -282,11 +284,11 @@ and this is line 3
 	<div data-role="view" data-title="Inspection List Filter" id="drawer-filter" data-layout="drawer-layout" >
 		<label>
 	        From-date:
- 			<input type="datetime-local" value="2014-01-22T20:15" />
+ 			<input type="date" value="2014-01-22" />
 		</label>
 		<label>
     	    To-date:
- 			<input type="datetime-local" value="2014-03-22T20:15" />
+ 			<input type="date" value="2014-03-22" />
 		</label>
 		<label>Inspection Status
 			<select  id="dropdown">
@@ -311,20 +313,29 @@ and this is line 3
 	</div>
 	<script>
 		var galleryDataSource = new kendo.data.DataSource({
-			data: [
-			{fname:"/storage/sdcard0/MyInspections/000000000_000.jpg"},
-			{fname:"/storage/sdcard0/MyInspections/000000000_001.jpg"},
-			{fname:"/storage/sdcard0/MyInspections/000000000_002.jpg"},
-			{fname:"/storage/sdcard0/MyInspections/000000000_003.jpg"}
-			]
+			transport: {
+				read: {
+					url: function() {return app.settings.getInspxPicturesURL()}
+					, data: {
+						deviceid: function () { return app.settings.deviceId}
+						, inspectionId: function () { return app.currentInspectionId}
+					}
+				}
+			}
+				
+			//data: [
+			//{fname:"/storage/sdcard0/MyInspections/000000000_000.jpg"},
+			//{fname:"/storage/sdcard0/MyInspections/000000000_001.jpg"},
+			//{fname:"/storage/sdcard0/MyInspections/000000000_002.jpg"},
+			//{fname:"/storage/sdcard0/MyInspections/000000000_003.jpg"}
+			//]
 		})
     </script>
 	<script type="text/x-kendo-template" id="pix-list-template">
-		<p><img height="100" width="100" src="#= fname #">   <span class="idetail-d"> #= fname#   </span></p>
-		<a href="mailto:likoudis@hotmail.com?subject=My Inspections">
-			Email Me
-		</a>
-	</script>
+		<p><img height="100" width="133" src="#= fname #">   <span class="idetail-d"> #= fname#   </span></p>
+		<div data-role="button" data-click="app.pixUpload" data-image="#=fname#"> Upload
+		</div>
+    </script>
 
 	<!--Map-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-map" data-title="Map"
@@ -338,13 +349,13 @@ and this is line 3
 			This view requires internet connection to display the map.
 		</div>
 		<div>
-			<div class="map-search-wrap">
+			<!--div class="map-search-wrap">
 				<div>
 					<button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
     				<input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
 					<button class="map-tools-button search" data-bind="click: onSearchAddress"></button>
 				</div>
-			</div>
+			</div-->
 			<ul id="listview-permitsToday" 
 				data-role="listview"
 				data-bind="source: permitsTodayDataSource"
@@ -411,35 +422,23 @@ and this is line 3
 	
 	<!--Snap-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-snap" data-title="Take Pictures">
-		Add a picture to current inspetion
+		Add a picture to the current inspection
 		<a data-role="button" data-click="app.onSnapShow">
 			Snap
         </a>
 		<div>
-			<img height="100" width="100" id="snap-thumb"> <span id="snap-fname"></span>
+			<img height="100" width="133" id="snap-thumb"> <span id="snap-fname"></span>
         </div>
 	</div>
 	
 	<!--Report-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-report" data-title="Reports">
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-report" data-title="Reports" data-show="app.renderReport">
 		<div data-role="scroller" id="scroller-report">
 		</div>
 		<a  style="position:fixed; bottom: 40px; right: 30px" data-role="button">
 			Print
         </a>
 	</div>
-	<script>
-		var xml = new XMLHttpRequest();
-		xml.open("GET", "data/MyInspections/temp/inspection00000.xml",false);
-		xml.send("");
-		var xsl = new XMLHttpRequest();
-		xsl.open("GET", "data/MyInspections/Reports/CheckList.xsl",false);
-		xsl.send("");
-		xsltProcessor = new XSLTProcessor();
-		xsltProcessor.importStylesheet(xsl.responseXML);
-		resultDocument = xsltProcessor.transformToFragment(xml.responseXML, document);
-		document.getElementById("scroller-report").appendChild(resultDocument);
-	 </script>
 
 	<!--Email-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-email" data-title="E-mail">
@@ -458,15 +457,9 @@ and this is line 3
 					</li>
 					<li>
 						<label>Message
-							<textarea rows="10" cols="60" style="width:85%; padding: 3px; border: 1px solid">Enter you comments here,
-also here
-and this is line 3,
-4,
-5,
-6,
-7,
-8...
-</textarea>
+							<textarea placeholder="Enter your comments here..." 
+								rows="10" cols="60" style="width:85%; padding: 3px; border: 1px solid">
+                            </textarea>
 						</label>
 					</li>
 					<li>

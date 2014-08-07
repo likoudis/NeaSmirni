@@ -15,14 +15,17 @@
 		app.settings.set("hostName", "qqw.directit.ca:8000")
 		app.settings.set("hostName", "89.210.253.91:8000")
 		app.settings.set("hostName", "192.168.2.6:8000")
-		app.settings.set("hostName", "dctlt060:8000")
 		app.settings.set("hostName", "dctlt063:8000")
+		app.settings.set("hostName", "dctlt060:8000")
+		app.settings.set("hostName", "192.168.2.60:8000")
 		app.settings.set("hostName", "192.168.2.50:8000")
 
-		app.currentInspectionId = ""
+		app.currentInspectionId = 0
 		
 		app.settings.isInetConnected = true
 		app.isLoggedIn = true;
+		
+		app.reportElement = ""
 		
 		kendo.bind($("#settingsListView"), app.settings);
 		kendo.bind($("#loginDeviceId"), app.settings);
@@ -31,17 +34,11 @@
 		
 		app.settings.set("isHostConnected", false)
 
-		$.ajax({
-			url: app.settings.devValidURL()
-			, success: function (data) {
-				app.settings.set("isDeviceValid", data)
-			}
-			, error: function (x,s,e) {
-				app.settings.set("isDeviceValid", undefined)
-			}
-
-        })
-
+		app.checkValidDevice()
+		
+		app.itsTheSimulator = function() {
+			return device.uuid.substr(-6) === "010333"
+        }
 	}, false);
 
 
@@ -73,63 +70,48 @@
 		, addNoteURL: function () {
 			return this.get("serviceHostURL()") + "/AddInspectionNote"
 		}
+		, getInspxPicturesURL: function () {
+			return this.get("serviceHostURL()") + "/GetInspectionImages"
+		}
+		, saveInspxImageURL: function (inspection, filename) {
+			return this.get(
+			"serviceHostURL()") + "/SaveInspectionImage"
+			+ "?deviceid=" + this.get("deviceId")
+			+ "&Inspectionid=" + inspection
+			+ "&ImageFileName=" + filename
+		}
+		, getInspxCheckListXmlURL: function (inspection) {
+			return this.get(
+			"serviceHostURL()") + "/GetInspectionCheckListXml"
+			+ "?deviceid=" + this.get("deviceId")
+			+ "&Inspectionid=" + inspection
+		}
 		, dsDataType: "jsonp"
 		, isHostConnected: false
 		, isInetConnected: false
 		, isDeviceValid: false
+		, headerDateRange: "all"
 
     });
 	
-	app.onSnapShow = function (e) {
-		// Take picture using device camera and retrieve image file
-		navigator.camera.getPicture(
-			onPhotoDataSuccess, 
-			onFail, 
-			{   quality: 50, 
-				destinationType: Camera.DestinationType.FILE_URI
-			}
-		);
-	}
-	
-	function onPhotoDataSuccess(imageURI) { 
-		window.resolveLocalFileSystemURI(imageURI, resolveOnSuccess, resOnError); 
-	}
+	app.galleryInit = function () {
+		var galleryDataSource = device.uuid.substr(-6) === "010333"
+			? new kendo.data.DataSource( {data:  [
+			{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_000.jpg"},
+			{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_001.jpg"},
+			{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_002.jpg"},
+			{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_003.jpg"}
+			]}) : new kendo.data.DataSource( {data: [
+			{fname:"/storage/sdcard0/MyInspections/000000000_000.jpg"},
+			{fname:"/storage/sdcard0/MyInspections/000000000_001.jpg"},
+			{fname:"/storage/sdcard0/MyInspections/000000000_002.jpg"},
+			{fname:"/storage/sdcard0/MyInspections/000000000_003.jpg"}
+			] })
 
-	function onFail(message) {
-		alert('Failed because: ' + message);
-	}
-	//Callback function when the file system uri has been resolved
-	function resolveOnSuccess(entry){ 
-		//new file name
-		var fname = app.imageCount;
-		fname = fname < 100 ? fname < 10 ? "00"+ fname : "0" + fname : fname ;
-		fname = "000000000_" + fname + ".jpg";
-		var NSAppFolder = "MyInspections";
-	
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {
-		//The folder is created if doesn't exist
-			fileSys.root.getDirectory( NSAppFolder,
-				{create:true, exclusive: false},
-				function(directory) {
-					entry.moveTo(directory, fname,  successMove, resOnError);
-				},
-				resOnError
-			);
-		},
-		resOnError);
-	}
-	//Callback function when the file has been moved successfully - inserting the complete path
-	function successMove(entry) {
-		app.imageCount = app.imageCount < 999 ? app.imageCount + 1 : 0;
-		document.getElementById("snap-fname").innerHTML=entry.fullPath;
-		document.getElementById("snap-thumb").src=entry.fullPath;
-	//document.getElementById("snap-thumb").src="styles/images/My_municipality.png";
-	}
-	
-	function resOnError(error) {
-		alert(error.code);
-	}
-
+		$("gallery-listview").kendoMobileListView ({
+		dataSource: galleryDataSource
+		})
+    }
 	// Connection related stuff
 	document.addEventListener("online", onOnline, false);
 	function onOnline() {
@@ -163,9 +145,16 @@
 		setTimeout(function() {navigator.splashscreen.hide()}, 3000)
 	};
 
-	app.getHostName = function () {
-		//app.headersDataSource.transport.options.read.url = app.settings.get("headersURL()")
-		//app.headersDataSource. read();
+	app.checkValidDevice = function () {
+		$.ajax({
+			url: app.settings.devValidURL()
+			, success: function (data) {
+				app.settings.set("isDeviceValid", data)
+			}
+			, error: function (x,s,e) {
+				app.settings.set("isDeviceValid", undefined)
+			}
+        })
     }
 
 	app.setAndReadFor = function (InspectionId) {
@@ -174,5 +163,23 @@
         }
 		return true
     }
+	
+	app.renderReport = function () {
+		var xml = new XMLHttpRequest();
+		 xml.open("GET", app.settings.getInspxCheckListXmlURL(app.currentInspectionId) ,false);
+		//xml.open("GET", "data/MyInspections/temp/inspection00000.xml" ,false);
+		xml.send("");
+		var xsl = new XMLHttpRequest();
+		xsl.open("GET", "data/MyInspections/Reports/CheckList.xsl",false);
+		xsl.send("");
+		xsltProcessor = new XSLTProcessor();
+		xsltProcessor.importStylesheet(xsl.responseXML);
+		resultDocument = xsltProcessor.transformToFragment(xml.responseXML, document);
+		app.reportElement = true // app.reportElement === ""
+			? document.getElementById("scroller-report").appendChild(resultDocument)
+			: document.getElementById("scroller-report").replaceChild(resultDocument, app.reportElement);
+	}
+
+
 
 })(window);

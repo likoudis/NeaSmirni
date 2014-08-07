@@ -1,3 +1,4 @@
+/* From cuteness.io*/
 var os = kendo.support.mobileOS ,
     PAGE_SIZE = os ? ( os.tablet ? 40 : 26) : 80,
     imgurAlbumRegex = /http:\/\/imgur.com\/a\//,
