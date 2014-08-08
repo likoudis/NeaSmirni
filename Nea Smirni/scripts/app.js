@@ -179,8 +179,8 @@
 	
 	app.renderReport = function () {
 		var xml = new XMLHttpRequest();
-		 xml.open("GET", app.settings.getInspxCheckListXmlURL(app.currentInspectionId) ,false);
-		//xml.open("GET", "data/MyInspections/temp/inspection00000.xml" ,false);
+		//xml.open("GET", app.settings.getInspxCheckListXmlURL(app.currentInspectionId) ,false);
+		xml.open("GET", "data/MyInspections/temp/inspection00000.xml" ,false);
 		xml.send("");
 		var xsl = new XMLHttpRequest();
 		xsl.open("GET", "data/MyInspections/Reports/CheckList.xsl",false);

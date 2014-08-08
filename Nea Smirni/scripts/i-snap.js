@@ -44,27 +44,22 @@
 				resOnError
 			);
 		},
-		resOnError1)
-
-		$.ajax({
-			url: app.settings.saveInspxImageURL(app.currentInspectionId, fname)
-			, type: "POST"
-			, data: "shit"
-			, success: function (data) { }
-			, error: function (x,s,e) { }
-        })
-		
+		resOnError1)		
 		//app.pixUpload ("file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/" +fname)
 	}
 
 	//Callback function when the file has been moved successfully - inserting the complete path
 	function successMove(entry) {
 		app.imageCount = app.imageCount < 999 ? app.imageCount + 1 : 0;
-		var imagePath = app.itsTheSimulator()
-			? "file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/" + entry.fullPath.substr(entry.fullPath.lastIndexOf("%") +2)
-			: entry.fullPath;
-		document.getElementById("snap-fname").innerHTML= imagePath;
-		document.getElementById("snap-thumb").src= imagePath;
+		document.getElementById("snap-fname").innerHTML= entry.name;
+		document.getElementById("snap-thumb").src= entry.fullPath;
+		$.ajax({
+			url: app.settings.saveInspxImageURL(app.currentInspectionId, entry.fullPath)
+			, type: "POST"
+			, data: "shit"
+			, success: function (data) { }
+			, error: function (x,s,e) { }
+    	});
 	}
 
 	function resOnError(error) {
