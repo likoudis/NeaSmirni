@@ -303,37 +303,18 @@
     </div>
 
 	<!--Pictures-->
-	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs" data-layout="drawer-layout2" >
+	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs" data-layout="drawer-layout2"
+		data-show="app.galleryShow">
 		<ul id="gallery-listview"
-			data-role="listview" 
+			data-role="listview"
+			data-source="app.galleryDataSource"
 			data-template="pix-list-template" 
-			data-source="galleryDataSource"
 			data-click="showDetail">
 		</ul>
 	</div>
-	<script>
-		var galleryDataSource = new kendo.data.DataSource({
-			transport: {
-				read: {
-					url: function() {return app.settings.getInspxPicturesURL()}
-					, data: {
-						deviceid: function () { return app.settings.deviceId}
-						, inspectionId: function () { return app.currentInspectionId}
-					}
-				}
-			}
-				
-			//data: [
-			//{fname:"/storage/sdcard0/MyInspections/000000000_000.jpg"},
-			//{fname:"/storage/sdcard0/MyInspections/000000000_001.jpg"},
-			//{fname:"/storage/sdcard0/MyInspections/000000000_002.jpg"},
-			//{fname:"/storage/sdcard0/MyInspections/000000000_003.jpg"}
-			//]
-		})
-    </script>
 	<script type="text/x-kendo-template" id="pix-list-template">
-		<p><img height="100" width="133" src="#= fname #">   <span class="idetail-d"> #= fname#   </span></p>
-		<div data-role="button" data-click="app.pixUpload" data-image="#=fname#"> Upload
+		<p><img height="100" width="133" src="file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/#= MobileFileName #">   <span class="idetail-d"> #= MobileFileName#   </span></p>
+		<div data-role="button" data-click="app.pixUpload" data-image="#=MobileFileName#"> Upload
 		</div>
     </script>
 

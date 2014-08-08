@@ -94,24 +94,37 @@
 
     });
 	
-	app.galleryInit = function () {
-		var galleryDataSource = device.uuid.substr(-6) === "010333"
-			? new kendo.data.DataSource( {data:  [
-			{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_000.jpg"},
-			{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_001.jpg"},
-			{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_002.jpg"},
-			{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_003.jpg"}
-			]}) : new kendo.data.DataSource( {data: [
-			{fname:"/storage/sdcard0/MyInspections/000000000_000.jpg"},
-			{fname:"/storage/sdcard0/MyInspections/000000000_001.jpg"},
-			{fname:"/storage/sdcard0/MyInspections/000000000_002.jpg"},
-			{fname:"/storage/sdcard0/MyInspections/000000000_003.jpg"}
-			] })
+	app.galleryDataSource = new kendo.data.DataSource({
+		transport: {
+			read: {
+				url: function() {return app.settings.getInspxPicturesURL()}
+				, dataType: "jsonp"
+				, data: {
+					deviceid: function () { return app.settings.deviceId}
+					, inspectionId: function () { return app.currentInspectionId}
+				}
+			}
+		}
+	})
 
-		$("gallery-listview").kendoMobileListView ({
-		dataSource: galleryDataSource
-		})
+	app.galleryShow = function () {
+
+		app.galleryDataSource.read()
+		//app.itsTheSimulator()
+		//? [
+		//{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_000.jpg"},
+		//{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_001.jpg"},
+		//{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_002.jpg"},
+		//{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_003.jpg"}
+		//] : [
+		//{fname:"/storage/sdcard0/MyInspections/000000000_000.jpg"},
+		//{fname:"/storage/sdcard0/MyInspections/000000000_001.jpg"},
+		//{fname:"/storage/sdcard0/MyInspections/000000000_002.jpg"},
+		//{fname:"/storage/sdcard0/MyInspections/000000000_003.jpg"}
+		//]
+		//)
     }
+
 	// Connection related stuff
 	document.addEventListener("online", onOnline, false);
 	function onOnline() {
