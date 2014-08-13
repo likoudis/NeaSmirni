@@ -76,15 +76,15 @@
 		, saveInspxImageURL: function (inspection, filename) {
 			return this.get(
 			"serviceHostURL()") + "/SaveInspectionImage"
-			+ "?deviceid=" + this.get("deviceId")
-			+ "&Inspectionid=" + inspection
+			+ "?DeviceId=" + this.get("deviceId")
+			+ "&InspectionId=" + inspection
 			+ "&ImageFileName=" + filename
 		}
 		, getInspxCheckListXmlURL: function (inspection) {
 			return this.get(
 			"serviceHostURL()") + "/GetInspectionCheckListXml"
-			+ "?deviceid=" + this.get("deviceId")
-			+ "&Inspectionid=" + inspection
+			+ "?DeviceId=" + this.get("deviceId")
+			+ "&InspectionId=" + inspection
 		}
 		, dsDataType: "jsonp"
 		, isHostConnected: false
