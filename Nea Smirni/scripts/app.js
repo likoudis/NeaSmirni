@@ -17,8 +17,8 @@
 		app.settings.set("hostName", "192.168.2.6:8000")
 		app.settings.set("hostName", "dctlt063:8000")
 		app.settings.set("hostName", "dctlt060:8000")
-		app.settings.set("hostName", "192.168.2.60:8000")
 		app.settings.set("hostName", "192.168.2.50:8000")
+		app.settings.set("hostName", "192.168.2.60:8000")
 
 		app.currentInspectionId = 0
 		
