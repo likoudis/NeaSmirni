@@ -3,24 +3,21 @@ app.onSnapShow = function (e) {
 	navigator.camera.getPicture(
 		onPhotoDataSuccess, 
 		onFail, 
-		{   quality: 50, 
-			destinationType: Camera.DestinationType.FILE_URI
+		{   quality: 50
+			, destinationType: Camera.DestinationType.FILE_URI
+			, targetWidth: 500
+            , targetHeight: 500
 		}
 	)
 }
 
 function onPhotoDataSuccess(imageURI) { 
 	if (app.itsTheSimulator()) {
-	//alert(imageURI.replace(/C:/, "C|"))
 	    window.resolveLocalFileSystemURL("file:///" + imageURI.substr(imageURI.lastIndexOf("/") +1 )
 	    , resolveOnSuccess, resOnError2)
     } else {
        window.resolveLocalFileSystemURL(imageURI, resolveOnSuccess, resOnError2); 
 	}
-}
-
-function onFail(message) {
-	alert('Failed because: ' + message);
 }
 
 //Callback function when the file system uri has been resolved
@@ -46,7 +43,6 @@ function resolveOnSuccess(entry){
 		);
 	},
 	resOnError1)		
-
 }
 
 //Callback function when the file has been moved successfully - inserting the complete path
@@ -105,10 +101,13 @@ function resOnError2(error) {
     //}
 }
 
+function onFail(message) {
+	alert('Failed because: ' + message);
+}
+
 app.onAddImgNote1 = function(e) {
 	var l
 	
-	//console.log($("#newNoteText").val())
 	app.newNoteText = $("#newImgNoteText").val()
 	//app.notesDataSource.add({Note: app.newNoteText, CreateDate: "No Date"})
 	app.notesDataSource.add({})
@@ -116,7 +115,6 @@ app.onAddImgNote1 = function(e) {
 	app.notesDataSource.at(l).set("CreateDate", "No Date")
 	app.notesDataSource.sync()
 	app.notesDataSource.read()
-	//app.pixUpload ("file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/" +fname)}
 }
 
 // Picture up-downloads
@@ -127,10 +125,9 @@ app.onAddImgNote = function (e){
     options.fileKey="file"
     options.fileName=imageURI
     options.mimeType="image/jpeg"
-	options.chunkedMode = false
-    options.headers = {
-        Connection: "close"
-    }
+    //options.headers = {
+    //    Connection: "close"
+    //}
 
     var params = {};
     params.Inspectionid = app.currentInspectionId;
@@ -148,30 +145,26 @@ app.onAddImgNote = function (e){
 	//    }
 	//};
 
-	
- //   alert(encodeURI(app.settings.saveInspxImageURL(app.currentInspectionId, options.fileName)))
- //$("#snap-button").data("kendoMobileButton").enable(false)
-   ft.upload(imageURI, encodeURI(app.settings.saveInspxImageURL(app.currentInspectionId, options.fileName)), win, fail, options, true);
-    //ft.upload(imageURI, encodeURI("http://some.server.com/upload.php"), win, fail, options);
-    //ft.upload(imageURI, encodeURI("http://192.168.2.50:8000/permitservice/SaveInspectionImage"), win, fail, options);
+    ft.upload(imageURI, encodeURI(app.settings.saveInspxImageURL(app.currentInspectionId, options.fileName)), win, fail, options);
      
     function win(r) {
         console.log("Code = " + r.responseCode);
         console.log("Response = " + r.response);
         console.log("Sent = " + r.bytesSent);
-//$("#snap-button").data("kendoMobileButton").enable(true)
     }
     
     function fail(error) {
-//$("#snap-button").data("kendoMobileButton").enable(true)
-        alert("An error has occurred:"
-        + "\nupload http status:  " + error.http_status
-        + "\nupload error code    " + error.code
-        + "\nupload response body " + error.body
-        + "\nupload error source  " + error.source
-        + "\nupload error target  " + error.target);
-        console.log("upload http status: " + error.http_status);
-        console.log("upload error source " + error.source);
-        console.log("upload error target " + error.target);
-    }
+		switch (error.code) {
+			case FileTransferError.FILE_NOT_FOUND_ERR:
+				alert("Photo file not found");
+				break;
+			case FileTransferError.INVALID_URL_ERR:
+				alert("Bad Photo URL");
+				break;
+			case FileTransferError.CONNECTION_ERR:
+				alert("Connection error");
+				break;
+			
+		}
+	}
 }
