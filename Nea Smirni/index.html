@@ -9,7 +9,7 @@
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
     <!--script src="kendo/js/kendo.mobile.min.js"></script -->
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+	<!--script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script!-->
     <!-- CDN-based script reference for Kendo UI -->
     <script src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js"></script>
 
@@ -45,7 +45,9 @@
             <p>
                 This is the Welcome page.
             </p>
-            <div class="img"></div>
+			<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Native</a>
+			<div class="img">
+            </div>
 			<div style="text-align:center; margin: 10px">
             	<a id="openHomePage" 
 					data-role="button"
@@ -55,10 +57,13 @@
             	</a>
 			</div>
 			<div>
-	        	<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Native</a>
+	        	<a id="logout" data-role="button" data-bind="visible: isDeviceValid"
+					data-click="app.logout" >
+					Logout
+                </a>
 			</div>
 			<div id="no-host" data-bind="invisible: isDeviceValid">
-				<label for="hostName"> There is no connection or the server URL is invalid:
+				<label for="hostName"> Logged out. Please supply a server address:
 					<a style="float:right" id="submitbutton" data-role="button" data-click="app.checkValidDevice">Enter</a>
 					<input style="float:right" type="text" id="hostName" data-bind="value: hostName">
 				</label>
@@ -433,7 +438,8 @@
 	</div>
 	
 	<!--Snap-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-snap" data-title="Take Pictures">
+	<div id="drawer-snap" data-role="view" data-layout="drawer-layout2"
+		data-title="Take Pictures" data-show="app.onSnapShow">
 		<div style="margin:5px">
 			<div>
 				Add a picture to the current inspection
@@ -454,8 +460,8 @@
 						Upload <span id="uploadProgress"></span>
         	        </div>
     		    </div>
-				<input id="newImgNoteText"
-					style="display:inline-block; width:25em">
+				<textarea id="newImgNoteText"
+					style="display:inline-block; width:25em"></textarea>
 			</form>
 		</div>
 	</div>

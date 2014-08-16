@@ -31,6 +31,7 @@
 		kendo.bind($("#loginDeviceId"), app.settings);
 		kendo.bind($("#openHomePage"), app.settings);
 		kendo.bind($("#no-host"), app.settings);
+		kendo.bind($("#logout"), app.settings);
 
 		$("#newImgNoteText").kendoAutoComplete({
 			dataSource: app.acDictionary,
@@ -53,7 +54,7 @@
 	
 	app.newNoteText ="Note text";
 
-	app.imageCount = 0;
+	//app.imageCount = 0;
 
 	app.settings = new kendo.data.ObservableObject({
 		deviceId: "noDeviceId"
@@ -115,21 +116,7 @@
 	})
 
 	app.galleryShow = function () {
-
 		app.galleryDataSource.read()
-		//app.itsTheSimulator()
-		//? [
-		//{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_000.jpg"},
-		//{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_001.jpg"},
-		//{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_002.jpg"},
-		//{fname:"file://C|/Users/Pavlos/Documents/Telerik/Icenium/Simulator/Storage/Persistent/MyInspections/000000000_003.jpg"}
-		//] : [
-		//{fname:"/storage/sdcard0/MyInspections/000000000_000.jpg"},
-		//{fname:"/storage/sdcard0/MyInspections/000000000_001.jpg"},
-		//{fname:"/storage/sdcard0/MyInspections/000000000_002.jpg"},
-		//{fname:"/storage/sdcard0/MyInspections/000000000_003.jpg"}
-		//]
-		//)
     }
 
 	// Connection related stuff
@@ -162,7 +149,7 @@
 		}
 		app.application.skin(mobileSkin);
 		navigator.splashscreen.show()
-		setTimeout(function() {navigator.splashscreen.hide()}, 3000)
+		setTimeout(function() {navigator.splashscreen.hide()}, 2000)
 	};
 
 	app.checkValidDevice = function () {
@@ -200,20 +187,17 @@
 			: document.getElementById("scroller-report").replaceChild(resultDocument, app.reportElement);
 	}
 
-	app.acDictionary = [
-		"Russia",
-		"San Marino",
-		"Serbia",
-		"Slovakia",
-		"Slovenia",
-		"Spain",
-		"Sweden",
-		"Switzerland",
-		"Turkey",
-		"Ukraine",
-		"United Kingdom",
-		"Vatican City"
-	]
-
+	app.acDictionary = new kendo.data.DataSource({
+		transport: {
+		 	read: {
+		 	 	url: "data/MyInspections/dictionary.json",
+		 	 	dataType: "json"
+		 	}
+		}
+    })
+	
+	app.logout = function () {
+		app.settings.set("isDeviceValid", false)
+    }
 
 })(window);

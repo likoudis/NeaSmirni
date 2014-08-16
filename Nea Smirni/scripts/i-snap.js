@@ -1,4 +1,10 @@
-app.onSnapClick = function (e) {
+app.onSnapShow = function () {
+	document.getElementById("snap-thumb").src = "noImageToShow"
+	document.getElementById("snap-fname").innerHTML = ""
+	document.getElementById("newImgNoteText").value = ""
+}
+
+app.onSnapClick = function () {
 	// Take picture using device camera and retrieve image file
 	navigator.camera.getPicture(
 		onPhotoDataSuccess, 
@@ -24,8 +30,8 @@ function onPhotoDataSuccess(imageURI) {
 //Callback function when the file system uri has been resolved
 function resolveOnSuccess(entry) { 
 	//new file name
-	var fname = app.imageCount;
-	fname = fname < 100 ? fname < 10 ? "00"+ fname : "0" + fname : fname ;
+	var fname = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+		function(c) {var r = Math.random()*16|0, v=c==='x'?r:r&0x3|0x8;return v.toString(16);});
 	fname = "Id_" + app.currentInspectionId + "_" + fname + ".jpg";
 	var NSAppFolder = "MyInspections";
 
@@ -48,7 +54,7 @@ function resolveOnSuccess(entry) {
 
 //Callback function when the file has been moved successfully - inserting the complete path
 function successMove(entry) {
-	app.imageCount = app.imageCount < 999 ? app.imageCount + 1 : 0;
+	//app.imageCount = app.imageCount < 999 ? app.imageCount + 1 : 0;
 	document.getElementById("snap-thumb").src = entry.toInternalURL()
 	t = entry.toInternalURL()
 	document.getElementById("snap-fname").innerHTML = t.substr(t.lastIndexOf("/") +1)
