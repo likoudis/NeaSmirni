@@ -8,8 +8,10 @@
 
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
-    <script src="kendo/js/kendo.mobile.min.js"></script>
+    <!--script src="kendo/js/kendo.mobile.min.js"></script -->
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <!-- CDN-based script reference for Kendo UI -->
+    <script src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js"></script>
 
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
@@ -147,7 +149,8 @@
 	<div data-role="layout" data-id="drawer-layout2">
 		<header data-role="header">
 			<div data-role="navbar">
-				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
+				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" 
+					data-icon="drawer-button">Lists</a>
 				<span data-role="view-title"></span>
 				<a data-role="backbutton" data-align="right">Back</a>
 			</div>
@@ -181,7 +184,8 @@
 				<h3>#= PropertyAddress #</h3><p>No: #= InspectionNo #</p>
 				<p>#= InspectionType #</p>
 			</div>
-		<a class="item-link" href="\#inspx-notes" onclick="return app.setAndReadFor(#=InspectionId#);"> &gt;
+		<a class="item-link" href="\#inspx-notes" onclick="return app.setAndReadFor(#=InspectionId#);"
+			> &nbsp; &nbsp; &gt; &nbsp;
 		</a>
 		</div>
 	</script>
@@ -430,22 +434,29 @@
 	
 	<!--Snap-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-snap" data-title="Take Pictures">
-		Add a picture to the current inspection
-		<a data-role="button" data-click="app.onSnapShow" id="snap-button">
-			Snap
-        </a>
-		<div>
-			<img height="400" width="auto" id="snap-thumb"> <span id="snap-fname"></span>
-			<form>
-				<div style="display:inline-block; text-align:top">
+		<div style="margin:5px">
+			<div>
+				Add a picture to the current inspection
+				<a data-role="button" data-click="app.onSnapClick" id="snap-button">
+					Snap
+				</a>
+        	</div>
+			<div style="display:inline-block; vertical-align: top">
+				<img id="snap-thumb" alt="No picture available"
+
+				style="width:350px; margin: 10px">
+				<div id="snap-fname"></div>
+			</div>
+			<form id="pixur-note-form">
+				<div style="display:inline-block">
 					<p>Image Note</p>
-					<div data-role="button" data-click="app.onAddImgNote">Upload</div>
-                </div>
-				<textarea id="newImgNoteText" rows="8" placeholder="Your note text here..."
-					style="width:400px; padding: 3px; border: 1px solid"></textarea>
+					<div data-role="button" data-click="app.onAddImgNote">
+						Upload <span id="uploadProgress"></span>
+        	        </div>
+    		    </div>
+				<input id="newImgNoteText"
+					style="display:inline-block; width:25em">
 			</form>
-		</div>
-		<div data-role="scroller" style="height: 30%">
 		</div>
 	</div>
 	

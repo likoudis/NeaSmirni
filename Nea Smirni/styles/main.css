@@ -88,6 +88,12 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
     top: 0;
 	left: 1;
 	}
+
+	#pixur-note-form {
+		display:inline-block;
+		width: 50%;
+		height: 90%;
+	}
 }
 @media all and (orientation:portrait) {
 	#listview-permitsToday {
@@ -99,6 +105,12 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 		height: 65%;
     	top: 1;
 		left: 0;
+	}
+
+	#pixur-note-form {
+		display:inline-block;
+		width: 90%;
+		height: 50%;
 	}
 }
 .map-search-wrap {

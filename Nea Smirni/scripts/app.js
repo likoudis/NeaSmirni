@@ -31,7 +31,13 @@
 		kendo.bind($("#loginDeviceId"), app.settings);
 		kendo.bind($("#openHomePage"), app.settings);
 		kendo.bind($("#no-host"), app.settings);
-		
+
+		$("#newImgNoteText").kendoAutoComplete({
+			dataSource: app.acDictionary,
+			filter: "startswith",
+			placeholder: "Start writing...",
+			separator: " "
+		});
 		app.settings.set("isHostConnected", false)
 
 		app.checkValidDevice()
@@ -78,7 +84,7 @@
 			"serviceHostURL()") + "/SaveInspectionImage"
 			+ "?DeviceId=" + this.get("deviceId")
 			+ "&InspectionId=" + inspection
-			+ "&ImageFileName=" + filename
+			//+ "&ImageFileName=" + filename
 		}
 		, getInspxCheckListXmlURL: function (inspection) {
 			return this.get(
@@ -91,6 +97,7 @@
 		, isInetConnected: false
 		, isDeviceValid: false
 		, headerDateRange: "all"
+		, uploadProgress: 0
 
     });
 	
@@ -193,6 +200,20 @@
 			: document.getElementById("scroller-report").replaceChild(resultDocument, app.reportElement);
 	}
 
+	app.acDictionary = [
+		"Russia",
+		"San Marino",
+		"Serbia",
+		"Slovakia",
+		"Slovenia",
+		"Spain",
+		"Sweden",
+		"Switzerland",
+		"Turkey",
+		"Ukraine",
+		"United Kingdom",
+		"Vatican City"
+	]
 
 
 })(window);

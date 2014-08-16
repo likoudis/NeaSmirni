@@ -1,4 +1,4 @@
-app.onSnapShow = function (e) {
+app.onSnapClick = function (e) {
 	// Take picture using device camera and retrieve image file
 	navigator.camera.getPicture(
 		onPhotoDataSuccess, 
@@ -7,21 +7,22 @@ app.onSnapShow = function (e) {
 			, destinationType: Camera.DestinationType.FILE_URI
 			, targetWidth: 500
             , targetHeight: 500
+			, correctOrientation: true
 		}
 	)
 }
 
 function onPhotoDataSuccess(imageURI) { 
 	if (app.itsTheSimulator()) {
-	    window.resolveLocalFileSystemURL("file:///" + imageURI.substr(imageURI.lastIndexOf("/") +1 )
+		window.resolveLocalFileSystemURL("file:///" + imageURI.substr(imageURI.lastIndexOf("/") +1 )
 	    , resolveOnSuccess, resOnError2)
     } else {
-       window.resolveLocalFileSystemURL(imageURI, resolveOnSuccess, resOnError2); 
+		window.resolveLocalFileSystemURL(imageURI, resolveOnSuccess, resOnError2); 
 	}
 }
 
 //Callback function when the file system uri has been resolved
-function resolveOnSuccess(entry){ 
+function resolveOnSuccess(entry) { 
 	//new file name
 	var fname = app.imageCount;
 	fname = fname < 100 ? fname < 10 ? "00"+ fname : "0" + fname : fname ;
@@ -47,9 +48,10 @@ function resolveOnSuccess(entry){
 
 //Callback function when the file has been moved successfully - inserting the complete path
 function successMove(entry) {
-	//app.imageCount = app.imageCount < 999 ? app.imageCount + 1 : 0;
-	document.getElementById("snap-fname").innerHTML = entry.toInternalURL()
+	app.imageCount = app.imageCount < 999 ? app.imageCount + 1 : 0;
 	document.getElementById("snap-thumb").src = entry.toInternalURL()
+	t = entry.toInternalURL()
+	document.getElementById("snap-fname").innerHTML = t.substr(t.lastIndexOf("/") +1)
 	//$.ajax({
 	//	url: app.settings.saveInspxImageURL(app.currentInspectionId, entry.toInternalURL())
 	//	, type: "POST"
@@ -60,15 +62,15 @@ function successMove(entry) {
 }
 
 function resOnError(error) {
-	console.log("getDirectory error:" + error.code);
+	alert("getDirectory error:" + error.code);
 }
 
 function resOnError1(error) {
-	console.log("requestFileSystem error:" + error.code);
+	alert("requestFileSystem error:" + error.code);
 }
 
 function resOnError2(error) {
-	console.log("resolveLocalFileSystemURL error:" + error.code);
+	alert("resolveLocalFileSystemURL error:" + error.code);
 
 	//function gotFiles(entries) {
     //   var s = "";
@@ -124,26 +126,28 @@ app.onAddImgNote = function (e){
     var options = new FileUploadOptions();
     options.fileKey="file"
     options.fileName=imageURI
-    options.mimeType="image/jpeg"
+    options.mimeType="image/jpeg" 
     //options.headers = {
     //    Connection: "close"
     //}
 
     var params = {};
-    params.Inspectionid = app.currentInspectionId;
+    //params.Inspectionid = app.currentInspectionId;
     params.ImageFileName = options.fileName;
 	params.ImageNotes = $("#newImgNoteText").val()
     
     options.params = params;
     
     var ft = new FileTransfer();
-	//ft.onprogress = function(progressEvent) {
-	//    if (progressEvent.lengthComputable) {
-	//      loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
-	//    } else {
-	//      loadingStatus.increment();
-	//    }
-	//};
+	ft.onprogress = function(progressEvent) {
+		if (progressEvent.lengthComputable) {
+			t= progressEvent.loaded > 0.9 * progressEvent.total ? "" : "ing..." 
+			t= document.getElementById("uploadProgress").innerHTML = t
+			//loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
+		} else {
+			//loadingStatus.increment();
+		}
+	};
 
     ft.upload(imageURI, encodeURI(app.settings.saveInspxImageURL(app.currentInspectionId, options.fileName)), win, fail, options);
      
