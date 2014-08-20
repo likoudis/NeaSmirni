@@ -78,7 +78,7 @@
 		data-views="[
 		'drawer-inspxions','drawer-filter','drawer-map','drawer-sync','drawer-settings',
 		'drawer-snap','drawer-report','drawer-email',
-		'inspx-details','inspx-notes', 'inspx-hist']"
+		'inspx-details','inspx-notes', 'inspx-hist', 'drawer-pixurs']"
 		style="width: 290px"> 
 		<ul data-role="listview" data-type="flat">
 			<li data-icon="home">     <a data-transition="none" href="#view-welcome">Home</a></li>
@@ -88,7 +88,6 @@
 			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=thisWeek">This Week's Inspections</a></li>
 			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=lastWeek">Last Week's Inspections</a></li>
 			<!--li data-icon="featured"> <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li -->
-			<!--li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li -->
 			<li data-icon="globe">    <a data-transition="none" href="#drawer-map"   >Map</a></li>
 			<li></li>
 			<!--<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>-->
@@ -150,7 +149,7 @@
 		</header>
 	</div>
 
-	<!--Drawer Layout 4 leaf views-->
+	<!--Drawer Layout 4 leaf views with non-leaf options-->
 	<div data-role="layout" data-id="drawer-layout2">
 		<header data-role="header">
 			<div data-role="navbar">
@@ -182,7 +181,7 @@
 	<script type="text/x-kendo-template" id="inspx-template">
 		<div >
 			<div class="item-thumb">
-				<img class="loading-thumb" src="styles/images/IconLogoOrange.jpg" />
+				<img class="loading-thumb" src= "#= "data:image/jpg;base64," + ThumbnailBase64 #" >
 			</div>
 			<div class="item-summary">
 				<h3 class="time">#= InspectionDate === null ? "No date" : new Date(InspectionDate).toDateString() #</h3>
@@ -195,100 +194,6 @@
 		</div>
 	</script>
 
-	<!--Inspection Notes-->
-	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout1"
-		data-show="app.onNotesShow">
-		<div data-role="scroller" style="height: 30%">
-			<form>
-				<div style="display:inline-block; text-align:top">
-					<p>New Note</p>
-					<div data-role="button" data-click="app.onAddNote">Append</div>
-                </div>
-				<textarea id="newNoteText" rows="8" placeholder="Your note text here..."
-					style="width:75%; padding: 3px; border: 1px solid"></textarea>
-			</form>
-		</div>
-		<div data-role="scroller" style="height: 700px">
-			<ul id="i-notes-section" data-role="listview" data-template="notes-template" data-source="app.notesDataSource"
-				 data-auto-bind="false">
-			</ul>
-		</div>
-	</div>
-	<script type="text/x-kendo-template" id="notes-template">
-		<div class="item-summary">
-		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  # </h3>
-		<p> #= Note || "&lt;no notes&gt;" # </p>
-		</div>
-	</script>
-
-	<!--Inspection Details-->
-	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout1" 
-		data-model="app.detailsViewModel" data-before-show="app.onDetailsShow" >
-		<ul id="i-detail-section" data-role="listview"  data-template="details-section-template" data-bind="source: detailsGroupedList"
-			data-auto-bind="true">
-		</ul>
-	</div>
-	<script type="text/x-kendo-template" id="details-section-template">
-		# if (header !== "History") { #
-			<h2>#: header #</h2>
-			<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source: fields">
-			</ul>
-		# } else { #
-			<a  href="\#inspx-hist">
-				<h2> #: header # </h2>
-			</a>
-		# } #
-	</script>
-	<script type="text/x-kendo-template" id="details-template">
-		<span style="font-weight: bold">#= desc # </span>
-		<span style="float:right">#= typeof(ix) === "function" ? ix() : app.detailsViewModel.detailsDataSource.data()[0][ix]# </span>
-	</script>
-
-	<!--Inspection History-->
-	<div id="inspx-hist" data-role="view" data-layout="drawer-layout" data-title="Past Inspections"
-		data-show="app.onHistoryShow">
-		<div class="map-search-wrap">
-			<button id="map-navigate-home"></button>
-			<form onsubmit="return false;">
-				<input id="map-address" type="search" placeholder="Address" />
-				<input class="map-search" type="submit" value="" />
-			</form>
-		</div>
-		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.historyDataSource">
-		</ul>
-	</div>
-
-	<style>
-		.i-detail-list-data {
-			float:right;
-			margin-right: 20px;
-			font-weight: bold;
-        }
-    </style>
-
-	<!--Assess (pass/fail)-->
-	<div data-role="modalview" id="modal-psfc" data-width="400" data-height="430" data-modal="false">
-		<div data-role="header">
-			<div data-role="navbar">
-				<span>Assessment</span>
-			</div>
-		</div>
-
-		<ul data-role="listview">
-			<li style="text-align:center"> Date: today</li>
-			<li data-role="button"><span data-icon="featured" >Pass</span></li>
-			<li data-role="button"><span data-icon="downloads" >Fail</span></li>
-			<li data-role="button"><span data-icon="more" >Conditional</span></li>
-		</ul>
-
-		<div data-role="footer">
-			<div data-role="navbar">
-				<a id="cancel-login" data-click="app.closeAssessModalView" data-align="right" data-role="button">Cancel</a>
-			</div>
-		</div>
-
-	</div>
- 
 	<!--Filter-->
 	<div data-role="view" data-title="Inspection List Filter" id="drawer-filter" data-layout="drawer-layout" >
 		<label>
@@ -310,49 +215,6 @@
 		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="inspxDataList">
 		</ul>
     </div>
-
-	<!--Pictures-->
-	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs" data-layout="drawer-layout2" data-stretch="true"
-		data-show="app.galleryShow">
-		<!--ul id="gallery-listview"
-			data-role="listview"
-			data-source="app.galleryDataSource"
-			data-template="pix-list-template" 
-			data-click="showDetail">
-		</ul-->
-
-		<div data-role="scrollview"
-			data-source="app.galleryDataSource"
-			data-template="scrollview-template"
-			data-content-height="100%"
-			data-enable-pager="true"
-		>
-		</div>
-	</div>
-	<script type="text/x-kendo-template" id="pix-list-template1">
-		<p><img height="400" width="auto" src="#= MobileFileName #"><span class="idetail-d"> #= MobileFileName#   </span></p>
-    </script>
-
-	<script type="text/x-kendo-template" id="scrollview-template">
-		<div style="width:auto; height:100%; margin-right:auto; margin-left:auto; white-space: initial">
-		<img style="display: block; width:auto; margin-right:auto; margin-left:auto" src="#= MobileFileName #">
-			#= MobileFileName.replace(/\//g, " ") #
-		</div>
-    </script>
-
-	<script type="text/x-kendo-template" id="scrollview-template1">
-		<div class="image" style="background-image: url(#: MobileFileName #)">
-		</div>
-    </script>
-	<style scoped>
-		.image {
-			display: block;
-			margin: 1em auto;
-			height: 400px;
-			width: 400px;
-			background-size: auto 100%;
-		}
-	</style>
 
 	<!--Map-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-map" data-title="Map"
@@ -437,31 +299,141 @@
         </form>
 	</div>
 	
+	<!--Assess (pass/fail)-->
+	<div data-role="modalview" id="modal-psfc" data-width="400" data-height="430" data-modal="false">
+		<div data-role="header">
+			<div data-role="navbar">
+				<span>Assessment</span>
+			</div>
+		</div>
+
+		<ul data-role="listview">
+			<li style="text-align:center"> Date: today</li>
+			<li data-role="button"><span data-icon="featured" >Pass</span></li>
+			<li data-role="button"><span data-icon="downloads" >Fail</span></li>
+			<li data-role="button"><span data-icon="more" >Conditional</span></li>
+		</ul>
+
+		<div data-role="footer">
+			<div data-role="navbar">
+				<a id="cancel-login" data-click="app.closeAssessModalView" data-align="right" data-role="button">Cancel</a>
+			</div>
+		</div>
+
+	</div>
+ 
+	<!--Inspection Details-->
+	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout1" 
+		data-model="app.detailsViewModel" data-before-show="app.onDetailsShow" >
+		<ul id="i-detail-section" data-role="listview"  data-template="details-section-template" data-bind="source: detailsGroupedList"
+			data-auto-bind="true">
+		</ul>
+	</div>
+	<script type="text/x-kendo-template" id="details-section-template">
+		# if (header !== "History") { #
+			<h2>#: header #</h2>
+			<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source: fields">
+			</ul>
+		# } else { #
+			<a  href="\#inspx-hist">
+				<h2> #: header # </h2>
+			</a>
+		# } #
+	</script>
+	<script type="text/x-kendo-template" id="details-template">
+		<span style="font-weight: bold">#= desc # </span>
+		<span style="float:right">#= typeof(ix) === "function" ? ix() : app.detailsViewModel.detailsDataSource.data()[0][ix]# </span>
+	</script>
+
+	<!--Inspection Notes-->
+	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout1"
+		data-show="app.onNotesShow">
+		<div data-role="scroller">
+			<p>New Note</p>
+			<form style="height: 90%; margin: auto 5px">
+				<textarea id="newNoteText" rows="8" placeholder="Your note text here..."
+					style="width:80%; padding: 3px; border: 1px solid"></textarea>
+			<div data-role="button" data-click="app.onAddNote" style="float: right">Append</div>
+			</form>
+		</div>
+		<div data-role="scroller" style="height: 700px">
+			<ul id="i-notes-section" data-role="listview" data-template="notes-template" data-source="app.notesDataSource"
+				 data-auto-bind="false">
+			</ul>
+		</div>
+	</div>
+	<script type="text/x-kendo-template" id="notes-template">
+		<div class="item-summary">
+		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  # </h3>
+		<p> #= Note || "&lt;no notes&gt;" # </p>
+		</div>
+	</script>
+
+	<!--Pictures-->
+	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs" data-layout="drawer-layout1" data-stretch="true"
+		data-show="app.galleryShow">
+		<!--ul id="gallery-listview"
+			data-role="listview"
+			data-source="app.galleryDataSource"
+			data-template="pix-list-template" 
+			data-click="showDetail">
+		</ul-->
+
+		<div data-role="scrollview"
+			data-source="app.galleryDataSource"
+			data-template="scrollview-template"
+			data-content-height="100%"
+			data-enable-pager="true"
+		>
+		</div>
+	</div>
+	<script type="text/x-kendo-template" id="pix-list-template1">
+		<p><img height="400" width="auto" src="#= MobileFileName #"><span class="idetail-d"> #= MobileFileName#   </span></p>
+    </script>
+
+	<script type="text/x-kendo-template" id="scrollview-template">
+		<div style="width:auto; height:100%; margin-right:auto; margin-left:auto; white-space: initial">
+		<img style="display: block; width:auto; margin-right:auto; margin-left:auto" src="#= MobileFileName #">
+			#= MobileFileName.replace(/\//g, " ") #
+		</div>
+    </script>
+
+	<script type="text/x-kendo-template" id="scrollview-template1">
+		<div class="image" style="background-image: url(#: MobileFileName #)">
+		</div>
+    </script>
+	<style scoped>
+		.image {
+			display: block;
+			margin: 1em auto;
+			height: 400px;
+			width: 400px;
+			background-size: auto 100%;
+		}
+	</style>
+
 	<!--Snap-->
 	<div id="drawer-snap" data-role="view" data-layout="drawer-layout2"
 		data-title="Take Pictures" data-show="app.onSnapShow">
 		<div style="margin:5px">
 			<div>
-				Add a picture to the current inspection
+				<p>Add a picture to the current inspection </p>
 				<a data-role="button" data-click="app.onSnapClick" id="snap-button">
 					Snap
 				</a>
         	</div>
-			<div style="display:inline-block; vertical-align: top">
+			<div style="display:inline-block; vertical-align: top; width: 49%">
 				<img id="snap-thumb" alt="No picture available"
 
 				style="width:350px; margin: 10px">
 				<div id="snap-fname"></div>
 			</div>
 			<form id="pixur-note-form">
-				<div style="display:inline-block">
-					<p>Image Note</p>
-					<div data-role="button" data-click="app.onAddImgNote">
-						Upload <span id="uploadProgress"></span>
-        	        </div>
-    		    </div>
-				<textarea id="newImgNoteText"
-					style="display:inline-block; width:25em"></textarea>
+				<p>Image Note</p>
+				<textarea id="newImgNoteText"></textarea>
+				<div data-role="button" data-click="app.onAddImgNote" style="float: right;">
+					Upload <span id="uploadProgress"></span>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -510,6 +482,28 @@
         </a>
 	</div>
 	
+	<!--Inspection History-->
+	<div id="inspx-hist" data-role="view" data-layout="drawer-layout" data-title="Past Inspections"
+		data-show="app.onHistoryShow">
+		<!--div class="map-search-wrap">
+			<button id="map-navigate-home"></button>
+			<form onsubmit="return false;">
+				<input id="map-address" type="search" placeholder="Address" />
+				<input class="map-search" type="submit" value="" />
+			</form>
+		</div-->
+		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.historyDataSource">
+		</ul>
+	</div>
+
+	<style>
+		.i-detail-list-data {
+			float:right;
+			margin-right: 20px;
+			font-weight: bold;
+        }
+    </style>
+
 	<!--Add Inspection-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-addinspx" data-title="Add an Inspection">
 	</div>

@@ -21,6 +21,7 @@ app.headersDataSource = new kendo.data.DataSource ({
 				, InspectionDate:  {type: "String"}
 				, PropertyAddress: {type: "String"}
 				, InspectionNo:    {type: "String"}
+				, ThumbnailBase64:    {type: "String"}
 			}
 		}
 
