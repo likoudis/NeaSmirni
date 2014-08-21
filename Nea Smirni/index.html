@@ -8,10 +8,11 @@
 
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
-    <!--script src="kendo/js/kendo.mobile.min.js"></script -->
+    <!--script src="kendo/js/kendo.mobile.min.js"></script!-->
 	<!--script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script!-->
     <!-- CDN-based script reference for Kendo UI -->
-    <script src="http://cdn.kendostatic.com/2013.3.1119/js/kendo.all.min.js"></script>
+    <script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js"></script>
+    <!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.mobile.min.js"></script!-->
 
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
@@ -114,7 +115,7 @@
 		style="width: 200px">
 		<ul data-role="listview" data-type="inset" >
 			<li data-icon="featured" ><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
-			<!-- <li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li> -->
+			<!-- li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li<!-->
 			<li data-icon="info"     ><a data-transition="none" href="#inspx-details" >Details</a></li>
 			<li data-icon="bookmarks"><a data-transition="none" href="#inspx-notes"   >Notes</a></li>
 			<li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li>
@@ -358,7 +359,7 @@
 		</div>
 		<div data-role="scroller" style="height: 700px">
 			<ul id="i-notes-section" data-role="listview" data-template="notes-template" data-source="app.notesDataSource"
-				 data-auto-bind="false">
+				 data-pull-to-refresh="true" data-auto-bind="false">
 			</ul>
 		</div>
 	</div>
