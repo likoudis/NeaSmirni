@@ -25,7 +25,7 @@ app.notesDataSource = new kendo.data.DataSource ({
 		model: { 
 			id: "CreateDate"
 			, fields: {
-				CreateDate: {type: "String"}
+				CreateDate: {type: "Date"}
 				, Note: {type: "String"}
             }
 		}
@@ -36,6 +36,7 @@ app.notesDataSource = new kendo.data.DataSource ({
 app.onNotesShow = function (e) {
 	app.notesDataSource.read()
 	app.detailsViewModel.detailsDataSource.read()
+	document.getElementById("newNoteText").value = ""
 }
 
 app.onAddNote = function(e) {
@@ -46,7 +47,8 @@ app.onAddNote = function(e) {
 	//app.notesDataSource.add({Note: app.newNoteText, CreateDate: "No Date"})
 	app.notesDataSource.add({})
 	app.notesDataSource.at(l=app.notesDataSource.data().length-1).set("Note", app.newNoteText)
-	app.notesDataSource.at(l).set("CreateDate", "No Date")
+	app.notesDataSource.at(l).set("CreateDate", new Date())
 	app.notesDataSource.sync()
-	app.notesDataSource.read()
+	//app.notesDataSource.read()
+	document.getElementById("newNoteText").value = ""
 }

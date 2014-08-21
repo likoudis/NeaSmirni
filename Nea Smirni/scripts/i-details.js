@@ -49,7 +49,7 @@ app.detailsViewModel = new kendo.observable({
 						 "AssignedInspector": {type: "String"}
 						,"ConstructionType":  {type: "String"}
 						,"CurrentUse":        {type: "String"}
-						,"InspectionDate":    {type: "String"}
+						,"InspectionDate":    {type: "Date"}
 						,"InspectionId":      {type: "Number"}
 						,"InspectionNo":      {type: "String"}
 						,"InspectionStatus":  {type: "String"}
@@ -57,13 +57,13 @@ app.detailsViewModel = new kendo.observable({
 						,"IntendedUse":       {type: "String"}
 						,"LegalDescription":  {type: "String"}
 						,"Owner":             {type: "String"}
-						,"PermitDate":        {type: "String"}
+						,"PermitDate":        {type: "Date"}
 						,"PermitDescription": {type: "String"}
 						,"PermitDocId":       {type: "Number"}
 						,"PermitNo":          {type: "String"}
 						,"PermitType":        {type: "String"}
 						,"PropertyAddress":   {type: "String"}
-						,"RequestDate":       {type: "String"}
+						,"RequestDate":       {type: "Date"}
 						,"RollNo":            {type: "String"}
 						,"RollNoDisplay":     {type: "String"}
 				}

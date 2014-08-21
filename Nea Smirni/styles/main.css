@@ -332,7 +332,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 
 /* Drawer styles */
 
-.km-drawer-button:before  { content: "\E078"; }
+.km-drawer-button:before  { content: "\E077"; }
 .km-drawer-button:after  { content: "\E077"; }
 .km-filter:before, .km-filter:after { content: "\E06C"; }
 .km-sent:before, .km-sent:after { content: "\E0C6"; }
@@ -378,12 +378,11 @@ h3.time {
 /* Inspection list */
 
 .loading-thumb {
-    width: 126px;
-    height: 72px;
+    width: 128px;
+    height: 76px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100% 100%;
-    border-radius: 10px;
     overflow: hidden;
     margin-top: 1em;
     display: inline-block;

@@ -18,10 +18,10 @@ app.headersDataSource = new kendo.data.DataSource ({
 			id: "InspectionId",
 			fields: {
 				InspectionId:      {type: "Number"}
-				, InspectionDate:  {type: "String"}
+				, InspectionDate:  {type: "Date"}
 				, PropertyAddress: {type: "String"}
 				, InspectionNo:    {type: "String"}
-				, ThumbnailBase64:    {type: "String"}
+				, ThumbnailBase64: {type: "String"}
 			}
 		}
 
