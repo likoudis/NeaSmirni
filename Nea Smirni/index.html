@@ -9,7 +9,7 @@
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
     <!--script src="kendo/js/kendo.mobile.min.js"></script!-->
-	<!--script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script!-->
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
     <!-- CDN-based script reference for Kendo UI -->
     <script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js"></script>
     <!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.mobile.min.js"></script!-->
@@ -82,17 +82,17 @@
 		'inspx-details','inspx-notes', 'inspx-hist', 'drawer-pixurs']"
 		style="width: 290px"> 
 		<ul data-role="listview" data-type="flat">
-			<li data-icon="home">     <a data-transition="none" href="#view-welcome">Home</a></li>
-			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=all">All Inspections</a></li>
-			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=today">Today's Inspections</a></li>
-			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=yesterday">Yesterday's Inspections</a></li>
-			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=thisWeek">This Week's Inspections</a></li>
-			<li data-icon="featured"> <a data-transition="none" href="#drawer-inspxions?filter=lastWeek">Last Week's Inspections</a></li>
+			<li data-icon="dct-home">    <a data-transition="none" href="#view-welcome">Home</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=all">All Inspections</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=today">Today's Inspections</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=yesterday">Yesterday's Inspections</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=thisWeek">This Week's Inspections</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=lastWeek">Last Week's Inspections</a></li>
 			<!--li data-icon="featured"> <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li -->
-			<li data-icon="globe">    <a data-transition="none" href="#drawer-map"   >Map</a></li>
+			<li data-icon="dct-map">    <a data-transition="none" href="#drawer-map"   >Map</a></li>
 			<li></li>
 			<!--<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>-->
-			<li data-icon="settings"> <a data-transition="none" href="#drawer-settings" >Settings</a></li>
+			<li data-icon="dct-settings"> <a data-transition="none" href="#drawer-settings" >Settings</a></li>
 		</ul>
 	</div>
 	
@@ -102,9 +102,9 @@
 		data-views="['drawer-inspxions','drawer-filter']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="flat">
-			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"    >Snap</a> </li>
-			<li data-icon="organize"> <a data-transition="none" href="#drawer-report"  >Report</a></li>
-			<li data-icon="share">    <a data-transition="none" href="#drawer-email"   >E-mail</a></li>
+			<li data-icon="dct-snap">   <a data-transition="none" href="#drawer-snap"    >Snap</a> </li>
+			<li data-icon="dct-report"> <a data-transition="none" href="#drawer-report"  >Report</a></li>
+			<li data-icon="dct-e-mail"> <a data-transition="none" href="#drawer-email"   >E-mail</a></li>
 		</ul>
 	</div>
 	
@@ -114,15 +114,15 @@
 		'inspx-details','inspx-notes','drawer-pixurs','drawer-addinspx', 'inspx-hist']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="inset" >
-			<li data-icon="featured" ><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
-			<!-- li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li!-->
-			<li data-icon="info"     ><a data-transition="none" href="#inspx-details" >Details</a></li>
-			<li data-icon="bookmarks"><a data-transition="none" href="#inspx-notes"   >Notes</a></li>
-			<li data-icon="camera">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li>
+			<li data-icon="dct-assessment" ><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
+			<!-- li data-icon="compose">    <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li!-->
+			<li data-icon="dct-details">    <a data-transition="none" href="#inspx-details" >Details</a></li>
+			<li data-icon="dct-notes">      <a data-transition="none" href="#inspx-notes"   >Notes</a></li>
+			<li data-icon="dct-pictures">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li>
 			<li></li>
-			<li data-icon="camera">   <a data-transition="none" href="#drawer-snap"   >Snap</a> </li>
-			<li data-icon="organize"> <a data-transition="none" href="#drawer-report" >Report</a></li>
-			<li data-icon="share"    ><a data-transition="none" href="#drawer-email"  >E-mail</a></li>
+			<li data-icon="dct-snap">   <a data-transition="none" href="#drawer-snap"   >Snap</a> </li>
+			<li data-icon="dct-report"> <a data-transition="none" href="#drawer-report" >Report</a></li>
+			<li data-icon="dct-e-mail"> <a data-transition="none" href="#drawer-email"  >E-mail</a></li>
 		</ul>
 	</div>
 	
@@ -130,10 +130,10 @@
 	<div data-role="layout" data-id="drawer-layout">
 		<header data-role="header">
 			<div data-role="navbar" id="inspxListViewNavBar">
-				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
+				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
-				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="share">Actions</a>
-				<a data-role="backbutton" data-align="right">Back</a>
+				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="dct-actions">Actions</a>
+				<a data-role="backbutton" data-icon="dct-back" data-align="right">Back</a>
 			</div>
 		</header>
 	</div>
@@ -142,10 +142,10 @@
 	<div data-role="layout" data-id="drawer-layout1">
 		<header data-role="header">
 			<div data-role="navbar">
-				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="drawer-button">Lists</a>
+				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
-				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="share">Actions</a>
-				<a data-role="backbutton" data-align="right">Back</a>
+				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="dct-actions">Actions</a>
+				<a data-role="backbutton" data-icon="dct-back" data-align="right">Back</a>
 			</div>
 		</header>
 	</div>
@@ -155,9 +155,9 @@
 		<header data-role="header">
 			<div data-role="navbar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" 
-					data-icon="drawer-button">Lists</a>
+					data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
-				<a data-role="backbutton" data-align="right">Back</a>
+				<a data-role="backbutton" data-icon="dct-back" data-align="right">Back</a>
 			</div>
 		</header>
 	</div>
@@ -252,12 +252,12 @@
 		<div>
 			#=address#
 			<a 
-				data-role="detailbutton" data-icon="contactadd"
+				data-role="detailbutton" data-icon="dct-mapAdd"
 				data-bind="click:onInspectionSelect, invisible:inspectionAddressOnMap">
 				<span style="visibility:hidden">#=id#</span>
 			</a>
 			<a 
-				data-role="detailbutton" data-icon="rowdelete"
+				data-role="detailbutton" data-icon="dct-mapRemove"
 				data-bind="click:onInspectionSelect, visible:inspectionAddressOnMap">
 				<span style="visibility:hidden">#=id#</span>
 			</a>
@@ -310,9 +310,9 @@
 
 		<ul data-role="listview">
 			<li style="text-align:center"> Date: today</li>
-			<li data-role="button"><span data-icon="featured" >Pass</span></li>
-			<li data-role="button"><span data-icon="downloads" >Fail</span></li>
-			<li data-role="button"><span data-icon="more" >Conditional</span></li>
+			<li data-role="button"><span data-icon="dct-pass" >Pass</span></li>
+			<li data-role="button"><span data-icon="dct-fail" >Fail</span></li>
+			<li data-role="button"><span data-icon="dct-willSee" >Conditional</span></li>
 		</ul>
 
 		<div data-role="footer">
@@ -333,7 +333,9 @@
 	<script type="text/x-kendo-template" id="details-section-template">
 		# if (header !== "History") { #
 			<h2>#: header #</h2>
-			<ul id="i-detail-list" data-role="listview"  data-template="details-template" data-bind="source: fields">
+			<ul id="i-detail-list"
+				data-role="listview"  data-template="details-template"
+				data-bind="source: fields">
 			</ul>
 		# } else { #
 			<a  href="\#inspx-hist">
@@ -440,12 +442,14 @@
 	</div>
 	
 	<!--Report-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-report" data-title="Reports" data-show="app.renderReport">
-		<div data-role="scroller" id="scroller-report">
-		</div>
-		<a  style="position:fixed; bottom: 40px; right: 30px" data-role="button">
-			Print
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-report"
+		data-title="Reports" data-show="app.renderReport">
+		<a data-role="button" href="#"
+			style="position: fixed; right:5px; top:45px">
+			E-mail
         </a>
+		<div data-role="scroller" id="scroller-report" style="width:100%">
+		</div>
 	</div>
 
 	<!--Email-->
@@ -512,5 +516,10 @@
 	<!--Synchronize-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-sync" data-title="Synch with Server">
 	</div>
+
+<div id="status-line">
+	This is the status line
+</div>
+	
 </body>
 </html>

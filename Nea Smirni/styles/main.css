@@ -372,7 +372,7 @@ h3.time {
 	color: #369;
 	float: left;
 	margin-right: 15px;
-	width: 110px;
+	width: 75px;
 }
 
 /* Inspection list */
@@ -437,3 +437,24 @@ h3.time {
 	width:75%;
 	background-color: Green;
 }
+
+/* DirectIT icons and their images */
+.km-dct-home:before { background: url("images/DirectIT/home.jpg") no-repeat; display: block }
+.km-dct-headers:before { background: url("images/DirectIT/headers.jpg") no-repeat; display: block }
+.km-dct-map:before { background: url("images/DirectIT/map.jpg") no-repeat; display: block }
+.km-dct-settings:before { background: url("images/DirectIT/settings.jpg") no-repeat; display: block }
+.km-dct-snap:before { background: url("images/DirectIT/snap.jpg") no-repeat; display: block }
+.km-dct-report:before { background: url("images/DirectIT/report.jpg") no-repeat; display: block }
+.km-dct-e-mail:before { background: url("images/DirectIT/e-mail.jpg") no-repeat; display: block }
+.km-dct-assessment:before { background: url("images/DirectIT/assessment.jpg") no-repeat; display: block }
+.km-dct-details:before { background: url("images/DirectIT/details.jpg") no-repeat; display: block }
+.km-dct-notes:before { background: url("images/DirectIT/notes.jpg") no-repeat; display: block }
+.km-dct-pictures:before { background: url("images/DirectIT/pictures.jpg") no-repeat; display: block }
+.km-dct-lists:before { background: url("images/DirectIT/lists.jpg") no-repeat; display: block }
+.km-dct-actions:before { background: url("images/DirectIT/actions.jpg") no-repeat; display: block }
+.km-dct-back:before { background: url("images/DirectIT/back.jpg") no-repeat; display: block }
+.km-dct-mapAdd:before { background: url("images/DirectIT/mapAdd.jpg") no-repeat; display: block }
+.km-dct-mapRemove:before { background: url("images/DirectIT/mapRemove.jpg") no-repeat; display: block }
+.km-dct-pass:before { background: url("images/DirectIT/pass.jpg") no-repeat; display: block }
+.km-dct-fail:before { background: url("images/DirectIT/fail.jpg") no-repeat; display: block }
+.km-dct-willSee:before { background: url("images/DirectIT/willSee.jpg") no-repeat; display: block }

@@ -46,6 +46,8 @@
 		app.itsTheSimulator = function() {
 			return device.uuid.substr(-6) === "010333"
         }
+		
+		document.addEventListener("backbutton", function(){}, false);
 	}, false);
 
 
@@ -173,8 +175,8 @@
 	
 	app.renderReport = function () {
 		var xml = new XMLHttpRequest();
-		//xml.open("GET", app.settings.getInspxCheckListXmlURL(app.currentInspectionId) ,false);
-		xml.open("GET", "data/MyInspections/temp/inspection00000.xml" ,false);
+		xml.open("GET", app.settings.getInspxCheckListXmlURL(app.currentInspectionId) ,false);
+		//xml.open("GET", "data/MyInspections/temp/inspection00000.xml" ,false);
 		xml.send("");
 		var xsl = new XMLHttpRequest();
 		xsl.open("GET", "data/MyInspections/Reports/CheckList.xsl",false);
@@ -182,9 +184,15 @@
 		xsltProcessor = new XSLTProcessor();
 		xsltProcessor.importStylesheet(xsl.responseXML);
 		resultDocument = xsltProcessor.transformToFragment(xml.responseXML, document);
-		app.reportElement = true // app.reportElement === ""
-			? document.getElementById("scroller-report").appendChild(resultDocument)
-			: document.getElementById("scroller-report").replaceChild(resultDocument, app.reportElement);
+		if (document.querySelector("#xlistXMLTable1")) {
+			document.getElementById("scroller-report").removeChild(
+				document.getElementById("xlistXMLTable1"))
+			document.getElementById("scroller-report").removeChild(
+				document.getElementById("xlistXMLH2"))
+			document.getElementById("scroller-report").removeChild(
+				document.getElementById("xlistXMLTable3"))
+        }
+		document.getElementById("scroller-report").appendChild(resultDocument)
 	}
 
 	app.acDictionary = new kendo.data.DataSource({
@@ -198,6 +206,13 @@
 	
 	app.logout = function () {
 		app.settings.set("isDeviceValid", false)
+    }
+	
+	app.onWelcomeShow = function () {
+		//alert(history.length)
+		//console.log(history.length)
+		history.go(-history.length+1)
+		//window.location.replace("#")
     }
 
 })(window);
