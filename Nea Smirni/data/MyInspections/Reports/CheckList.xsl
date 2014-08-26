@@ -39,7 +39,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				</style>
 			</head>
 			<body>
-				<table border = "0">
+				<table id="xlistXMLTable1" border = "0">
 					<tr>
 						<td class="munilogotd">
 							<img src="{Inspection/LogoPath}" alt="Logo" border="0"></img>
@@ -54,10 +54,10 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 					</tr>
 				</table>
 				<!-- Check List Items -->
-				<h2>
+				<h2 id="xlistXMLH2">
 					Check List Items: <xsl:value-of select="Inspection/OfficeDocID"/>
 				</h2>
-				<table border = "0" width = "100%">
+				<table id="xlistXMLTable3" border = "0" width = "100%">
 					<tr class="header">
 						<td>Status</td>
 						<td>Description</td>
