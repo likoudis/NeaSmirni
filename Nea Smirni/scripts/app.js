@@ -48,6 +48,7 @@
         }
 		
 		document.addEventListener("backbutton", function(){}, false);
+		
 	}, false);
 
 
@@ -162,6 +163,7 @@
 			}
 			, error: function (x,s,e) {
 				app.settings.set("isDeviceValid", undefined)
+				app.showStatus("Device not authorized")
 			}
         })
     }
@@ -213,6 +215,20 @@
 		//console.log(history.length)
 		history.go(-history.length+1)
 		//window.location.replace("#")
+    }
+	
+	app.showStatus = function(message) {
+		var statusLineElement = document.getElementById("status-line")
+		statusLineElement.style.webkitTransition= "opacity 0s"
+		statusLineElement.style.opacity = 1
+		statusLineElement.innerHTML = message
+		setTimeout(
+			function() {
+				statusLineElement.style.webkitTransition= "opacity 2s"
+				statusLineElement.style.opacity = 0
+			}
+			, 2000
+		)
     }
 
 })(window);

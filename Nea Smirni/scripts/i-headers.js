@@ -9,8 +9,7 @@ app.headersDataSource = new kendo.data.DataSource ({
 			}
 			, timeout: 5000
 			, beforeSend: function(e) {app.application.showLoading()}
-			, complete:   function(e) {app.application.hideLoading()
-			}
+			, complete:   function(e) {app.application.hideLoading()}
         }
 	}
 	, schema: {
@@ -48,6 +47,8 @@ app.mobileListViewFiltering = function (e) {
 	$("#filterList").kendoMobileListView({
 		template: $("#inspx-template").text()
 		, dataSource: app.headersDataSource
+		, autoBind: false
+		, pullToRefresh: true
 		//, filterable: true
 		//, filterable: {
 		//	field: "PropertyAddress"
