@@ -55,7 +55,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 				</table>
 				<!-- Check List Items -->
 				<h2 id="xlistXMLH2">
-					Check List Items: <xsl:value-of select="Inspection/OfficeDocID"/>
+					Check List Items: <xsl:value-of select="Inspection/OfficeDocId"/>
 				</h2>
 				<table id="xlistXMLTable3" border = "0" width = "100%">
 					<tr class="header">
