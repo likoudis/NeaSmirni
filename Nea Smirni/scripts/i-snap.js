@@ -1,3 +1,19 @@
+(function (global) {
+    var app = global.app = global.app || {};
+
+    document.addEventListener('deviceready', function () {
+
+		$("#newImgNoteText").kendoAutoComplete({
+			dataSource: app.acDictionary
+			, filter: "startswith"
+			, placeholder: "Start writing..."
+			, separator: " "
+			, suggest: true
+			, height: 300
+		});
+	})
+})(window)
+
 app.onSnapShow = function () {
 	document.getElementById("snap-thumb").src = "noImageToShow"
 	document.getElementById("snap-fname").innerHTML = ""

@@ -1,3 +1,19 @@
+(function (global) {
+    var app = global.app = global.app || {};
+
+    document.addEventListener('deviceready', function () {
+
+		$("#newNoteText").kendoAutoComplete({
+			dataSource: app.acDictionary
+			, filter: "startswith"
+			, placeholder: "Start writing..."
+			, separator: " "
+			, suggest: true
+			, height: 300
+		});
+	})
+})(window)
+
 app.notesDataSource = new kendo.data.DataSource ({
 	batch: true,
 	transport: {

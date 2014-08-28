@@ -33,12 +33,6 @@
 		kendo.bind($("#no-host"), app.settings);
 		kendo.bind($("#logout"), app.settings);
 
-		$("#newImgNoteText").kendoAutoComplete({
-			dataSource: app.acDictionary,
-			filter: "startswith",
-			placeholder: "Start writing...",
-			separator: " "
-		});
 		app.settings.set("isHostConnected", false)
 
 		app.checkValidDevice()

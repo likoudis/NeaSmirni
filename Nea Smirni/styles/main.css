@@ -369,10 +369,11 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 }
 
 h3.time {
+	display: table-cell;
 	color: #369;
 	float: left;
 	margin-right: 15px;
-	width: 75px;
+	width: 70px;
 }
 
 /* Inspection list */
@@ -394,7 +395,7 @@ h3.time {
     padding-right: .5em;
 }
 .item-thumb {
-    padding-left: 0.5em;
+    padding-left: 0;
 }
 .item-link {
 	vertical-align: middle;
@@ -458,3 +459,10 @@ h3.time {
 .km-dct-pass:before { background: url("images/DirectIT/pass.jpg") no-repeat; display: block }
 .km-dct-fail:before { background: url("images/DirectIT/fail.jpg") no-repeat; display: block }
 .km-dct-willSee:before { background: url("images/DirectIT/willSee.jpg") no-repeat; display: block }
+
+/* AutoComplete for new image note */
+#newImgNoteText_listbox, #newNoteText_listbox {
+	background-color: LightGray;
+	font-size: 1.25em;
+	line-height: 30px;
+}

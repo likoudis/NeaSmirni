@@ -40,16 +40,12 @@
 	<div id="view-welcome"
         data-role="view"
         data-title="Welcome">
-
-        <div class="view-content">
-            <h1>Version 2014.08.26.1</h1>
-            <p>
-                This is the Welcome page.
-            </p>
-			<a id="skin-change" data-role="button" data-align="right" data-click="app.changeSkin">Native</a>
-			<div class="img">
-            </div>
-			<div style="text-align:center; margin: 10px">
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+		<div class="view-content">
+			<div class="img"></div>
+			<div style="text-align:center; margin: 20px">
             	<a id="openHomePage" 
 					data-role="button"
 					data-bind="visible: isDeviceValid"
@@ -57,21 +53,25 @@
 					Open Inspections
             	</a>
 			</div>
-			<div>
+			<div style="height:60px">
 	        	<a id="logout" data-role="button" data-bind="visible: isDeviceValid"
 					data-click="app.logout" >
 					Logout
                 </a>
 			</div>
-			<div id="no-host" data-bind="invisible: isDeviceValid">
+			<div id="no-host" data-bind="invisible: isDeviceValid" style="height:60px">
 				<label for="hostName"> Logged out. Please supply a server address:
 					<a style="float:right" id="submitbutton" data-role="button" data-click="app.checkValidDevice">Enter</a>
 					<input style="float:right" type="text" id="hostName" data-bind="value: hostName">
 				</label>
             </div>
-			Device ID: <span id="loginDeviceId" data-bind="text: deviceId"> </span>
+			<div style="display:block; font-size: 0.75em">
+				Device ID:
+				<span id="loginDeviceId" data-bind="text: deviceId"> </span>
+				<span style="float:right;">Version 2014.08.28.1&nbsp;</span>
+			</div>
         </div>
-    </div>
+	</div>
 
 	<!--Left drawer-->
 	<!-- map should not be included here, if it should not respond to swipe -->
@@ -351,23 +351,23 @@
 	<!--Inspection Notes-->
 	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout1"
 		data-show="app.onNotesShow">
-		<div data-role="scroller">
+		<div style="text-align:center">
 			<p>New Note</p>
-			<form style="height: 90%; margin: auto 5px">
-				<textarea id="newNoteText" rows="8" placeholder="Your note text here..."
-					style="width:80%; padding: 3px; border: 1px solid"></textarea>
-			<div data-role="button" data-click="app.onAddNote" style="float: right">Append</div>
+			<form style="margin-right: 15px">
+				<textarea id="newNoteText"
+					style="padding: 3px"></textarea>
+			<div data-role="button" data-click="app.onAddNote">Append</div>
 			</form>
 		</div>
-		<div data-role="scroller" style="height: 700px">
-			<ul id="i-notes-section" data-role="listview" data-template="notes-template" data-source="app.notesDataSource"
-				 data-pull-to-refresh="true" data-auto-bind="false">
+		<div>
+			<ul id="i-notes-section" data-role="listview" data-template="notes-template"
+				data-source="app.notesDataSource" data-auto-bind="false" data-pull-to-refresh="true">
 			</ul>
 		</div>
 	</div>
 	<script type="text/x-kendo-template" id="notes-template">
-		<div class="item-summary">
-		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  # </h3>
+		<div class="item-summary" style="width:60%">
+		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString().replace(/ /, ", ")  # </h3>
 		<p> #= Note || "&lt;no notes&gt;" # </p>
 		</div>
 	</script>
@@ -393,14 +393,12 @@
 	<script type="text/x-kendo-template" id="pix-list-template1">
 		<p><img height="400" width="auto" src="#= MobileFileName #"><span class="idetail-d"> #= MobileFileName#   </span></p>
     </script>
-
 	<script type="text/x-kendo-template" id="scrollview-template">
 		<div style="width:auto; height:100%; margin-right:auto; margin-left:auto; white-space: initial">
 		<img style="display: block; width:auto; margin-right:auto; margin-left:auto" src="#= MobileFileName #">
 			#= MobileFileName.replace(/\//g, " ") #
 		</div>
     </script>
-
 	<script type="text/x-kendo-template" id="scrollview-template1">
 		<div class="image" style="background-image: url(#: MobileFileName #)">
 		</div>
@@ -431,10 +429,10 @@
 				style="width:350px; margin: 10px">
 				<div id="snap-fname"></div>
 			</div>
-			<form id="pixur-note-form">
+			<form id="pixur-note-form" style="text-align: center">
 				<p>Image Note</p>
 				<textarea id="newImgNoteText"></textarea>
-				<div data-role="button" data-click="app.onAddImgNote" style="float: right;">
+				<div data-role="button" data-click="app.onAddImgNote">
 					Upload <span id="uploadProgress"></span>
 				</div>
 			</form>
@@ -517,10 +515,11 @@
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-sync" data-title="Synch with Server">
 	</div>
 
-<div id="status-line"
-	style="position: absolute; bottom:0px; width: 100%;
-		background-color:lightBlue;">
-</div>
+	<!-- Status line -->
+	<div id="status-line"
+		style="position: absolute; bottom:0px; width: 100%;
+			background-color:lightBlue;">
+	</div>
 	
 </body>
 </html>
