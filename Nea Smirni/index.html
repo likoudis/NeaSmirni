@@ -65,7 +65,7 @@
 			<div style="display:block; font-size: 0.75em">
 				Device ID:
 				<span id="loginDeviceId" data-bind="text: deviceId"> </span>
-				<span style="float:right;">Version 2014.08.28.1&nbsp;</span>
+				<span style="float:right;">Version 2014.09.04.1&nbsp;</span>
 			</div>
         </div>
 	</div>
@@ -332,31 +332,11 @@
 		data-show="app.onDetailsShow">
 		<ul id="i-detail-section" data-role="listview"
 			data-source="app.detailsDataSource"
-			data-template="details-template1"
+			data-template="details-template"
 			data-auto-bind="false">
 		  </ul>
 	</div>
-	<script type="text/x-kendo-template" id="details-section-template">
-		# if (header !== "History") { #
-			<h2>#: header #</h2>
-			<ul id="i-detail-list"
-				data-role="listview"  data-template="details-template"
-				data-bind="source: fields">
-			</ul>
-		# } else { #
-			<a  href="\#inspx-hist">
-				<h2> #: header # </h2>
-			</a>
-		# } #
-	</script>
 	<script type="text/x-kendo-template" id="details-template">
-		<span style="font-weight: bold">#= desc # </span>
-		<span style="float:right">#= 
-			typeof(ix) !== "function"
-				? app.detailsViewModel.detailsDataSource.data()[0][ix] 
-				: ix()# </span>
-	</script>
-	<script type="text/x-kendo-template" id="details-template1">
 <h2>Inspection Information</h2>
 <p><span>Inspection Date</span>                     <span>#=InspectionId#</span></p>
 <p><span>Inspected</span>          <span>#=InspectionDate.toDateString()#</span></p>
