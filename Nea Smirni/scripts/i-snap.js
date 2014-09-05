@@ -14,7 +14,9 @@
 	})
 })(window)
 
-app.onSnapShow = function () {
+app.onSnapShow = function (e) {
+	var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
+	t.title("Snap - " + app.currentInspxAddress)
 	document.getElementById("snap-thumb").src = "noImageToShow"
 	document.getElementById("snap-fname").innerHTML = ""
 	document.getElementById("newImgNoteText").value = ""

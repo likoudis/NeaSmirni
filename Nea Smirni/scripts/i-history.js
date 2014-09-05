@@ -1,10 +1,34 @@
 app.historyDataSource = new kendo.data.DataSource ({
-	data: []
+	transport: {
+		read: function(option) {
+				app.ajax4datasouce(
+					option
+					, app.settings.getHistoryURL()
+					, {permitDocId: app.currentPermitId}
+				)
+		}
+	}
+	, schema: {
+		model: {
+			id: "InspectionId",
+			fields: {
+				InspectionId:      {type: "Number"}
+				, InspectionDate:  {type: "Date"}
+				, PropertyAddress: {type: "String"}
+				, InspectionNo:    {type: "String"}
+				, ThumbnailBase64: {type: "String"}
+			}
+		}
+
+	//,  filter: { field: "PropertyAddress", operator: "contains", value: "Paul" }
+
+	}
 	,sort: { field: "InspectionDate", dir: "desc" }
 })
 
 	app.onHistoryShow = function (e) {
-		app.historyDataSource.fetch(function () {
-			app.historyDataSource.data(app.detailsViewModel.detailsDataSource.data()[0].HistoricalInspections)
-        })
+		var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
+		t.title("History - " + app.currentInspxAddress)
+
+		app.historyDataSource.read()
     }

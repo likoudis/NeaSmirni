@@ -21,6 +21,8 @@
 		app.settings.set("hostName", "192.168.2.60:8000")
 
 		app.currentInspectionId = 0
+		app.currentInspxAddress = ""
+		app.currentPermitId = 0
 		
 		app.settings.isInetConnected = true
 		app.isLoggedIn = true;
@@ -43,6 +45,7 @@
 		
 		document.addEventListener("backbutton", function(){}, false);
 		
+
 	}, false);
 
 
@@ -73,6 +76,9 @@
 		}
 		, addNoteURL: function () {
 			return this.get("serviceHostURL()") + "/AddInspectionNote"
+		}
+		, getHistoryURL: function () {
+			return this.get("serviceHostURL()") + "/GetHistoricalInspectionHeaders"
 		}
 		, getInspxPicturesURL: function () {
 			return this.get("serviceHostURL()") + "/GetInspectionImages"
@@ -112,7 +118,9 @@
 		}
 	})
 
-	app.galleryShow = function () {
+	app.galleryShow = function (e) {
+		var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
+		t.title("Pictures - " + app.currentInspxAddress)
 		app.galleryDataSource.read()
     }
 
@@ -156,20 +164,18 @@
 				app.settings.set("isDeviceValid", data)
 			}
 			, error: function (x,s,e) {
+				//console.log(x,s,e)
 				app.settings.set("isDeviceValid", undefined)
-				app.showStatus("Device not authorized")
+				app.showStatus("Could not authorize the device: " + s)
 			}
+			, timeout: 5000
         })
     }
 
-	app.setAndReadFor = function (InspectionId) {
-		if (app.currentInspectionId !== InspectionId) {
-			app.currentInspectionId = InspectionId || app.currentInspectionId
-        }
-		return true
-    }
-	
-	app.renderReport = function () {
+	app.onReportShow = function (e) {
+		var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
+		t.title("Report - " + app.currentInspxAddress)
+
 		var xml = new XMLHttpRequest();
 		xml.open("GET", app.settings.getInspxCheckListXmlURL(app.currentInspectionId) ,false);
 		//xml.open("GET", "data/MyInspections/temp/inspection00000.xml" ,false);
@@ -189,6 +195,11 @@
 				document.getElementById("xlistXMLTable3"))
         }
 		document.getElementById("scroller-report").appendChild(resultDocument)
+	}
+
+	app.onEmailShow = function (e) {
+		var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
+		t.title("Email - " + app.currentInspxAddress)
 	}
 
 	app.acDictionary = new kendo.data.DataSource({
@@ -221,8 +232,31 @@
 				statusLineElement.style.webkitTransition= "opacity 2s"
 				statusLineElement.style.opacity = 0
 			}
-			, 2000
+			, 3000
 		)
     }
+	
+		app.ajax4datasouce = function (option, url, dataObject) {
+			$.ajax({
+				url: url
+				, dataType: app.settings.dsDataType
+				, data: $.extend(
+					{deviceid: app.settings.deviceId }
+					, dataObject)
+				, timeout: 5000
+				, beforeSend: function(e) {app.application.showLoading()}
+				, complete:   function(e) {app.application.hideLoading()}
+				, success: function(result){
+					// notify the data source that the request succeeded
+					option.success(result)
+				}
+				, error: function(result) {
+					// notify the data source that the request failed
+					option.error(result);
+					app.application.hideLoading()
+					app.showStatus(JSON.stringify(result))
+				}
+			})
+    	}
 
 })(window);

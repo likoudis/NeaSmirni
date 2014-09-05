@@ -48,7 +48,7 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 
 /* IMAGE STYLES*/
 .img {
-    background-image: url(../styles/images/DctSplash-Larger.png);
+    background-image: url(../styles/images/DirectIT/DctSplash-Larger.png);
     background-size: cover;
     text-align: center;
     width: 388px;
@@ -71,6 +71,19 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 
 #listview-permitsToday {
 	width: 32%;
+}
+
+
+#inspx-details p {
+border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+#inspx-details p > span:first-child {
+	font-weight: bold;
+}
+
+#inspx-details p > span:last-child {
+	float:right;
 }
 
 #map-canvas {
@@ -368,12 +381,10 @@ Copied from the Getting Started > mobile > NavBar > Showing Hidden View Title in
 	color: #eee;
 }
 
-h3.time {
-	display: table-cell;
+.time {
 	color: #369;
-	float: left;
-	margin-right: 15px;
-	width: 70px;
+/*	float: left;
+*/	margin-right: 15px;
 }
 
 /* Inspection list */
@@ -385,7 +396,6 @@ h3.time {
     background-position: center center;
     background-size: 100% 100%;
     overflow: hidden;
-    margin-top: 1em;
     display: inline-block;
 }
 .item-thumb, .item-summary, .item-comments, .item-link{
@@ -440,25 +450,25 @@ h3.time {
 }
 
 /* DirectIT icons and their images */
-.km-dct-home:before { background: url("images/DirectIT/home.jpg") no-repeat; display: block }
-.km-dct-headers:before { background: url("images/DirectIT/headers.jpg") no-repeat; display: block }
-.km-dct-map:before { background: url("images/DirectIT/map.jpg") no-repeat; display: block }
-.km-dct-settings:before { background: url("images/DirectIT/settings.jpg") no-repeat; display: block }
-.km-dct-snap:before { background: url("images/DirectIT/snap.jpg") no-repeat; display: block }
-.km-dct-report:before { background: url("images/DirectIT/report.jpg") no-repeat; display: block }
-.km-dct-e-mail:before { background: url("images/DirectIT/e-mail.jpg") no-repeat; display: block }
-.km-dct-assessment:before { background: url("images/DirectIT/assessment.jpg") no-repeat; display: block }
-.km-dct-details:before { background: url("images/DirectIT/details.jpg") no-repeat; display: block }
-.km-dct-notes:before { background: url("images/DirectIT/notes.jpg") no-repeat; display: block }
-.km-dct-pictures:before { background: url("images/DirectIT/pictures.jpg") no-repeat; display: block }
-.km-dct-lists:before { background: url("images/DirectIT/lists.jpg") no-repeat; display: block }
-.km-dct-actions:before { background: url("images/DirectIT/actions.jpg") no-repeat; display: block }
-.km-dct-back:before { background: url("images/DirectIT/back.jpg") no-repeat; display: block }
-.km-dct-mapAdd:before { background: url("images/DirectIT/mapAdd.jpg") no-repeat; display: block }
-.km-dct-mapRemove:before { background: url("images/DirectIT/mapRemove.jpg") no-repeat; display: block }
-.km-dct-pass:before { background: url("images/DirectIT/pass.jpg") no-repeat; display: block }
-.km-dct-fail:before { background: url("images/DirectIT/fail.jpg") no-repeat; display: block }
-.km-dct-willSee:before { background: url("images/DirectIT/willSee.jpg") no-repeat; display: block }
+.km-dct-home:before { background: url("images/DirectIT/home.png") no-repeat; display: block }
+.km-dct-headers:before { background: url("images/DirectIT/headers.png") no-repeat; display: block }
+.km-dct-map:before { background: url("images/DirectIT/map.png") no-repeat; display: block }
+.km-dct-settings:before { background: url("images/DirectIT/settings.png") no-repeat; display: block }
+.km-dct-snap:before { background: url("images/DirectIT/snap.png") no-repeat; display: block }
+.km-dct-report:before { background: url("images/DirectIT/report.png") no-repeat; display: block }
+.km-dct-e-mail:before { background: url("images/DirectIT/e-mail.png") no-repeat; display: block }
+.km-dct-assessment:before { background: url("images/DirectIT/assessment.png") no-repeat; display: block }
+.km-dct-details:before { background: url("images/DirectIT/details.png") no-repeat; display: block }
+.km-dct-notes:before { background: url("images/DirectIT/notes.png") no-repeat; display: block }
+.km-dct-pictures:before { background: url("images/DirectIT/pictures.png") no-repeat; display: block }
+.km-dct-lists:before { background: url("images/DirectIT/lists.png") no-repeat; display: block }
+.km-dct-actions:before { background: url("images/DirectIT/actions.png") no-repeat; display: block }
+.km-dct-back:before { background: url("images/DirectIT/back.png") no-repeat; display: block }
+.km-dct-mapAdd:before { background: url("images/DirectIT/mapAdd.png") no-repeat; display: block }
+.km-dct-mapRemove:before { background: url("images/DirectIT/mapRemove.png") no-repeat; display: block }
+.km-dct-pass:before { background: url("images/DirectIT/pass.png") no-repeat; display: block }
+.km-dct-fail:before { background: url("images/DirectIT/fail.png") no-repeat; display: block }
+.km-dct-willSee:before { background: url("images/DirectIT/willSee.png") no-repeat; display: block }
 
 /* AutoComplete for new image note */
 #newImgNoteText_listbox, #newNoteText_listbox {

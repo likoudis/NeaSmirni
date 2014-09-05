@@ -17,29 +17,26 @@
 app.notesDataSource = new kendo.data.DataSource ({
 	batch: true,
 	transport: {
-		read: {
-			url: function () { return app.settings.notesURL()}
-			, dataType: "jsonp"
-			, data: {
-				deviceid: function () { return app.settings.deviceId}
-				, inspectionId: function () { return app.currentInspectionId}
-			}
-			, timeout: 5000
-        }
-		, create: {
-			url: function () { return app.settings.addNoteURL()}
-			, dataType: "jsonp"
-			, data: {
-				deviceid: function () { return app.settings.deviceId}
-				, inspectionId: function () { return app.currentInspectionId}
-				, note: function() {return app.newNoteText}
-			}
-			//, timeout: 5000
-        }
+		read: function(option) {
+				app.ajax4datasouce(
+					option
+					, app.settings.notesURL()
+					, {inspectionId: app.currentInspectionId}
+				)
+		}
+		, create: function(option) {
+				app.ajax4datasouce(
+					option
+					, app.settings.addNoteURL()
+					, {inspectionId: app.currentInspectionId
+					, createDate: ""
+					, note: app.newNoteText}
+				)
+		}
 	}
 	, schema: {
 		model: { 
-			id: "CreateDate"
+			id: "Id"
 			, fields: {
 				CreateDate: {type: "Date"}
 				, Note: {type: "String"}
@@ -50,19 +47,18 @@ app.notesDataSource = new kendo.data.DataSource ({
 })
 
 app.onNotesShow = function (e) {
+	var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
+	t.title("Notes - " + app.currentInspxAddress)
 	app.notesDataSource.read()
-	app.detailsViewModel.detailsDataSource.read()
 	document.getElementById("newNoteText").value = ""
 }
 
 app.onAddNote = function(e) {
-	var l
-	
-	//console.log($("#newNoteText").val())
+	var l = app.notesDataSource.data().length
+
 	app.newNoteText = $("#newNoteText").val()
-	//app.notesDataSource.add({Note: app.newNoteText, CreateDate: "No Date"})
 	app.notesDataSource.add({})
-	app.notesDataSource.at(l=app.notesDataSource.data().length-1).set("Note", app.newNoteText)
+	app.notesDataSource.at(l).set("Note", app.newNoteText)
 	app.notesDataSource.at(l).set("CreateDate", new Date())
 	app.notesDataSource.sync()
 	//app.notesDataSource.read()

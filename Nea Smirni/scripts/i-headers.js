@@ -1,16 +1,12 @@
 app.headersDataSource = new kendo.data.DataSource ({
 	transport: {
-		read: {
-			url: function () {return app.settings.headersURL()}
-			, dataType: "jsonp"
-			, data: {
-				deviceid: function () { return app.settings.deviceId}
-				, daterange: function () { return app.settings.get("headerDateRange")}
-			}
-			, timeout: 5000
-			, beforeSend: function(e) {app.application.showLoading()}
-			, complete:   function(e) {app.application.hideLoading()}
-        }
+		read: function(option) {
+				app.ajax4datasouce(
+					option
+					, app.settings.headersURL()
+					, {daterange: app.settings.get("headerDateRange")}
+				)
+		}
 	}
 	, schema: {
 		model: {
@@ -29,8 +25,16 @@ app.headersDataSource = new kendo.data.DataSource ({
 	}
 });
 
+app.setAndReadFor = function (InspectionId, PropertyAddress) {
+	if (app.currentInspectionId !== InspectionId) {
+		app.currentInspectionId = InspectionId || app.currentInspectionId
+		app.currentInspxAddress = PropertyAddress || app.currentInspxAddress
+	}
+	return true
+}
+	
 app.onInspectionShow = function(e) {
-	var filterParam = e.view.params.filter;
+	var filterParam = e.view.params.filter || app.settings.get("headerDateRange");
 	//console.log(filterParam)
 	$("#inspxListViewNavBar").data("kendoMobileNavBar").title( 
 		filterParam === "today" ? "Today's Inspections" :
@@ -48,7 +52,7 @@ app.mobileListViewFiltering = function (e) {
 		template: $("#inspx-template").text()
 		, dataSource: app.headersDataSource
 		, autoBind: false
-		, pullToRefresh: true
+		, pullToRefresh: false
 		//, filterable: true
 		//, filterable: {
 		//	field: "PropertyAddress"

@@ -8,11 +8,8 @@
 
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
-    <!--script src="kendo/js/kendo.mobile.min.js"></script!-->
+    <script src="kendo/js/kendo.all.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
-    <!-- CDN-based script reference for Kendo UI -->
-    <script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js"></script>
-    <!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.mobile.min.js"></script!-->
 
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
@@ -89,7 +86,7 @@
 			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=thisWeek">This Week's Inspections</a></li>
 			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=lastWeek">Last Week's Inspections</a></li>
 			<!--li data-icon="featured"> <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li -->
-			<li data-icon="dct-map">    <a data-transition="none" href="#drawer-map"   >Map</a></li>
+			<!--li data-icon="dct-map">    <a data-transition="none" href="#drawer-map"   >Map</a></li!-->
 			<li></li>
 			<!--<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>-->
 			<li data-icon="dct-settings"> <a data-transition="none" href="#drawer-settings" >Settings</a></li>
@@ -103,8 +100,8 @@
 		style="width: 200px">
 		<ul data-role="listview" data-type="flat">
 			<li data-icon="dct-snap">   <a data-transition="none" href="#drawer-snap"    >Snap</a> </li>
-			<li data-icon="dct-report"> <a data-transition="none" href="#drawer-report"  >Report</a></li>
-			<li data-icon="dct-e-mail"> <a data-transition="none" href="#drawer-email"   >E-mail</a></li>
+			<li data-icon="dct-report"><a data-transition="none" href="#drawer-report"  >Report</a></li>
+			<li data-icon="dct-e-mail"><a data-transition="none" href="#drawer-email"   >E-mail</a></li>
 		</ul>
 	</div>
 	
@@ -114,10 +111,10 @@
 		'inspx-details','inspx-notes','drawer-pixurs','drawer-addinspx', 'inspx-hist']"
 		style="width: 200px">
 		<ul data-role="listview" data-type="inset" >
-			<li data-icon="dct-assessment" ><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a> </li>
-			<!-- li data-icon="compose">    <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li!-->
-			<li data-icon="dct-details">    <a data-transition="none" href="#inspx-details" >Details</a></li>
-			<li data-icon="dct-notes">      <a data-transition="none" href="#inspx-notes"   >Notes</a></li>
+			<li data-icon="dct-assessment"><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a></li>
+			<!-- li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li!-->
+			<li data-icon="dct-details">  <a data-transition="none" href="#inspx-details" >Details</a></li>
+			<li data-icon="dct-notes"> <a data-transition="none" href="#inspx-notes"   >Notes</a></li>
 			<li data-icon="dct-pictures">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li>
 			<li></li>
 			<li data-icon="dct-snap">   <a data-transition="none" href="#drawer-snap"   >Snap</a> </li>
@@ -132,7 +129,7 @@
 			<div data-role="navbar" id="inspxListViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
-				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="dct-actions">Actions</a>
+				<!--a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="dct-actions">Actions</a!-->
 				<a data-role="backbutton" data-icon="dct-back" data-align="right">Back</a>
 			</div>
 		</header>
@@ -141,7 +138,7 @@
 	<!--Drawer Layout 4 leaf views-->
 	<div data-role="layout" data-id="drawer-layout1">
 		<header data-role="header">
-			<div data-role="navbar">
+			<div data-role="navbar" id="inspxData1ViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
 				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="dct-actions">Actions</a>
@@ -153,7 +150,7 @@
 	<!--Drawer Layout 4 leaf views with non-leaf options-->
 	<div data-role="layout" data-id="drawer-layout2">
 		<header data-role="header">
-			<div data-role="navbar">
+			<div data-role="navbar" id="inspxData2ViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" 
 					data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
@@ -180,16 +177,23 @@
         </div>
 	</div>
 	<script type="text/x-kendo-template" id="inspx-template">
-		<div >
+		<div>
 			<div class="item-thumb">
 				<img class="loading-thumb" src= "#= "data:image/jpg;base64," + ThumbnailBase64 #" >
 			</div>
 			<div class="item-summary">
-				<h3 class="time">#= InspectionDate === null ? "No date" : new Date(InspectionDate).toDateString() #</h3>
-				<h3>#= PropertyAddress #</h3><p>No: #= InspectionNo #</p>
+				<h3>
+					<span class="time">
+						#= InspectionDate === null ? 'No date' : new Date(InspectionDate).toDateString() #
+					</span>
+					<span style="float:right">
+						#= PropertyAddress #
+					</span>
+				</h3>
+				<p>No: #= InspectionNo #</p>
 				<p>#= InspectionType #</p>
 			</div>
-		<a class="item-link" href="\#inspx-notes" onclick="return app.setAndReadFor(#=InspectionId#);"
+		<a class="item-link" href="\#inspx-notes" onclick="return app.setAndReadFor(#=InspectionId #,'#=PropertyAddress #');"
 			> &nbsp; &nbsp; &gt; &nbsp;
 		</a>
 		</div>
@@ -324,11 +328,13 @@
 	</div>
  
 	<!--Inspection Details-->
-	<div id="inspx-details" data-title="Inspection Details" data-role="view" data-layout="drawer-layout1" 
-		data-model="app.detailsViewModel" data-before-show="app.onDetailsShow" >
-		<ul id="i-detail-section" data-role="listview"  data-template="details-section-template" data-bind="source: detailsGroupedList"
-			data-auto-bind="true">
-		</ul>
+	<div id="inspx-details" data-role="view" data-layout="drawer-layout1" 
+		data-show="app.onDetailsShow">
+		<ul id="i-detail-section" data-role="listview"
+			data-source="app.detailsDataSource"
+			data-template="details-template1"
+			data-auto-bind="false">
+		  </ul>
 	</div>
 	<script type="text/x-kendo-template" id="details-section-template">
 		# if (header !== "History") { #
@@ -345,7 +351,37 @@
 	</script>
 	<script type="text/x-kendo-template" id="details-template">
 		<span style="font-weight: bold">#= desc # </span>
-		<span style="float:right">#= typeof(ix) === "function" ? ix() : app.detailsViewModel.detailsDataSource.data()[0][ix]# </span>
+		<span style="float:right">#= 
+			typeof(ix) !== "function"
+				? app.detailsViewModel.detailsDataSource.data()[0][ix] 
+				: ix()# </span>
+	</script>
+	<script type="text/x-kendo-template" id="details-template1">
+<h2>Inspection Information</h2>
+<p><span>Inspection Date</span>                     <span>#=InspectionId#</span></p>
+<p><span>Inspected</span>          <span>#=InspectionDate.toDateString()#</span></p>
+<p><span>Assigned To</span>                    <span>#=AssignedInspector#</span></p>
+<p><span>Status</span>                          <span>#=InspectionStatus#</span></p>
+<p><span>Type</span>                              <span>#=InspectionType#</span></p>
+<p><span>Requested</span>             <span>#=RequestDate.toDateString()#</span></p>
+<p><span>Number</span>                              <span>#=InspectionNo#</span></p>
+<h2>Property Information</h2>
+<p><span>Address</span>                          <span>#=PropertyAddress#</span></p>
+<p><span>Owner</span>                                      <span>#=Owner#</span></p>
+<p><span>Legal Description</span>               <span>#=LegalDescription#</span></p>
+<p><span>Rol \#</span>                             <span>#=RollNoDisplay#</span></p>
+<h2>Permit Information</h2>
+<p><span>Description</span>                    <span>#=PermitDescription#</span></p>
+<p><span>Permit Date</span>            <span>#=PermitDate.toDateString()#</span></p>
+<p><span>Construction type</span>               <span>#=ConstructionType#</span></p>
+<p><span>Permit Id</span>                            <span>#=PermitDocId#</span></p>
+<p><span>Permit Number</span>                           <span>#=PermitNo#</span></p>
+<p><span>Permit type</span>                           <span>#=PermitType#</span></p>
+<p><span>Current use</span>                           <span>#=CurrentUse#</span></p>
+<p><span>Intended use</span>                         <span>#=IntendedUse#</span></p>
+<p><span>Conditional permit</span><span>#=IsPermitConditional?"Yes":"No"#</span></p>
+<p><span>Permit notes</span>  <span>#=InspectionNotes.length||"No notes"#</span></p>
+<h2><a href="\#inspx-hist" style="text-decoration: none" onclick="return app.savePermitDocId()">History</a></h2>
 	</script>
 
 	<!--Inspection Notes-->
@@ -361,13 +397,13 @@
 		</div>
 		<div>
 			<ul id="i-notes-section" data-role="listview" data-template="notes-template"
-				data-source="app.notesDataSource" data-auto-bind="false" data-pull-to-refresh="true">
+				data-source="app.notesDataSource" data-auto-bind="false" data-pull-to-refresh="false">
 			</ul>
 		</div>
 	</div>
 	<script type="text/x-kendo-template" id="notes-template">
 		<div class="item-summary" style="width:60%">
-		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString().replace(/ /, ", ")  # </h3>
+		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  # </h3>
 		<p> #= Note || "&lt;no notes&gt;" # </p>
 		</div>
 	</script>
@@ -441,9 +477,9 @@
 	
 	<!--Report-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-report"
-		data-title="Reports" data-show="app.renderReport">
+		data-title="Reports" data-show="app.onReportShow">
 		<a data-role="button" href="#"
-			style="position: fixed; right:5px; top:45px">
+			style="position: fixed; right:5px; top:65px">
 			E-mail
         </a>
 		<div data-role="scroller" id="scroller-report" style="width:100%">
@@ -451,7 +487,7 @@
 	</div>
 
 	<!--Email-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-email" data-title="E-mail">
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-email" data-show="app.onEmailShow">
 		<div data-role="scroller">
 			<form>
 				<ul data-role="listview" data-style="inset">
@@ -469,7 +505,7 @@
 						<label>Message
 							<textarea placeholder="Enter your comments here..." 
 								rows="10" cols="60" style="width:85%; padding: 3px; border: 1px solid">
-                            </textarea>
+                  </textarea>
 						</label>
 					</li>
 					<li>
@@ -495,17 +531,9 @@
 				<input class="map-search" type="submit" value="" />
 			</form>
 		</div-->
-		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.historyDataSource">
+		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.historyDataSource" data-auto-bind="false">
 		</ul>
 	</div>
-
-	<style>
-		.i-detail-list-data {
-			float:right;
-			margin-right: 20px;
-			font-weight: bold;
-        }
-    </style>
 
 	<!--Add Inspection-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-addinspx" data-title="Add an Inspection">
