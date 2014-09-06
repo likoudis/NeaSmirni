@@ -29,7 +29,7 @@
 		
 		app.reportElement = ""
 		
-		kendo.bind($("#settingsListView"), app.settings);
+		kendo.bind($("#drawer-settings"), app.settings);
 		kendo.bind($("#loginDeviceId"), app.settings);
 		kendo.bind($("#openHomePage"), app.settings);
 		kendo.bind($("#no-host"), app.settings);
@@ -161,16 +161,18 @@
 		$.ajax({
 			url: app.settings.devValidURL()
 			, success: function (data) {
+				//console.log(data)
 				app.settings.set("isDeviceValid", data)
 			}
-			, error: function (x,s,e) {
+			, error: function (x,s) {
 				//console.log(x,s,e)
 				app.settings.set("isDeviceValid", undefined)
 				app.showStatus("Could not authorize the device: " + s)
 			}
 			, timeout: 5000
-        })
-    }
+			, callbackParameter: 'callback'
+    	});
+	}
 
 	app.onReportShow = function (e) {
 		var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
@@ -216,10 +218,7 @@
     }
 	
 	app.onWelcomeShow = function () {
-		//alert(history.length)
-		//console.log(history.length)
 		history.go(-history.length+1)
-		//window.location.replace("#")
     }
 	
 	app.showStatus = function(message) {
@@ -232,31 +231,30 @@
 				statusLineElement.style.webkitTransition= "opacity 2s"
 				statusLineElement.style.opacity = 0
 			}
-			, 3000
+			, 13000
 		)
     }
 	
-		app.ajax4datasouce = function (option, url, dataObject) {
-			$.ajax({
-				url: url
-				, dataType: app.settings.dsDataType
-				, data: $.extend(
-					{deviceid: app.settings.deviceId }
-					, dataObject)
-				, timeout: 5000
-				, beforeSend: function(e) {app.application.showLoading()}
-				, complete:   function(e) {app.application.hideLoading()}
-				, success: function(result){
-					// notify the data source that the request succeeded
-					option.success(result)
-				}
-				, error: function(result) {
-					// notify the data source that the request failed
-					option.error(result);
-					app.application.hideLoading()
-					app.showStatus(JSON.stringify(result))
-				}
-			})
-    	}
-
+	app.ajax4datasouce = function (option, url, dataObject) {
+		$.ajax({
+			url: url
+			, dataType: app.settings.dsDataType
+			, data: $.extend(
+				{deviceid: app.settings.deviceId }
+				, dataObject)
+			, timeout: 5000
+			, beforeSend: function(e) {app.application.showLoading()}
+			, complete:   function(e) {app.application.hideLoading()}
+			, success: function(result){
+				// notify the data source that the request succeeded
+				option.success(result)
+			}
+			, error: function(result) {
+				// notify the data source that the request failed
+				option.error(result);
+				app.application.hideLoading()
+				app.showStatus(JSON.stringify(result))
+			}
+		})
+    }
 })(window);

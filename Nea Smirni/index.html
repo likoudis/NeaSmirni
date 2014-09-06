@@ -8,8 +8,12 @@
 
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/jqjsonp.js"></script>
     <script src="kendo/js/kendo.all.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+	<!-- script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script!-->
+    <!-- CDN-based script reference for Kendo UI -->
+    <!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js"></script!-->
+    <!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.mobile.min.js"></script!-->
 
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
@@ -57,9 +61,9 @@
                 </a>
 			</div>
 			<div id="no-host" data-bind="invisible: isDeviceValid" style="height:60px">
-				<label for="hostName"> Logged out. Please supply a server address:
+				<label> Logged out. Please supply a server address:
 					<a style="float:right" id="submitbutton" data-role="button" data-click="app.checkValidDevice">Enter</a>
-					<input style="float:right" type="text" id="hostName" data-bind="value: hostName">
+					<input style="float:right" type="text" data-bind="value: hostName">
 				</label>
             </div>
 			<div style="display:block; font-size: 0.75em">
@@ -269,38 +273,33 @@
 	</script>
 
 	<!--Settings-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-settings" data-title="Settings" data-use-native-scrolling="true">
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-settings"
+		data-title="Settings">
 		<form action="javascript:history.back()">
-			<ul data-role="listview" data-style="inset" id="settingsListView">
-				<li>
-					<label>Service host URL: 
-						<input type="url" placeholder="http://server:port/service/program(?.....)"
-							data-bind="value:serviceHostURL"
-							value="http://dctlt063:8000/directit.permitting">
-					</label>
-                </li>
-				<li>
-					<label>Service host URL: 
-						<input type="url" placeholder="http://server:port/service/program(?.....)"
-							data-bind="value:serviceHostURL"
-							value="http://dctlt063:8000/directit.permitting">
-					</label>
-                </li>
-				<li>
-					<label>Service host URL:</label>
-						<input type="url" placeholder="http://server:port/service/program(?.....)"
-							data-bind="value:serviceHostURL"
-							value="http://dctlt063:8000/directit.permitting">
-                </li>
-				<li>
-					<label>Service host URL: 
-						<input type="url" placeholder="http://server:port/service/program(?.....)"
-							data-bind="value:serviceHostURL"
-							value="http://dctlt063:8000/directit.permitting">
-					</label>
-                </li>
-			
-			</ul>
+			<div>
+			<label>Service host and port: 
+				<input type="text" placeholder="localhost:8000"
+					data-bind="value: hostName" />
+			</label>
+			</div>
+			<div>
+			<label>Service host and port: 
+				<input type="text" placeholder="localhost:8000"
+					data-bind="value: hostName" />
+			</label>
+			</div>
+			<div>
+			<label>Service host and port: 
+				<input type="text" placeholder="localhost:8000"
+					data-bind="value: hostName" />
+			</label>
+			</div>
+			<div>
+			<label>Service host and port: 
+				<input type="text" placeholder="localhost:8000"
+					data-bind="value: hostName" />
+			</label>
+			</div>
         </form>
 	</div>
 	
@@ -337,31 +336,31 @@
 		  </ul>
 	</div>
 	<script type="text/x-kendo-template" id="details-template">
-<h2>Inspection Information</h2>
-<p><span>Inspection Date</span>                     <span>#=InspectionId#</span></p>
-<p><span>Inspected</span>          <span>#=InspectionDate.toDateString()#</span></p>
-<p><span>Assigned To</span>                    <span>#=AssignedInspector#</span></p>
-<p><span>Status</span>                          <span>#=InspectionStatus#</span></p>
-<p><span>Type</span>                              <span>#=InspectionType#</span></p>
-<p><span>Requested</span>             <span>#=RequestDate.toDateString()#</span></p>
-<p><span>Number</span>                              <span>#=InspectionNo#</span></p>
-<h2>Property Information</h2>
-<p><span>Address</span>                          <span>#=PropertyAddress#</span></p>
-<p><span>Owner</span>                                      <span>#=Owner#</span></p>
-<p><span>Legal Description</span>               <span>#=LegalDescription#</span></p>
-<p><span>Rol \#</span>                             <span>#=RollNoDisplay#</span></p>
-<h2>Permit Information</h2>
-<p><span>Description</span>                    <span>#=PermitDescription#</span></p>
-<p><span>Permit Date</span>            <span>#=PermitDate.toDateString()#</span></p>
-<p><span>Construction type</span>               <span>#=ConstructionType#</span></p>
-<p><span>Permit Id</span>                            <span>#=PermitDocId#</span></p>
-<p><span>Permit Number</span>                           <span>#=PermitNo#</span></p>
-<p><span>Permit type</span>                           <span>#=PermitType#</span></p>
-<p><span>Current use</span>                           <span>#=CurrentUse#</span></p>
-<p><span>Intended use</span>                         <span>#=IntendedUse#</span></p>
-<p><span>Conditional permit</span><span>#=IsPermitConditional?"Yes":"No"#</span></p>
-<p><span>Permit notes</span>  <span>#=InspectionNotes.length||"No notes"#</span></p>
-<h2><a href="\#inspx-hist" style="text-decoration: none" onclick="return app.savePermitDocId()">History</a></h2>
+		<h2>Inspection Information</h2>
+		<p><span>Inspection Date</span>                     <span>#=InspectionId#</span></p>
+		<p><span>Inspected</span>          <span>#=InspectionDate.toDateString()#</span></p>
+		<p><span>Assigned To</span>                    <span>#=AssignedInspector#</span></p>
+		<p><span>Status</span>                          <span>#=InspectionStatus#</span></p>
+		<p><span>Type</span>                              <span>#=InspectionType#</span></p>
+		<p><span>Requested</span>             <span>#=RequestDate.toDateString()#</span></p>
+		<p><span>Number</span>                              <span>#=InspectionNo#</span></p>
+		<h2>Property Information</h2>
+		<p><span>Address</span>                          <span>#=PropertyAddress#</span></p>
+		<p><span>Owner</span>                                      <span>#=Owner#</span></p>
+		<p><span>Legal Description</span>               <span>#=LegalDescription#</span></p>
+		<p><span>Rol \#</span>                             <span>#=RollNoDisplay#</span></p>
+		<h2>Permit Information</h2>
+		<p><span>Description</span>                    <span>#=PermitDescription#</span></p>
+		<p><span>Permit Date</span>            <span>#=PermitDate.toDateString()#</span></p>
+		<p><span>Construction type</span>               <span>#=ConstructionType#</span></p>
+		<p><span>Permit Id</span>                            <span>#=PermitDocId#</span></p>
+		<p><span>Permit Number</span>                           <span>#=PermitNo#</span></p>
+		<p><span>Permit type</span>                           <span>#=PermitType#</span></p>
+		<p><span>Current use</span>                           <span>#=CurrentUse#</span></p>
+		<p><span>Intended use</span>                         <span>#=IntendedUse#</span></p>
+		<p><span>Conditional permit</span><span>#=IsPermitConditional?"Yes":"No"#</span></p>
+		<p><span>Permit notes</span>  <span>#=InspectionNotes.length||"No notes"#</span></p>
+		<h2><a href="\#inspx-hist" style="text-decoration: none" onclick="return app.savePermitDocId()">History</a></h2>
 	</script>
 
 	<!--Inspection Notes-->
@@ -411,7 +410,7 @@
     </script>
 	<script type="text/x-kendo-template" id="scrollview-template">
 		<div style="width:auto; height:100%; margin-right:auto; margin-left:auto; white-space: initial">
-		<img style="display: block; width:auto; margin-right:auto; margin-left:auto" src="#= MobileFileName #">
+		<img style="display: block; width:auto; margin:auto; max-width:99%; max-height:99%" src="#= MobileFileName #">
 			#= MobileFileName.replace(/\//g, " ") #
 		</div>
     </script>

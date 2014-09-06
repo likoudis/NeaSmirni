@@ -22,6 +22,9 @@ app.headersDataSource = new kendo.data.DataSource ({
 
 	//,  filter: { field: "PropertyAddress", operator: "contains", value: "Paul" }
 
+    , error: function(e) {
+        console.log("Error " + e);
+    }
 	}
 });
 

@@ -417,18 +417,14 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 /* Views under construction */
-.km-android #drawer-settings .km-content,
 .km-android #drawer-addinspx .km-content,
 .km-android #drawer-sync .km-content,
-.km-flat #drawer-settings .km-content,
 .km-flat #drawer-addinspx .km-content,
 .km-flat #drawer-sync .km-content {
 	background: url(images/android_404.jpg) no-repeat center;
 }
-.km-ios #drawer-settings .km-content,
 .km-ios #drawer-addinspx .km-content ,
 .km-ios #drawer-sync .km-content,
-.km-ios7 #drawer-settings .km-content,
 .km-ios7 #drawer-addinspx .km-content ,
 .km-ios7 #drawer-sync .km-content {
 	background: url(images/ios_404.jpg) no-repeat center;
@@ -438,15 +434,15 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 	background-color: black;
 }
 
-#drawer-settings label {
-	width:150px;
-	display:inline-block;
-	background-color: Red;
+#drawer-settings form div {
+	padding: .5em .7em;
 }
 
 #drawer-settings input {
 	width:75%;
-	background-color: Green;
+	float:right;
+	background-color: White;
+	border: 1px solid rgba(0,0,0,0.1)
 }
 
 /* DirectIT icons and their images */
@@ -475,4 +471,14 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 	background-color: LightGray;
 	font-size: 1.25em;
 	line-height: 30px;
+}
+
+#left-drawer div, #right-drawer1 div, .km-view-title {
+	color: White;
+	background-color: rgba(44,62,80,1);
+}
+
+.km-button {
+	color: White !important;
+	background-color: rgba(245,158,31,1) !important;
 }
