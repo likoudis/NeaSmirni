@@ -96,7 +96,7 @@
 			+ "?DeviceId=" + this.get("deviceId")
 			+ "&InspectionId=" + inspection
 		}
-		, dsDataType: "jsonp"
+		, dsDataType: "json"
 		, isHostConnected: false
 		, isInetConnected: false
 		, isDeviceValid: false
