@@ -96,7 +96,8 @@
 			+ "?DeviceId=" + this.get("deviceId")
 			+ "&InspectionId=" + inspection
 		}
-		, dsDataType: "json"
+		, useJsonP: false
+		, dsDataType: function () {return "json" + (app.settings.useJsonP ? "p" : "")}
 		, isHostConnected: false
 		, isInetConnected: false
 		, isDeviceValid: false
@@ -225,26 +226,26 @@
 		var statusLineElement = document.getElementById("status-line")
 		statusLineElement.style.webkitTransition= "opacity 0s"
 		statusLineElement.style.opacity = 1
-		statusLineElement.innerHTML = message
+		statusLineElement.innerHTML =message
 		setTimeout(
 			function() {
 				statusLineElement.style.webkitTransition= "opacity 2s"
 				statusLineElement.style.opacity = 0
 			}
-			, 13000
+			, 5000
 		)
     }
 	
 	app.ajax4datasouce = function (option, url, dataObject) {
 		$.ajax({
 			url: url
-			, dataType: app.settings.dsDataType
+			, dataType: app.settings.dsDataType()
 			, data: $.extend(
 				{deviceid: app.settings.deviceId }
 				, dataObject)
 			, timeout: 5000
-			, beforeSend: function(e) {app.application.showLoading()}
-			, complete:   function(e) {app.application.hideLoading()}
+			, beforeSend: function(e) {app.application && app.application.showLoading()}
+			, complete:   function(e) {app.application && app.application.hideLoading()}
 			, success: function(result){
 				// notify the data source that the request succeeded
 				option.success(result)
@@ -252,8 +253,8 @@
 			, error: function(result) {
 				// notify the data source that the request failed
 				option.error(result);
-				app.application.hideLoading()
-				app.showStatus(JSON.stringify(result))
+				app.application && app.application.hideLoading()
+				app.showStatus("Datasource transport reports: "+ result.statusText)
 			}
 		})
     }

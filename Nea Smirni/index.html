@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
-    <meta charset="utf-8" />
-    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
-    <link href="styles/main.css" rel="stylesheet" />
-
-    <script src="cordova.js"></script>
-    <script src="kendo/js/jquery.min.js"></script>
-    <script src="kendo/js/jqjsonp.js"></script>
-    <script src="kendo/js/kendo.all.min.js"></script>
+	<title></title>
+	<meta charset="utf-8" />
+	<link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+	<!--link href="kendo/styles/modernui.css" rel="stylesheet" /-->
+	<link href="styles/main.css" rel="stylesheet" />
+	<link href="styles/dctmodernui.css" rel="stylesheet" />
+	
+	<script src="cordova.js"></script>
+	<script src="kendo/js/jquery.min.js"></script>
+	<script src="kendo/js/jqjsonp.js"></script>
+	<script src="kendo/js/kendo.all.min.js"></script>
 	<!-- script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script!-->
-    <!-- CDN-based script reference for Kendo UI -->
-    <!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js"></script!-->
-    <!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.mobile.min.js"></script!-->
-
+	<!-- CDN-based script reference for Kendo UI -->
+	<!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js"></script!-->
+	<!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.mobile.min.js"></script!-->
+	
 	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
 	<script src="scripts/i-headers.js"></script>
@@ -22,19 +24,19 @@
 	<script src="scripts/i-notes.js"></script>
 	<script src="scripts/i-history.js"></script>
 	<script src="scripts/i-snap.js"></script>
-
+	
 	<style>
-        html .km-wp-light .km-content,
-        html .km-wp-light .km-button,
-        html .km-wp-light .km-navbar,
-        html .km-wp-light .km-detail,
-        html .km-wp-light *:not(.k-label) > input:not(.k-input),
-        html .km-wp-light .k-dropdown,
-        html .km-wp-light *:not(.k-label) > textarea,
-        html .km-wp-light *:not(.k-label) > select {
-            background: #fff;
-        }
-    </style>
+	    html .km-wp-light .km-content,
+	    html .km-wp-light .km-button,
+	    html .km-wp-light .km-navbar,
+	    html .km-wp-light .km-detail,
+	    html .km-wp-light *:not(.k-label) > input:not(.k-input),
+	    html .km-wp-light .k-dropdown,
+	    html .km-wp-light *:not(.k-label) > textarea,
+	    html .km-wp-light *:not(.k-label) > select {
+	        background: #fff;
+	    }
+	</style>
 </head>
 <body>
     <!--Welcome-->
@@ -69,7 +71,7 @@
 			<div style="display:block; font-size: 0.75em">
 				Device ID:
 				<span id="loginDeviceId" data-bind="text: deviceId"> </span>
-				<span style="float:right;">Version 2014.09.06.2&nbsp;</span>
+				<span style="float:right;">Version 2014.09.07.1&nbsp;</span>
 			</div>
         </div>
 	</div>
@@ -97,20 +99,8 @@
 		</ul>
 	</div>
 	
-	<!--Right drawer 4 inspx lists-->
-	<!-- map should not be included here, if it should not respond to swipe -->
-	<div data-role="drawer" id="right-drawer0" data-position="right"
-		data-views="['drawer-inspxions','drawer-filter']"
-		style="width: 200px">
-		<ul data-role="listview" data-type="flat">
-			<li data-icon="dct-snap">   <a data-transition="none" href="#drawer-snap"    >Snap</a> </li>
-			<li data-icon="dct-report"><a data-transition="none" href="#drawer-report"  >Report</a></li>
-			<li data-icon="dct-e-mail"><a data-transition="none" href="#drawer-email"   >E-mail</a></li>
-		</ul>
-	</div>
-	
 	<!--Right drawer 4 single inspx-->
-	<div data-role="drawer" id="right-drawer1" data-position="right"
+	<div data-role="drawer" id="right-drawer" data-position="right"
 		data-views="[
 		'inspx-details','inspx-notes','drawer-pixurs','drawer-addinspx', 'inspx-hist']"
 		style="width: 200px">
@@ -133,7 +123,6 @@
 			<div data-role="navbar" id="inspxListViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
-				<!--a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer0" data-icon="dct-actions">Actions</a!-->
 				<a data-role="backbutton" data-icon="dct-back" data-align="right">Back</a>
 			</div>
 		</header>
@@ -145,7 +134,7 @@
 			<div data-role="navbar" id="inspxData1ViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
-				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer1" data-icon="dct-actions">Actions</a>
+				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer" data-icon="dct-actions">Actions</a>
 				<a data-role="backbutton" data-icon="dct-back" data-align="right">Back</a>
 			</div>
 		</header>
@@ -283,21 +272,9 @@
 			</label>
 			</div>
 			<div>
-			<label>Service host and port: 
-				<input type="text" placeholder="localhost:8000"
-					data-bind="value: hostName" />
-			</label>
-			</div>
-			<div>
-			<label>Service host and port: 
-				<input type="text" placeholder="localhost:8000"
-					data-bind="value: hostName" />
-			</label>
-			</div>
-			<div>
-			<label>Service host and port: 
-				<input type="text" placeholder="localhost:8000"
-					data-bind="value: hostName" />
+			<label>Use "jsonp" for remote requests: 
+				<input type="checkbox" style="width: initial"
+					data-bind="value: useJsonP" />
 			</label>
 			</div>
         </form>
@@ -368,7 +345,7 @@
 		data-show="app.onNotesShow">
 		<div style="text-align:center">
 			<p>New Note</p>
-			<form style="margin-right: 15px">
+			<form style="margin-right: 25px">
 				<textarea id="newNoteText"
 					style="padding: 3px"></textarea>
 			<div data-role="button" data-click="app.onAddNote">Append</div>

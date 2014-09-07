@@ -1,0 +1,11 @@
+.km-flat .km-button {
+	border-radius: 0px;
+	-webkit-border-radius: 0px;
+}
+.km-flat {
+	font: normal 1em "Segoe UI","HelveticaNeue Light","Roboto Light","Slate Light","Segoe WP",NokiaPureTextLight,sans-serif;
+}
+h3 {
+	font: normal 16px/1.5 Arial,sans-serif;
+	margin: 20px 0 13px;
+}

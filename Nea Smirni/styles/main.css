@@ -312,7 +312,7 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 /* RETINA DISPLAY STYLES*/
 @media only screen and (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi) {
     .img {
-        background-image: url(../styles/images/DctSplash-Larger.png);
+        background-image: url(../styles/images/DirectIT/DctSplash-Larger.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
@@ -473,12 +473,12 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 	line-height: 30px;
 }
 
-#left-drawer div, #right-drawer1 div, .km-view-title {
+#left-drawer div, #right-drawer div, .km-view-title {
 	color: White;
-	background-color: rgba(44,62,80,1);
+	background-color: rgba(44,62,80,0.9);
 }
 
-.km-button {
-	color: White !important;
-	background-color: rgba(245,158,31,1) !important;
+.km-flat .km-button {
+	color: White;
+	background-color: rgba(245,158,31,0.9);
 }
