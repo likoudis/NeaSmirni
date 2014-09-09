@@ -4,7 +4,8 @@ app.headersDataSource = new kendo.data.DataSource ({
 				app.ajax4datasouce(
 					option
 					, app.settings.headersURL()
-					, {daterange: app.settings.get("headerDateRange")}
+					, {daterange: app.settings.get("headerDateRange")
+					, contains: app.settings.get("contains")}
 				)
 		}
 	}
@@ -47,7 +48,14 @@ app.onInspectionShow = function(e) {
 	);
 	//console.log(filterParam)
 	app.settings.set ("headerDateRange", filterParam)
-	app.headersDataSource.read(); // no need if auto-bind
+	$("#filterList").data("kendoMobileListView").scroller().reset()
+	//app.headersDataSource.data([]);
+	app.headersDataSource.read();
+	app.settings.set ("contains","") //clear the field for next time
+}
+
+app.onFilterFormShow = function (e) {
+	app.settings.set ("contains","")
 }
 
 app.mobileListViewFiltering = function (e) {

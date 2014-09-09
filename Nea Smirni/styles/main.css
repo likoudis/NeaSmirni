@@ -2,21 +2,7 @@ body, html {
     margin: 0;
     height: 100%;
     width: 100%;
-	font-size: 100%  !important;
-}
-
-/* portrait */
-@media screen and (orientation:portrait) {
-#headerListScroller {
-/*	height:909px; 
-*/}
-}
-/* landscape */
-@media screen and (orientation:landscape) {
-#headerListScroller {
-/*	height: 489px;
-*/}
-
+	font-size: 1.4em;
 }
 
 /* COMMON STYLES*/
@@ -91,20 +77,18 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
     bottom: 0;
     right: 0;
 }
+
+#pixur-note-form , #pixur-preview, #i-pix-note, #i-pix-image {
+	display:inline-block;
+	vertical-align: top;
+	text-align: center;
+}
 @media all and (orientation:landscape) {
 	#listview-permitsToday {
 		width: 32%;
 	}
-
-	#map-canvas {
-	width: 66%;
-    top: 0;
-	left: 1;
-	}
-
-	#pixur-note-form {
-		display:inline-block;
-		width: 50%;
+	#pixur-note-form , #pixur-preview, #i-pix-note, #i-pix-image {
+		width: 45%;
 		height: 100%;
 	}
 }
@@ -112,18 +96,10 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 	#listview-permitsToday {
 		width: 100%;
 	}
-
-	#map-canvas {
-		/*width: 100%;*/
-		height: 65%;
-    	top: 1;
-		left: 0;
-	}
-
-	#pixur-note-form {
-		display:inline-block;
+	#pixur-note-form, #pixur-preview, #i-pix-note, #i-pix-image {
+		display:block;
 		width: 100%;
-		height: 50%;
+		height: 45%;
 	}
 }
 .map-search-wrap {
@@ -448,6 +424,7 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 /* DirectIT icons and their images */
 .km-dct-home:before { background: url("images/DirectIT/home.png") no-repeat; display: block }
 .km-dct-headers:before { background: url("images/DirectIT/headers.png") no-repeat; display: block }
+.km-dct-search:before { background: url("images/DirectIT/search.png") no-repeat; display: block }
 .km-dct-map:before { background: url("images/DirectIT/map.png") no-repeat; display: block }
 .km-dct-settings:before { background: url("images/DirectIT/settings.png") no-repeat; display: block }
 .km-dct-snap:before { background: url("images/DirectIT/snap.png") no-repeat; display: block }
@@ -481,4 +458,8 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 .km-flat .km-button {
 	color: White;
 	background-color: rgba(245,158,31,0.9);
+}
+
+#i-filter-form input , #i-filter-form select {
+	float:right;
 }

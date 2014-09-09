@@ -12,6 +12,7 @@
 		app.application.skin("flat");
 
 		app.settings.set("deviceId", device.uuid)
+		//app.settings.set("deviceId", "b32f2b6527524b5c")
 		app.settings.set("hostName", "qqw.directit.ca:8000")
 		app.settings.set("hostName", "89.210.253.91:8000")
 		app.settings.set("hostName", "192.168.2.6:8000")
@@ -30,6 +31,7 @@
 		app.reportElement = ""
 		
 		kendo.bind($("#drawer-settings"), app.settings);
+		kendo.bind($("#drawer-filter"), app.settings);
 		kendo.bind($("#loginDeviceId"), app.settings);
 		kendo.bind($("#openHomePage"), app.settings);
 		kendo.bind($("#no-host"), app.settings);
@@ -42,7 +44,7 @@
 		app.itsTheSimulator = function() {
 			return device.uuid.substr(-6) === "010333"
         }
-		
+
 		document.addEventListener("backbutton", function(){}, false);
 		
 
@@ -102,29 +104,11 @@
 		, isInetConnected: false
 		, isDeviceValid: false
 		, headerDateRange: "all"
+		, contains: ""
 		, uploadProgress: 0
 
     });
 	
-	app.galleryDataSource = new kendo.data.DataSource({
-		transport: {
-			read: {
-				url: function() {return app.settings.getInspxPicturesURL()}
-				, dataType: "jsonp"
-				, data: {
-					deviceid: function () { return app.settings.deviceId}
-					, inspectionId: function () { return app.currentInspectionId}
-				}
-			}
-		}
-	})
-
-	app.galleryShow = function (e) {
-		var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
-		t.title("Pictures - " + app.currentInspxAddress)
-		app.galleryDataSource.read()
-    }
-
 	// Connection related stuff
 	document.addEventListener("online", onOnline, false);
 	function onOnline() {
@@ -236,7 +220,7 @@
 		)
     }
 	
-	app.ajax4datasouce = function (option, url, dataObject) {
+	app.ajax4datasouce = function (option, url, dataObject, that) {
 		$.ajax({
 			url: url
 			, dataType: app.settings.dsDataType()
@@ -245,7 +229,9 @@
 				, dataObject)
 			, timeout: 5000
 			, beforeSend: function(e) {app.application && app.application.showLoading()}
-			, complete:   function(e) {app.application && app.application.hideLoading()}
+			, complete:   function(e) {
+				app.application && app.application.hideLoading();
+}
 			, success: function(result){
 				// notify the data source that the request succeeded
 				option.success(result)
@@ -257,5 +243,10 @@
 				app.showStatus("Datasource transport reports: "+ result.statusText)
 			}
 		})
+    }
+	
+	app.guid = function () {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
+		function(c) {var r = Math.random()*16|0, v=c==='x'?r:r&0x3|0x8;return v.toString(16);})
     }
 })(window);

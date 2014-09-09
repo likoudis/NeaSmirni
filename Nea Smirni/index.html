@@ -4,26 +4,24 @@
 	<title></title>
 	<meta charset="utf-8" />
 	<link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
-	<!--link href="kendo/styles/modernui.css" rel="stylesheet" /-->
 	<link href="styles/main.css" rel="stylesheet" />
 	<link href="styles/dctmodernui.css" rel="stylesheet" />
 	
 	<script src="cordova.js"></script>
 	<script src="kendo/js/jquery.min.js"></script>
-	<script src="kendo/js/jqjsonp.js"></script>
 	<script src="kendo/js/kendo.all.min.js"></script>
 	<!-- script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script!-->
 	<!-- CDN-based script reference for Kendo UI -->
 	<!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js"></script!-->
 	<!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.mobile.min.js"></script!-->
 	
-	<script src="scripts/location.js"></script>
 	<script src="scripts/app.js"></script>
 	<script src="scripts/i-headers.js"></script>
 	<script src="scripts/i-details.js"></script>
 	<script src="scripts/i-notes.js"></script>
 	<script src="scripts/i-history.js"></script>
 	<script src="scripts/i-snap.js"></script>
+	<script src="scripts/i-pictures.js"></script>
 	
 	<style>
 	    html .km-wp-light .km-content,
@@ -71,7 +69,7 @@
 			<div style="display:block; font-size: 0.75em">
 				Device ID:
 				<span id="loginDeviceId" data-bind="text: deviceId"> </span>
-				<span style="float:right;">Version 2014.09.07.1&nbsp;</span>
+				<span style="float:right;">Version 2014.09.09.1&nbsp;</span>
 			</div>
         </div>
 	</div>
@@ -91,7 +89,7 @@
 			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=yesterday">Yesterday's Inspections</a></li>
 			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=thisWeek">This Week's Inspections</a></li>
 			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=lastWeek">Last Week's Inspections</a></li>
-			<!--li data-icon="featured"> <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li -->
+			<li data-icon="dct-search">  <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li>
 			<!--li data-icon="dct-map">    <a data-transition="none" href="#drawer-map"   >Map</a></li!-->
 			<li></li>
 			<!--<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>-->
@@ -156,13 +154,6 @@
 	<div id="drawer-inspxions" data-role="view" data-layout="drawer-layout" data-title="All Inspections"
 		data-init="app.mobileListViewFiltering" 
 		data-show="app.onInspectionShow">
-		<!-- div class="map-search-wrap">
-			<button id="map-navigate-home"></button>
-			<form onsubmit="return false;">
-				<input id="map-address" type="search" placeholder="Address" />
-				<input class="map-search" type="submit" value="" />
-			</form>
-		</div -->
 		<div id="headerListScroller" data-role="scroller"
 			style="width:100%">
 		    <ul id="filterList" class="filterList" data-role="listview">
@@ -193,26 +184,32 @@
 	</script>
 
 	<!--Filter-->
-	<div data-role="view" data-title="Inspection List Filter" id="drawer-filter" data-layout="drawer-layout" >
-		<label>
-	        From-date:
- 			<input type="date" value="2014-01-22" />
-		</label>
-		<label>
-    	    To-date:
- 			<input type="date" value="2014-03-22" />
-		</label>
-		<label>Inspection Status
-			<select  id="dropdown">
-				<option value="All">All</option>
-				<option value="Pass">Pass</option>
-				<option value="Fail">Fail</option>
-				<option value="Conditional">Conditional</option>
-			</select>
-		</label>
-		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="inspxDataList">
-		</ul>
-    </div>
+	<div data-role="view" data-title="Inspection List Filter"
+		id="drawer-filter" data-layout="drawer-layout" data-show="app.onFilterFormShow">
+		<form id="i-filter-form" style="font-size: 1.4em; padding: 5px">
+			<!--div><label>From-date:
+	 			<input type="date" value="2014-01-22" />
+			</label></div>
+			<div><label>
+	    	    To-date:
+	 			<input type="date" value="2014-03-22" />
+			</label></div>
+			<div><label> Inspection Status
+				<select  id="dropdown">
+					<option value="All">All</option>
+					<option value="Pass">Pass</option>
+					<option value="Fail">Fail</option>
+					<option value="Conditional">Conditional</option>
+				</select>
+			</label></div-->
+			<div><label>Contains:
+				<input style="font-size: 1.4em; width: 100%" placeholder="Search for"
+					data-bind="value: contains">
+			</label></div>
+		</form>
+			<div style="text-align: center"><a href="#drawer-inspxions" data-role="button"> Filter
+            </a></div>
+	</div>
 
 	<!--Map-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-map" data-title="Map"
@@ -265,23 +262,19 @@
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-settings"
 		data-title="Settings">
 		<form action="javascript:history.back()">
-			<div>
-			<label>Service host and port: 
+			<div> <label>Service host and port: 
 				<input type="text" placeholder="localhost:8000"
 					data-bind="value: hostName" />
-			</label>
-			</div>
-			<div>
-			<label>Use "jsonp" for remote requests: 
+			</label></div>
+			<div><label>Use "jsonp" for remote requests: 
 				<input type="checkbox" style="width: initial"
 					data-bind="value: useJsonP" />
-			</label>
-			</div>
+			</label></div>
         </form>
 	</div>
 	
 	<!--Assess (pass/fail)-->
-	<div data-role="modalview" id="modal-psfc" data-width="400" data-height="430" data-modal="false">
+	<div data-role="modalview" id="modal-psfc" data-width="200" data-height="260" data-modal="false">
 		<div data-role="header">
 			<div data-role="navbar">
 				<span>Assessment</span>
@@ -289,12 +282,11 @@
 		</div>
 
 		<ul data-role="listview">
-			<li style="text-align:center"> Date: today</li>
-			<li data-role="button"><span data-icon="dct-pass" >Pass</span></li>
-			<li data-role="button"><span data-icon="dct-fail" >Fail</span></li>
-			<li data-role="button"><span data-icon="dct-willSee" >Conditional</span></li>
+			<!--li style="text-align:center"> Date: today</li!-->
+			<li data-role="button" style="margin:15px; background-color:green"><span data-icon="dct-pass" >Pass</span></li>
+			<li data-role="button" style="margin:15px; background-color:orange"><span data-icon="dct-willSee" >Conditional</span></li>
+			<li data-role="button" style="margin:15px; background-color:red"><span data-icon="dct-fail" >Fail</span></li>
 		</ul>
-
 		<div data-role="footer">
 			<div data-role="navbar">
 				<a id="cancel-login" data-click="app.closeAssessModalView" data-align="right" data-role="button">Cancel</a>
@@ -314,7 +306,6 @@
 	</div>
 	<script type="text/x-kendo-template" id="details-template">
 		<h2>Inspection Information</h2>
-		<p><span>Inspection Date</span>                     <span>#=InspectionId#</span></p>
 		<p><span>Inspected</span>          <span>#=InspectionDate.toDateString()#</span></p>
 		<p><span>Assigned To</span>                    <span>#=AssignedInspector#</span></p>
 		<p><span>Status</span>                          <span>#=InspectionStatus#</span></p>
@@ -330,13 +321,11 @@
 		<p><span>Description</span>                    <span>#=PermitDescription#</span></p>
 		<p><span>Permit Date</span>            <span>#=PermitDate.toDateString()#</span></p>
 		<p><span>Construction type</span>               <span>#=ConstructionType#</span></p>
-		<p><span>Permit Id</span>                            <span>#=PermitDocId#</span></p>
 		<p><span>Permit Number</span>                           <span>#=PermitNo#</span></p>
 		<p><span>Permit type</span>                           <span>#=PermitType#</span></p>
 		<p><span>Current use</span>                           <span>#=CurrentUse#</span></p>
 		<p><span>Intended use</span>                         <span>#=IntendedUse#</span></p>
 		<p><span>Conditional permit</span><span>#=IsPermitConditional?"Yes":"No"#</span></p>
-		<p><span>Permit notes</span>  <span>#=InspectionNotes.length||"No notes"#</span></p>
 		<h2><a href="\#inspx-hist" style="text-decoration: none" onclick="return app.savePermitDocId()">History</a></h2>
 	</script>
 
@@ -365,17 +354,18 @@
 	</script>
 
 	<!--Pictures-->
-	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs" data-layout="drawer-layout1" data-stretch="true"
-		data-show="app.galleryShow">
-		<!--ul id="gallery-listview"
+	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs"
+		data-layout="drawer-layout1" data-stretch="true"
+		data-show="app.pixShow">
+		<!--ul id="pix-listview"
 			data-role="listview"
-			data-source="app.galleryDataSource"
+			data-source="app.pixDataSource"
 			data-template="pix-list-template" 
 			data-click="showDetail">
 		</ul-->
 
 		<div data-role="scrollview"
-			data-source="app.galleryDataSource"
+			data-source="app.pixDataSource"
 			data-template="scrollview-template"
 			data-content-height="100%"
 			data-enable-pager="true"
@@ -386,9 +376,12 @@
 		<p><img height="400" width="auto" src="#= MobileFileName #"><span class="idetail-d"> #= MobileFileName#   </span></p>
     </script>
 	<script type="text/x-kendo-template" id="scrollview-template">
-		<div style="width:auto; height:100%; margin-right:auto; margin-left:auto; white-space: initial">
-		<img style="display: block; width:auto; margin:auto; max-width:99%; max-height:99%" src="#= MobileFileName #">
-			#= MobileFileName.replace(/\//g, " ") #
+		<div style= "margin: 5px">
+		<div id="i-pix-image">
+		<img style="width:auto; margin:auto; max-width:99%; max-height:99%" src="#= MobileFileName #">
+		</div>
+		<div id="i-pix-note"> <textarea rows="20" cols="60"> #=Note#</textarea>
+		</div>
 		</div>
     </script>
 	<script type="text/x-kendo-template" id="scrollview-template1">
@@ -409,23 +402,20 @@
 	<div id="drawer-snap" data-role="view" data-layout="drawer-layout2"
 		data-title="Take Pictures" data-show="app.onSnapShow">
 		<div style="margin:5px">
-			<div>
-				<p>Add a picture to the current inspection </p>
-				<a data-role="button" data-click="app.onSnapClick" id="snap-button">
-					Snap
-				</a>
-        	</div>
-			<div style="display:inline-block; vertical-align: top; width: 49%">
+ 			<div id="pixur-preview">
 				<img id="snap-thumb" alt="No picture available"
-
-				style="width:350px; margin: 10px">
-				<div id="snap-fname"></div>
+				style="width:350px; margin: 5px">
+				<div style="text-align: center">
+					<a data-role="button" data-click="app.onSnapClick" id="snap-button">
+						Snap
+					</a>
+				</div>
 			</div>
-			<form id="pixur-note-form" style="text-align: center">
-				<p>Image Note</p>
-				<textarea id="newImgNoteText"></textarea>
+			<form id="pixur-note-form">
+				<p>Picture Note</p>
+				<textarea rows="20" id="newImgNoteText"></textarea>
 				<div data-role="button" data-click="app.onAddImgNote">
-					Upload <span id="uploadProgress"></span>
+					Upload
 				</div>
 			</form>
 		</div>
@@ -495,10 +485,6 @@
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-addinspx" data-title="Add an Inspection">
 	</div>
 	
-	<!--Synchronize-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-sync" data-title="Synch with Server">
-	</div>
-
 	<!-- Status line -->
 	<div id="status-line"
 		style="position: absolute; bottom:0px; width: 100%;

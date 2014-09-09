@@ -18,20 +18,20 @@ app.notesDataSource = new kendo.data.DataSource ({
 	batch: true,
 	transport: {
 		read: function(option) {
-				app.ajax4datasouce(
-					option
-					, app.settings.notesURL()
-					, {inspectionId: app.currentInspectionId}
-				)
+			app.ajax4datasouce(
+				option
+				, app.settings.notesURL()
+				, {inspectionId: app.currentInspectionId}
+			)
 		}
 		, create: function(option) {
-				app.ajax4datasouce(
-					option
-					, app.settings.addNoteURL()
-					, {inspectionId: app.currentInspectionId
-					, createDate: ""
-					, note: app.newNoteText}
-				)
+			app.ajax4datasouce(
+				option
+				, app.settings.addNoteURL()
+				, {inspectionId: app.currentInspectionId
+				, createDate: ""
+				, note: app.newNoteText}
+			)
 		}
 	}
 	, schema: {

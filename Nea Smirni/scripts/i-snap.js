@@ -18,7 +18,6 @@ app.onSnapShow = function (e) {
 	var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
 	t.title("Snap - " + app.currentInspxAddress)
 	document.getElementById("snap-thumb").src = "noImageToShow"
-	document.getElementById("snap-fname").innerHTML = ""
 	document.getElementById("newImgNoteText").value = ""
 }
 
@@ -48,8 +47,7 @@ function onPhotoDataSuccess(imageURI) {
 //Callback function when the file system uri has been resolved
 function resolveOnSuccess(entry) { 
 	//new file name
-	var fname = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
-		function(c) {var r = Math.random()*16|0, v=c==='x'?r:r&0x3|0x8;return v.toString(16);});
+	var fname = app.guid();
 	fname = "Id_" + app.currentInspectionId + "_" + fname + ".jpg";
 	var NSAppFolder = "MyInspections";
 
@@ -86,111 +84,59 @@ function successMove(entry) {
 }
 
 function resOnError(error) {
-	alert("getDirectory error:" + error.code);
+	app.showStatus("getDirectory error:" + error.code);
 }
 
 function resOnError1(error) {
-	alert("requestFileSystem error:" + error.code);
+	app.showStatus("requestFileSystem error:" + error.code);
 }
 
 function resOnError2(error) {
-	alert("resolveLocalFileSystemURL error:" + error.code);
-
-	//function gotFiles(entries) {
-    //   var s = "";
-    //   for(var i=0,len=entries.length; i<len; i++) {
-    //       //entry objects include: isFile, isDirectory, name, fullPath
-    //       s+= entries[i].fullPath;
-    //       if (entries[i].isFile) {
-    //           s += " [F]";
-    //       }
-    //       else {
-    //            s += " [D]";
-    //        }
-    //        s += "<br/>";
-            
-    //    }
-    //    s+="<p/>";
-    //    console.log(s);
-    //}
-
-	////get a directory reader from our FS
-    //window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
-	//    function(fileSys) {
-	//	   var dirReader = fileSys.root.createReader()
-    //       dirReader.readEntries(gotFiles,resOnError3)
-    //    }
-	//,resOnError3
-	//)
-    //function resOnError3(error) {
-	//    console.log("requestFileSystem3 error:" + error.code);
-    //}
+	app.showStatus("resolveLocalFileSystemURL error:" + error.code);
 }
 
 function onFail(message) {
-	alert('Failed because: ' + message);
+	app.showStatus('Failed because: ' + message);
 }
 
-app.onAddImgNote1 = function(e) {
-	var l
-	
-	app.newNoteText = $("#newImgNoteText").val()
-	//app.notesDataSource.add({Note: app.newNoteText, CreateDate: "No Date"})
-	app.notesDataSource.add({})
-	app.notesDataSource.at(l=app.notesDataSource.data().length-1).set("Note", app.newNoteText)
-	app.notesDataSource.at(l).set("CreateDate", "No Date")
-	app.notesDataSource.sync()
-	app.notesDataSource.read()
-}
-
-// Picture up-downloads
+// Picture upload
 app.onAddImgNote = function (e){
-	//var imageURI = typeof(e) === "object" ? e.button.data().image : e;
 	var imageURI = document.getElementById("snap-thumb").src
     var options = new FileUploadOptions();
     options.fileKey="file"
-    options.fileName=imageURI
+	
+	if ("noImageToShow" === imageURI.substr(-13)) {
+		app.showStatus("No picture to upload")
+		return
+    }
+	options.fileName=imageURI
     options.mimeType="image/jpeg" 
-    //options.headers = {
-    //    Connection: "close"
-    //}
-
+	
     var params = {};
     //params.Inspectionid = app.currentInspectionId;
     params.ImageFileName = options.fileName;
-	params.ImageNotes = $("#newImgNoteText").val()
+	params.ImageNotes = $("#newImgNoteText").val().replace(/\n/g,"\\r\\n")
     
     options.params = params;
     
     var ft = new FileTransfer();
-	ft.onprogress = function(progressEvent) {
-		if (progressEvent.lengthComputable) {
-			t= progressEvent.loaded > 0.9 * progressEvent.total ? "" : "ing..." 
-			t= document.getElementById("uploadProgress").innerHTML = t
-			//loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
-		} else {
-			//loadingStatus.increment();
-		}
-	};
 
     ft.upload(imageURI, encodeURI(app.settings.saveInspxImageURL(app.currentInspectionId, options.fileName)), win, fail, options);
      
-    function win(r) {
-        console.log("Code = " + r.responseCode);
-        console.log("Response = " + r.response);
-        console.log("Sent = " + r.bytesSent);
+    function win() {
+        app.showStatus("Picture uploaded")
     }
     
     function fail(error) {
 		switch (error.code) {
 			case FileTransferError.FILE_NOT_FOUND_ERR:
-				alert("Photo file not found");
+				app.showStatus("Photo file not found");
 				break;
 			case FileTransferError.INVALID_URL_ERR:
-				alert("Bad Photo URL");
+				app.showStatus("Bad Photo URL");
 				break;
 			case FileTransferError.CONNECTION_ERR:
-				alert("Connection error");
+				app.showStatus("Connection error");
 				break;
 			
 		}
