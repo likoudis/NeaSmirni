@@ -286,7 +286,7 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 /* RETINA DISPLAY STYLES*/
-@media only screen and (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dppx) {
     .img {
         background-image: url(../styles/images/DirectIT/DctSplash-Larger.png);
         background-repeat: no-repeat;

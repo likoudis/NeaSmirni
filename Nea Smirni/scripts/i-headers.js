@@ -56,6 +56,7 @@ app.onInspectionShow = function(e) {
 
 app.onFilterFormShow = function (e) {
 	app.settings.set ("contains","")
+	app.settings.set("headerDateRange","all")
 }
 
 app.mobileListViewFiltering = function (e) {
