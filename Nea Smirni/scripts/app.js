@@ -1,6 +1,7 @@
 (function (global) {
     var app = global.app = global.app || {};
 
+	//alert(localStorage.getItem("NeaSmyrni.settings"))
     document.addEventListener('deviceready', function () {
 
 		app.application = new kendo.mobile.Application(document.body, {
@@ -11,21 +12,32 @@
         navigator.splashscreen.hide();
 		app.application.skin("flat");
 
+		app.settings.bind("change",function(e) {
+			var item=e.field
+			switch(item) {
+				case "hostName": case "useJson":
+					localStorage.setItem("NeaSmyrni." + item, app.settings.get(item))
+			}
+        })
+
 		app.settings.set("deviceId", device.uuid)
 		//app.settings.set("deviceId", "b32f2b6527524b5c")
-		app.settings.set("hostName", "qqw.directit.ca:8000")
-		app.settings.set("hostName", "89.210.253.91:8000")
-		app.settings.set("hostName", "192.168.2.6:8000")
-		app.settings.set("hostName", "dctlt063:8000")
-		app.settings.set("hostName", "dctlt060:8000")
-		app.settings.set("hostName", "192.168.2.50:8000")
-		app.settings.set("hostName", "192.168.2.60:8000")
+		app.lsInitialise("hostName", "qqw.directit.ca:8000")
+		//app.settings.set("hostName", "qqw.directit.ca:8000")
+		//app.settings.set("hostName", "89.210.253.91:8000")
+		//app.settings.set("hostName", "192.168.2.6:8000")
+		//app.settings.set("hostName", "dctlt063:8000")
+		//app.settings.set("hostName", "dctlt060:8000")
+		//app.settings.set("hostName", "192.168.2.50:8000")
+		//app.settings.set("hostName", "192.168.2.60:8000")
 
+		app.lsInitialise("useJson", true)
+		app.settings.isInetConnected = true
+		app.settings.set("isHostConnected", false)
 		app.currentInspectionId = 0
 		app.currentInspxAddress = ""
 		app.currentPermitId = 0
 		
-		app.settings.isInetConnected = true
 		app.isLoggedIn = true;
 		
 		app.reportElement = ""
@@ -37,8 +49,6 @@
 		kendo.bind($("#no-host"), app.settings);
 		kendo.bind($("#logout"), app.settings);
 
-		app.settings.set("isHostConnected", false)
-
 		app.checkValidDevice()
 		
 		app.itsTheSimulator = function() {
@@ -47,7 +57,6 @@
 
 		document.addEventListener("backbutton", function(){}, false);
 		
-
 	}, false);
 
 
@@ -98,8 +107,8 @@
 			+ "?DeviceId=" + this.get("deviceId")
 			+ "&InspectionId=" + inspection
 		}
-		, useJsonP: false
-		, dsDataType: function () {return "json" + (app.settings.useJsonP ? "p" : "")}
+		, useJson: false
+		, dsDataType: function () {return "json" + (app.settings.useJson ? "" : "p")}
 		, isHostConnected: false
 		, isInetConnected: false
 		, isDeviceValid: false
@@ -248,5 +257,13 @@
 	app.guid = function () {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
 		function(c) {var r = Math.random()*16|0, v=c==='x'?r:r&0x3|0x8;return v.toString(16);})
+    }
+	
+	app.lsInitialise = function(item, value) {
+		if (localStorage.getItem("NeaSmyrni."+item) !== null)
+			app.settings.set(item, localStorage.getItem("NeaSmyrni."+item))
+		else {
+			app.settings.set(item, value)
+		}
     }
 })(window);
