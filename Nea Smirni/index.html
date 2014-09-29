@@ -69,7 +69,7 @@
 			<div style="display:block; font-size: 0.75em">
 				Device ID:
 				<span id="loginDeviceId" data-bind="text: deviceId"> </span>
-				<span style="float:right;">Version 2014.09.19.1&nbsp;</span>
+				<span style="float:right;">Version 2014.10.01.4&nbsp;</span>
 			</div>
         </div>
 	</div>
@@ -89,7 +89,7 @@
 			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=yesterday">Yesterday's Inspections</a></li>
 			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=thisWeek">This Week's Inspections</a></li>
 			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=lastWeek">Last Week's Inspections</a></li>
-			<li data-icon="dct-search">  <a data-transition="none" href="#drawer-filter">Inspection Filter</a></li>
+			<li data-icon="dct-search">  <a data-transition="none" href="#drawer-filter">Search</a></li>
 			<!--li data-icon="dct-map">    <a data-transition="none" href="#drawer-map"   >Map</a></li!-->
 			<li></li>
 			<!--<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>-->
@@ -184,7 +184,7 @@
 	</script>
 
 	<!--Filter-->
-	<div data-role="view" data-title="Inspection List Filter"
+	<div data-role="view" data-title="Inspection Search"
 		id="drawer-filter" data-layout="drawer-layout" data-show="app.onFilterFormShow">
 		<form id="i-filter-form" style="font-size: 1.4em; padding: 5px">
 			<!--div><label>From-date:
@@ -202,13 +202,12 @@
 					<option value="Conditional">Conditional</option>
 				</select>
 			</label></div-->
-			<div><label>Contains:
+			<div><label>Keywords in Type, Number or Address:
 				<input style="font-size: 1.4em; width: 100%" placeholder="Search for"
 					data-bind="value: contains">
 			</label></div>
 		</form>
-			<div style="text-align: center"><a href="#drawer-inspxions" data-role="button"> Filter
-            </a></div>
+			<div style="text-align: center"><a href="#drawer-inspxions" data-role="button">Search</a></div>
 	</div>
 
 	<!--Map-->

@@ -7,7 +7,11 @@ app.pixDataSource = new kendo.data.DataSource({
 				, {inspectionId: app.currentInspectionId}
 			)
 		}
-	}
+	},
+	schema: {
+		total: "ImageCount",
+		data: "Images"
+    }
 })
 
 app.pixShow = function (e) {
