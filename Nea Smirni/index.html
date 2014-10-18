@@ -188,7 +188,8 @@
 		<div class="item-thumb">
 			<img class="loading-thumb" src= "#= "data:image/jpg;base64," + ThumbnailBase64 #" >
 		</div>
-		<a class="km-listview-link" style="display: table-cell; width:100%" href="\#inspx-notes">
+		<a class="km-listview-link" style="display: table-cell; width:100%" href="\#inspx-notes"
+			onclick="return app.setAndReadFor(#=InspectionId #,'#=PropertyAddress #');">
 			<div style="width:100%">
 				<h3>
 					<span class="time">
@@ -355,13 +356,23 @@
 
 		<div data-role="scrollview"
 			data-source="app.pixDataSource"
-			data-template="scrollview-template1"
+			data-template="scrollview-template"
 			data-content-height="100%"
 			data-enable-pager="true"
 		  data-changed="app.onPixScrollChange">
 		</div>
 	</div>
 	<script type="text/x-kendo-template" id="scrollview-template">
+		<div style= "margin: 5px">
+			<div id="i-pix-image">
+				<img style="width:auto; margin:auto; max-width:99%; max-height:99%"
+	  		 src="#: MobileFileName#" alt="Image not available">
+			</div>
+			<div id="i-pix-note"> <textarea rows="20" cols="60"> #=Note#</textarea>
+			</div>
+		</div>
+    </script>
+	<script type="text/x-kendo-template" id="scrollview-template2">
 		<div style= "margin: 5px">
 			<div id="i-pix-image">
 				<img style="width:auto; margin:auto; max-width:99%; max-height:99%"

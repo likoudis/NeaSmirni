@@ -21,8 +21,8 @@
         })
 
 		app.lsInitialise("dsTimeOut", 5)
-		//app.settings.set("deviceId", device.uuid)
-		app.settings.set("deviceId", "CBD30130-86F8-4C42-B7C3-CD6C7EE6C93A")
+		app.settings.set("deviceId", device.uuid)
+		//app.settings.set("deviceId", "CBD30130-86F8-4C42-B7C3-CD6C7EE6C93A")
 		//app.settings.set("deviceId", "b32f2b6527524b5c")
 		app.lsInitialise("hostName", "qqw.directit.ca:8000")
 		//app.settings.set("hostName", "qqw.directit.ca:8000")
