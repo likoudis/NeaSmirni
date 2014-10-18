@@ -15,12 +15,14 @@
 		app.settings.bind("change",function(e) {
 			var item=e.field
 			switch(item) {
-				case "hostName": case "useJson":
+				case "hostName": case "useJson": case "dsTimeOut":
 					localStorage.setItem("NeaSmyrni." + item, app.settings.get(item))
 			}
         })
 
-		app.settings.set("deviceId", device.uuid)
+		app.lsInitialise("dsTimeOut", 5)
+		//app.settings.set("deviceId", device.uuid)
+		app.settings.set("deviceId", "CBD30130-86F8-4C42-B7C3-CD6C7EE6C93A")
 		//app.settings.set("deviceId", "b32f2b6527524b5c")
 		app.lsInitialise("hostName", "qqw.directit.ca:8000")
 		//app.settings.set("hostName", "qqw.directit.ca:8000")
@@ -109,6 +111,7 @@
 		}
 		, useJson: false
 		, dsDataType: function () {return "json" + (app.settings.useJson ? "" : "p")}
+		, dsTimeOut: 5
 		, isHostConnected: false
 		, isInetConnected: false
 		, isDeviceValid: false
@@ -163,34 +166,9 @@
 				app.settings.set("isDeviceValid", undefined)
 				app.showStatus("Could not authorize the device: " + s)
 			}
-			, timeout: 5000
+			, timeout: app.settings.get("dsTimeOut")*1000
 			, callbackParameter: 'callback'
     	});
-	}
-
-	app.onReportShow = function (e) {
-		var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
-		t.title("Report - " + app.currentInspxAddress)
-
-		var xml = new XMLHttpRequest();
-		xml.open("GET", app.settings.getInspxCheckListXmlURL(app.currentInspectionId) ,false);
-		//xml.open("GET", "data/MyInspections/temp/inspection00000.xml" ,false);
-		xml.send("");
-		var xsl = new XMLHttpRequest();
-		xsl.open("GET", "data/MyInspections/Reports/CheckList.xsl",false);
-		xsl.send("");
-		xsltProcessor = new XSLTProcessor();
-		xsltProcessor.importStylesheet(xsl.responseXML);
-		resultDocument = xsltProcessor.transformToFragment(xml.responseXML, document);
-		if (document.querySelector("#xlistXMLTable1")) {
-			document.getElementById("scroller-report").removeChild(
-				document.getElementById("xlistXMLTable1"))
-			document.getElementById("scroller-report").removeChild(
-				document.getElementById("xlistXMLH2"))
-			document.getElementById("scroller-report").removeChild(
-				document.getElementById("xlistXMLTable3"))
-        }
-		document.getElementById("scroller-report").appendChild(resultDocument)
 	}
 
 	app.onEmailShow = function (e) {
@@ -236,11 +214,11 @@
 			, data: $.extend(
 				{deviceid: app.settings.deviceId }
 				, dataObject)
-			, timeout: 5000
+			, timeout: app.settings.get("dsTimeOut")*1000
 			, beforeSend: function(e) {app.application && app.application.showLoading()}
 			, complete:   function(e) {
 				app.application && app.application.hideLoading();
-}
+			}
 			, success: function(result){
 				// notify the data source that the request succeeded
 				option.success(result)
@@ -266,4 +244,22 @@
 			app.settings.set(item, value)
 		}
     }
+	
+	app.fileSystemError = function (e) {
+		switch (e.code) {
+    		case FileError.NOT_FOUND_ERR:               msg = 'NOT_FOUND_ERR';               break;//1
+    		case FileError.SECURITY_ERR:                msg = 'SECURITY_ERR';                break;//2
+    		case FileError.NOT_READABLE_ERR:            msg = 'NOT_READABLE_ERR';            break;//4
+    		case FileError.ENCODING_ERR:                msg = 'ENCODING_ERR';                break;//5
+    		case FileError.NO_MODIFICATION_ALLOWED_ERR: msg = 'NO_MODIFICATION_ALLOWED_ERR'; break;//6
+    		case FileError.INVALID_STATE_ERR:           msg = 'INVALID_STATE_ERR';           break;//7
+    		case FileError.INVALID_MODIFICATION_ERR:    msg = 'INVALID_MODIFICATION_ERR';    break;//9
+    		case FileError.QUOTA_EXCEEDED_ERR:          msg = 'QUOTA_EXCEEDED_ERR';          break;//10
+    		case FileError.TYPE_MISMATCH_ERR:           msg = 'TYPE_MISMATCH_ERR';           break;//11
+    		case FileError.PATH_EXISTS_ERR:             msg = 'PATH_EXISTS_ERR';             break;//12
+    		default:                                    msg = 'Unknown Error';               break;
+		}
+		return msg
+	}
+
 })(window);

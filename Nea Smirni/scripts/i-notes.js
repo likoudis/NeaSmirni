@@ -29,8 +29,8 @@ app.notesDataSource = new kendo.data.DataSource ({
 				option
 				, app.settings.addNoteURL()
 				, {inspectionId: app.currentInspectionId
-				, createDate: ""
-				, note: app.newNoteText}
+				,  createDate: ""
+				,  note: app.newNoteText}
 			)
 		}
 	}

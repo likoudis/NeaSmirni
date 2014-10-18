@@ -5,7 +5,7 @@ app.headersDataSource = new kendo.data.DataSource ({
 					option
 					, app.settings.headersURL()
 					, {daterange: app.settings.get("headerDateRange")
-					, contains: app.settings.get("contains")}
+					,  contains: app.settings.get("contains")}
 				)
 		}
 	}

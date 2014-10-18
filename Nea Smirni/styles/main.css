@@ -422,26 +422,26 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 /* DirectIT icons and their images */
-.km-dct-home:before { background: url("images/DirectIT/home.png") no-repeat; display: block }
-.km-dct-headers:before { background: url("images/DirectIT/headers.png") no-repeat; display: block }
-.km-dct-search:before { background: url("images/DirectIT/search.png") no-repeat; display: block }
-.km-dct-map:before { background: url("images/DirectIT/map.png") no-repeat; display: block }
-.km-dct-settings:before { background: url("images/DirectIT/settings.png") no-repeat; display: block }
-.km-dct-snap:before { background: url("images/DirectIT/snap.png") no-repeat; display: block }
-.km-dct-report:before { background: url("images/DirectIT/report.png") no-repeat; display: block }
-.km-dct-e-mail:before { background: url("images/DirectIT/e-mail.png") no-repeat; display: block }
+.km-dct-home:before       { background: url("images/DirectIT/home.png")       no-repeat; display: block }
+.km-dct-headers:before    { background: url("images/DirectIT/headers.png")    no-repeat; display: block }
+.km-dct-search:before     { background: url("images/DirectIT/search.png")     no-repeat; display: block }
+.km-dct-map:before        { background: url("images/DirectIT/map.png")        no-repeat; display: block }
+.km-dct-settings:before   { background: url("images/DirectIT/settings.png")   no-repeat; display: block }
+.km-dct-snap:before       { background: url("images/DirectIT/snap.png")       no-repeat; display: block }
+.km-dct-report:before     { background: url("images/DirectIT/report.png")     no-repeat; display: block }
+.km-dct-e-mail:before     { background: url("images/DirectIT/e-mail.png")     no-repeat; display: block }
 .km-dct-assessment:before { background: url("images/DirectIT/assessment.png") no-repeat; display: block }
-.km-dct-details:before { background: url("images/DirectIT/details.png") no-repeat; display: block }
-.km-dct-notes:before { background: url("images/DirectIT/notes.png") no-repeat; display: block }
-.km-dct-pictures:before { background: url("images/DirectIT/pictures.png") no-repeat; display: block }
-.km-dct-lists:before { background: url("images/DirectIT/lists.png") no-repeat; display: block }
-.km-dct-actions:before { background: url("images/DirectIT/actions.png") no-repeat; display: block }
-.km-dct-back:before { background: url("images/DirectIT/back.png") no-repeat; display: block }
-.km-dct-mapAdd:before { background: url("images/DirectIT/mapAdd.png") no-repeat; display: block }
-.km-dct-mapRemove:before { background: url("images/DirectIT/mapRemove.png") no-repeat; display: block }
-.km-dct-pass:before { background: url("images/DirectIT/pass.png") no-repeat; display: block }
-.km-dct-fail:before { background: url("images/DirectIT/fail.png") no-repeat; display: block }
-.km-dct-willSee:before { background: url("images/DirectIT/willSee.png") no-repeat; display: block }
+.km-dct-details:before    { background: url("images/DirectIT/details.png")    no-repeat; display: block }
+.km-dct-notes:before      { background: url("images/DirectIT/notes.png")      no-repeat; display: block }
+.km-dct-pictures:before   { background: url("images/DirectIT/pictures.png")   no-repeat; display: block }
+.km-dct-lists:before      { background: url("images/DirectIT/lists.png")      no-repeat; display: block }
+.km-dct-actions:before    { background: url("images/DirectIT/actions.png")    no-repeat; display: block }
+.km-dct-back:before       { background: url("images/DirectIT/back.png")       no-repeat; display: block }
+.km-dct-mapAdd:before     { background: url("images/DirectIT/mapAdd.png")     no-repeat; display: block }
+.km-dct-mapRemove:before  { background: url("images/DirectIT/mapRemove.png")  no-repeat; display: block }
+.km-dct-pass:before       { background: url("images/DirectIT/pass.png")       no-repeat; display: block }
+.km-dct-fail:before       { background: url("images/DirectIT/fail.png")       no-repeat; display: block }
+.km-dct-willSee:before    { background: url("images/DirectIT/willSee.png")    no-repeat; display: block }
 
 /* AutoComplete for new image note */
 #newImgNoteText_listbox, #newNoteText_listbox {
@@ -463,3 +463,14 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 #i-filter-form input , #i-filter-form select {
 	float:right;
 }
+
+#drawer-report form {
+	height: 30%;
+	margin-left: 5px;
+	margin-right: 25px; /* to allow the finger to resize */
+}
+#drawer-report textarea {
+	height: 100%;
+	padding: 3px;
+}
+

@@ -19,10 +19,11 @@
 	<script src="scripts/i-headers.js"></script>
 	<script src="scripts/i-details.js"></script>
 	<script src="scripts/i-notes.js"></script>
+	<script src="scripts/i-pictures.js"></script>
 	<script src="scripts/i-history.js"></script>
 	<script src="scripts/i-snap.js"></script>
-	<script src="scripts/i-pictures.js"></script>
-	
+	<script src="scripts/i-report.js"></script>
+ 	
 	<style>
 	    html .km-wp-light .km-content,
 	    html .km-wp-light .km-button,
@@ -160,7 +161,7 @@
 		    </ul>
         </div>
 	</div>
-	<script type="text/x-kendo-template" id="inspx-template">
+	<script type="text/x-kendo-template" id="inspx-template1">
 		<div>
 			<div class="item-thumb">
 				<img class="loading-thumb" src= "#= "data:image/jpg;base64," + ThumbnailBase64 #" >
@@ -177,10 +178,30 @@
 				<p>No: #= InspectionNo #</p>
 				<p>#= InspectionType #</p>
 			</div>
-		<a class="item-link" href="\#inspx-notes" onclick="return app.setAndReadFor(#=InspectionId #,'#=PropertyAddress #');"
+		<a class="item-link" href="\#inspx-notes"
+			onclick="return app.setAndReadFor(#=InspectionId #,'#=PropertyAddress #');"
 			> &nbsp; &nbsp; &gt; &nbsp;
 		</a>
 		</div>
+	</script>
+	<script type="text/x-kendo-template" id="inspx-template">
+		<div class="item-thumb">
+			<img class="loading-thumb" src= "#= "data:image/jpg;base64," + ThumbnailBase64 #" >
+		</div>
+		<a class="km-listview-link" style="display: table-cell; width:100%" href="\#inspx-notes">
+			<div style="width:100%">
+				<h3>
+					<span class="time">
+						#= InspectionDate === null ? 'No date' : new Date(InspectionDate).toDateString() #
+					</span>
+					<span style="float:right">
+						#= PropertyAddress #
+					</span>
+				</h3>
+				<p>No: #= InspectionNo #</p>
+				<p>#= InspectionType #</p>
+			</div>
+		</a>
 	</script>
 
 	<!--Filter-->
@@ -211,36 +232,6 @@
             </a></div>
 	</div>
 
-	<!--Map-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-map" data-title="Map"
-		data-init="app.locationService.initLocation"
-		data-show="app.locationService.show"
-		data-hide="app.locationService.hide"
-		data-model="app.locationService.viewModel"
-		data-stretch="true">
-
-		<div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
-			This view requires internet connection to display the map.
-		</div>
-		<div>
-			<!--div class="map-search-wrap">
-				<div>
-					<button id="map-navigate-home" class="map-tools-button home" data-bind="click: onNavigateHome"></button>
-    				<input id="map-address" type="search" class="map-tools-input" data-bind="value: address" placeholder="Address" />
-					<button class="map-tools-button search" data-bind="click: onSearchAddress"></button>
-				</div>
-			</div-->
-			<ul id="listview-permitsToday" 
-				data-role="listview"
-				data-bind="source: permitsTodayDataSource"
-				data-template="location-inspections-template">
-			</ul>
-			<p id="map-canvas"
-				data-bind="visible: isGoogleMapsInitialized">
-			</p>
-		</div>
-	</div>
-
 	<!--Inspection Address List template-->
 	<script type="text/x-kendo-tmpl" id="location-inspections-template">
 		<div>
@@ -269,6 +260,10 @@
 			<div><label>Use "json" for remote requests: 
 				<input type="checkbox" style="width: initial"
 					data-bind="checked: useJson" />
+			</label></div>
+			<div><label>Remote request timeout (sec): 
+				<input type="text" placeholder="5000"
+					data-bind="value: dsTimeOut" />
 			</label></div>
         </form>
 	</div>
@@ -302,7 +297,7 @@
 			data-source="app.detailsDataSource"
 			data-template="details-template"
 			data-auto-bind="false">
-		  </ul>
+		</ul>
 	</div>
 	<script type="text/x-kendo-template" id="details-template">
 		<h2>Inspection Information</h2>
@@ -357,37 +352,32 @@
 	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs"
 		data-layout="drawer-layout1" data-stretch="true"
 		data-show="app.pixShow">
-		<!--ul id="pix-listview"
-			data-role="listview"
-			data-source="app.pixDataSource"
-			data-template="pix-list-template" 
-			data-click="showDetail">
-		</ul-->
 
 		<div data-role="scrollview"
 			data-source="app.pixDataSource"
-			data-template="scrollview-template"
+			data-template="scrollview-template1"
 			data-content-height="100%"
 			data-enable-pager="true"
-		>
+		  data-changed="app.onPixScrollChange">
 		</div>
 	</div>
-	<script type="text/x-kendo-template" id="pix-list-template1">
-		<p><img height="400" width="auto" src="#= MobileFileName #"><span class="idetail-d"> #= MobileFileName#   </span></p>
-    </script>
 	<script type="text/x-kendo-template" id="scrollview-template">
 		<div style= "margin: 5px">
-		<div id="i-pix-image">
-		<img style="width:auto; margin:auto; max-width:99%; max-height:99%" src="#= MobileFileName #">
-		</div>
-		<div id="i-pix-note"> <textarea rows="20" cols="60"> #=Note#</textarea>
-		</div>
+			<div id="i-pix-image">
+				<img style="width:auto; margin:auto; max-width:99%; max-height:99%"
+	  		 src="# "image/jpg;base64," + ImageBase64#" alt="Bugger!">
+			</div>
+			<div id="i-pix-note"> <textarea rows="20" cols="60"> #=Note#</textarea>
+			</div>
 		</div>
     </script>
 	<script type="text/x-kendo-template" id="scrollview-template1">
-		<div class="image" style="background-image: url(#: MobileFileName #)">
+		<div class="image" 
+	    style="background-image: styles/images/DirectIT/actions.png">
 		</div>
-    </script>
+		<div id="i-pix-note"> <textarea rows="20" cols="60"> #=Note#</textarea>
+		</div>
+   </script>
 	<style scoped>
 		.image {
 			display: block;
@@ -402,7 +392,7 @@
 	<div id="drawer-snap" data-role="view" data-layout="drawer-layout2"
 		data-title="Take Pictures" data-show="app.onSnapShow">
 		<div style="margin:5px">
- 			<div id="pixur-preview">
+			<div id="pixur-preview">
 				<img id="snap-thumb" alt="No picture available"
 				style="width:350px; margin: 5px">
 				<div style="text-align: center">
@@ -424,11 +414,23 @@
 	<!--Report-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-report"
 		data-title="Reports" data-show="app.onReportShow">
-		<a data-role="button" href="#"
-			style="position: fixed; right:5px; top:65px">
-			E-mail
-        </a>
-		<div data-role="scroller" id="scroller-report" style="width:100%">
+
+		<div style="height:60vh">
+  		<p>Top Section</p>
+  		<form>
+  			<textarea id="newReportTextTop"></textarea>
+  		</form>
+  		<p>Middle Section</p>
+  		<form>
+  			<textarea id="newReportTextMid"></textarea>
+  		</form>
+  		<p>Bottom Section</p>
+		  <form>
+				<textarea id="newReportTextBot"></textarea>
+			</form>
+  		<div style="text-align:right">
+			<div data-role="button" data-click="app.onAddSection">Save</div>
+          </div>
 		</div>
 	</div>
 
