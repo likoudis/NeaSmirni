@@ -8,7 +8,7 @@
 			, filter: "startswith"
 			, placeholder: "Start writing..."
 			, separator: " "
-			, suggest: true
+			, suggest: false
 			, height: 300
 		});
 	})

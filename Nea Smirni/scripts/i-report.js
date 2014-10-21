@@ -8,7 +8,7 @@
 			, filter: "startswith"
 			, placeholder: "Start writing..."
 			, separator: " "
-			, suggest: true
+			, suggest: false
 			, height: 300
 		});
 		$("#newReportTextMid").kendoAutoComplete({
@@ -16,7 +16,7 @@
 			, filter: "startswith"
 			, placeholder: "Start writing..."
 			, separator: " "
-			, suggest: true
+			, suggest: false
 			, height: 300
 		});
 		$("#newReportTextBot").kendoAutoComplete({
@@ -24,7 +24,7 @@
 			, filter: "startswith"
 			, placeholder: "Start writing..."
 			, separator: " "
-			, suggest: true
+			, suggest: false
 			, height: 300
 		});
 	})

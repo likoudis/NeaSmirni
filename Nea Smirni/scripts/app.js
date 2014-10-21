@@ -24,14 +24,14 @@
 		app.settings.set("deviceId", device.uuid)
 		//app.settings.set("deviceId", "CBD30130-86F8-4C42-B7C3-CD6C7EE6C93A")
 		//app.settings.set("deviceId", "b32f2b6527524b5c")
-		app.lsInitialise("hostName", "qqw.directit.ca:8000")
-		//app.settings.set("hostName", "qqw.directit.ca:8000")
-		//app.settings.set("hostName", "89.210.253.91:8000")
-		//app.settings.set("hostName", "192.168.2.6:8000")
-		//app.settings.set("hostName", "dctlt063:8000")
-		//app.settings.set("hostName", "dctlt060:8000")
-		//app.settings.set("hostName", "192.168.2.50:8000")
-		//app.settings.set("hostName", "192.168.2.60:8000")
+		//app.lsInitialise("hostName", "qqw.directit.ca:8000")
+		//app.lsInitialise("hostName", "89.210.253.91:8000")
+		//app.lsInitialise("hostName", "192.168.2.6:8000")
+		//app.lsInitialise("hostName", "dctlt063:8000")
+		//app.lsInitialise("hostName", "dctlt060:8000")
+		//app.lsInitialise("hostName", "192.168.2.50:8000")
+		app.lsInitialise("hostName", "192.168.2.60:8000")
+		//app.lsInitialise("hostName", "192.168.2.7:8000")
 
 		app.lsInitialise("useJson", true)
 		app.settings.isInetConnected = true
@@ -59,6 +59,8 @@
 
 		document.addEventListener("backbutton", function(){}, false);
 		
+		app.acDictionary.read()
+
 	}, false);
 
 
@@ -95,6 +97,9 @@
 		}
 		, getInspxPicturesURL: function () {
 			return this.get("serviceHostURL()") + "/GetInspectionImages"
+		}
+		, getInspxDictURL: function () {
+			return this.get("serviceHostURL()") + "/GetInspectionDictionary"
 		}
 		, saveInspxImageURL: function (inspection, filename) {
 			return this.get(
@@ -178,10 +183,16 @@
 
 	app.acDictionary = new kendo.data.DataSource({
 		transport: {
-		 	read: {
-		 	 	url: "data/MyInspections/dictionary.json",
-		 	 	dataType: "json"
-		 	}
+		 	//read: {
+		 	// 	url: "data/MyInspections/dictionary.json",
+		 	// 	dataType: "json"
+		 	//}
+			read: function(option) {
+				app.ajax4datasouce(
+					option
+					, app.settings.getInspxDictURL()
+				)
+			}
 		}
     })
 	
@@ -261,5 +272,51 @@
 		}
 		return msg
 	}
+	
+	app.onDictionaryRefresh = function (e) { //why is this function executed twice???
+		if (e.button) {
+			console.log(e)
+			app.acDictionary.read()
+		}
+    }
 
+	app.onContactKeyPress11 = function () {
+	    //var txt = window.event.keyCode;
+		var txt = document.getElementById("reportEmailTo")
+		txt.value = txt.value.replace(/[\r\n]/g, "ddddd")
+		
+		//alert(">" + txt.value + "<")
+
+// find all contacts with 'Bob' in any name field
+var options      = new ContactFindOptions();
+options.filter   = txt.value;
+options.multiple = false;
+options.desiredFields = [navigator.contacts.fieldType.emails];
+var fields       = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
+navigator.contacts.find(fields,
+		
+		//navigator.contacts.pickContact(
+				function(contact){
+        			alert(txt.value + 'The following contact has been selected:' + JSON.stringify(contact));
+					txt.value = (txt.value ? txt.value + "; " : "") + contact.emails[0].value
+    			},function(err){
+    			    alert(txt.value + 'Error: ' + err);
+    			}
+		, options);
+		//alert(key)
+    }
+
+	app.onContactKeyPress = function () {
+		var txt = document.getElementById("reportEmailTo")
+		navigator.contacts.pickContact(
+				function(contact){
+        			if (contact.emails.length && contact.emails[0].value) {
+						alert('The following contact has been selected:' + JSON.stringify(contact));
+						txt.value = (txt.value ? txt.value + "; " : "") + contact.emails[0].value
+					}
+    			},function(err){
+    			    alert('Error: ' + err);
+    			});
+		//alert(key)
+    }
 })(window);

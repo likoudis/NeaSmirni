@@ -70,7 +70,7 @@
 			<div style="display:block; font-size: 0.75em">
 				Device ID:
 				<span id="loginDeviceId" data-bind="text: deviceId"> </span>
-				<span style="float:right;">Version 2014.10.18.1&nbsp;</span>
+				<span style="float:right;">Version 2014.10.20.1&nbsp;</span>
 			</div>
         </div>
 	</div>
@@ -105,13 +105,12 @@
 		style="width: 200px">
 		<ul data-role="listview" data-type="inset" >
 			<li data-icon="dct-assessment"><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a></li>
-			<!-- li data-icon="compose">  <a data-transition="none" href="#drawer-addinspx">Add Inspection</a></li!-->
 			<li data-icon="dct-details">  <a data-transition="none" href="#inspx-details" >Details</a></li>
 			<li data-icon="dct-notes"> <a data-transition="none" href="#inspx-notes"   >Notes</a></li>
 			<li data-icon="dct-pictures">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li>
 			<li></li>
 			<li data-icon="dct-snap">   <a data-transition="none" href="#drawer-snap"   >Snap</a> </li>
-			<li data-icon="dct-report"> <a data-transition="none" href="#drawer-report" >Report</a></li>
+			<!--li data-icon="dct-report"> <a data-transition="none" href="#drawer-report" >Report</a></li!-->
 			<li data-icon="dct-e-mail"> <a data-transition="none" href="#drawer-email"  >E-mail</a></li>
 		</ul>
 	</div>
@@ -232,27 +231,10 @@
 			<div style="text-align: center"><a href="#drawer-inspxions" data-role="button">Search</a></div>
 	</div>
 
-	<!--Inspection Address List template-->
-	<script type="text/x-kendo-tmpl" id="location-inspections-template">
-		<div>
-			#=address#
-			<a 
-				data-role="detailbutton" data-icon="dct-mapAdd"
-				data-bind="click:onInspectionSelect, invisible:inspectionAddressOnMap">
-				<span style="visibility:hidden">#=id#</span>
-			</a>
-			<a 
-				data-role="detailbutton" data-icon="dct-mapRemove"
-				data-bind="click:onInspectionSelect, visible:inspectionAddressOnMap">
-				<span style="visibility:hidden">#=id#</span>
-			</a>
-		</div>
-	</script>
-
 	<!--Settings-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-settings"
 		data-title="Settings">
-		<form action="javascript:history.back()">
+		<form>
 			<div> <label>Service host and port: 
 				<input type="text" placeholder="localhost:8000"
 					data-bind="value: hostName" />
@@ -265,7 +247,10 @@
 				<input type="text" placeholder="5000"
 					data-bind="value: dsTimeOut" />
 			</label></div>
-        </form>
+ 			<a data-role="button" data-click="app.onDictionaryRefresh">
+				Tap here to refresh dictionary
+            </a>
+       </form>
 	</div>
 	
 	<!--Assess (pass/fail)-->
@@ -330,7 +315,7 @@
 		<div style="text-align:center">
 			<p>New Note</p>
 			<form style="margin-right: 25px">
-				<textarea id="newNoteText"
+				<textarea id="newNoteText" rows="7"
 					style="padding: 3px"></textarea>
 			<div data-role="button" data-click="app.onAddNote">Append</div>
 			</form>
@@ -342,9 +327,11 @@
 		</div>
 	</div>
 	<script type="text/x-kendo-template" id="notes-template">
-		<div class="item-summary" style="width:60%">
-		<h3 class="time"> #= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  # </h3>
-		<p> #= Note || "&lt;no notes&gt;" # </p>
+		<div class="item-summary" style="width:100%">
+			<div class="time" style="display: inline">
+				#= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  #
+			</div>
+		<div style="display: inline"> #= Note || "&lt;no notes&gt;" # </div>
 		</div>
 	</script>
 
@@ -364,8 +351,8 @@
 	<script type="text/x-kendo-template" id="scrollview-template">
 		<div style= "margin: 5px">
 			<div id="i-pix-image">
-				<img style="width:auto; margin:auto; max-width:99%; max-height:99%"
-	  		 src="#: MobileFileName#" alt="Image not available">
+				<img style="width:auto; margin:auto; max-width:99%; max-height:99%; min-height:60px"
+	  		 src="#: MobileFileName#" alt=" Image not available">
 			</div>
 			<div id="i-pix-note"> <textarea rows="20" cols="60"> #=Note#</textarea>
 			</div>
@@ -403,7 +390,8 @@
 		data-title="Take Pictures" data-show="app.onSnapShow">
 		<div style="margin:5px">
 			<div id="pixur-preview">
-				<img id="snap-thumb" alt="No picture available"
+				<p>Picture preview</p>
+				<img id="snap-thumb" alt=" No picture available"
 				style="width:350px; margin: 5px">
 				<div style="text-align: center">
 					<a data-role="button" data-click="app.onSnapClick" id="snap-button">
@@ -412,8 +400,8 @@
 				</div>
 			</div>
 			<form id="pixur-note-form">
-				<p>Picture Note</p>
-				<textarea rows="20" id="newImgNoteText"></textarea>
+				<p style="margin-top:2em"> Picture Note</p>
+				<textarea rows="15" id="newImgNoteText"></textarea>
 				<div data-role="button" data-click="app.onAddImgNote">
 					Upload
 				</div>
@@ -437,7 +425,7 @@
   		<p>Bottom Section</p>
 		  <form>
 				<textarea id="newReportTextBot"></textarea>
-			</form>
+          </form>
   		<div style="text-align:right">
 			<div data-role="button" data-click="app.onAddSection">Save</div>
           </div>
@@ -450,8 +438,10 @@
 			<form>
 				<ul data-role="listview" data-style="inset">
 					<li>
-						<label>To:
-							<input type="email" style="width:85%; text-align:left" value="someone@domain.ca" />
+						<label><div data-role="button" data-click="app.onContactKeyPress">To:</div>
+							<!--input type="email" style="width:85%; text-align:left" value="someone@domain.ca" /!-->
+							<textarea id="reportEmailTo" onkeypress="app.onContactKeyPresss();" placeholder="Tap to get the contacts" 
+								style="width:85%; padding: 3px; border: 1px solid"></textarea>
 						</label>
 					</li>
 					<li>
@@ -462,8 +452,7 @@
 					<li>
 						<label>Message
 							<textarea placeholder="Enter your comments here..." 
-								rows="10" cols="60" style="width:85%; padding: 3px; border: 1px solid">
-                  </textarea>
+								rows="10" cols="60" style="width:85%; padding: 3px; border: 1px solid"></textarea>
 						</label>
 					</li>
 					<li>

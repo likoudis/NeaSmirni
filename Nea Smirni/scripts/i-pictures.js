@@ -10,8 +10,8 @@ app.pixDataSource = new kendo.data.DataSource({
 			)
 		}
 	}
-	, serverPaging: true
-	, pageSize: 3
+	//, serverPaging: true
+	//, pageSize: 3
 	, schema: {data: "Images", total: "ImageCount"}
 
 })
