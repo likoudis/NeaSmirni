@@ -343,11 +343,18 @@
 		<div data-role="scrollview"
 			data-source="app.pixDataSource"
 			data-template="scrollview-template"
+			data-empty-template="scrollview-empty"
 			data-content-height="100%"
 			data-enable-pager="true"
 		  data-changed="app.onPixScrollChange">
 		</div>
 	</div>
+
+
+	<script id="scrollview-empty" type="text/x-kendo-template">
+	  <div style="text-align:center; vertical-align:bottom; height:100%vh">empty</div>
+	</script>
+
 	<script type="text/x-kendo-template" id="scrollview-template">
 		<div style= "margin: 5px">
 			<div id="i-pix-image">
@@ -463,7 +470,7 @@
 				</ul>
 			</form>
 		</div>
-		<a style="position:fixed; bottom: 40px; right: 30px" data-role="button">
+		<a style="position:fixed; bottom: 40px; right: 30px" data-role="button" data-click="app.onEmailSubmit">
 			Submit
         </a>
 	</div>

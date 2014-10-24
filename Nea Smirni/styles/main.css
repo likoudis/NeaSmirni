@@ -450,9 +450,19 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 	line-height: 30px;
 }
 
-#left-drawer div, #right-drawer div, .km-view-title {
+#left-drawer div, .km-view-title {
 	color: White;
 	background-color: rgba(44,62,80,0.9);
+}
+
+#right-drawer div {
+	color: White;
+	background-color: rgba(245,158,31,0.9);
+}
+
+#left-drawer li, #right-drawer li {
+	border-width: 0 0 3px 0;
+	border-color: White
 }
 
 .km-flat .km-button {

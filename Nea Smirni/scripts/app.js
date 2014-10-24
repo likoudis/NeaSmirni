@@ -20,10 +20,15 @@
 			}
         })
 
+		app.itsTheSimulator = function() {
+			return device.uuid.substr(-6) === "010333"
+        }
+
 		app.lsInitialise("dsTimeOut", 5)
 		app.settings.set("deviceId", device.uuid)
-		//app.settings.set("deviceId", "CBD30130-86F8-4C42-B7C3-CD6C7EE6C93A")
-		//app.settings.set("deviceId", "b32f2b6527524b5c")
+		//app.itsTheSimulator() && app.settings.set("deviceId", "CBD30130-86F8-4C42-B7C3-CD6C7EE6C93A")
+		// app.itsTheSimulator() && app.settings.set("deviceId", "b32f2b6527524b5c")
+
 		//app.lsInitialise("hostName", "qqw.directit.ca:8000")
 		//app.lsInitialise("hostName", "89.210.253.91:8000")
 		//app.lsInitialise("hostName", "192.168.2.6:8000")
@@ -53,10 +58,6 @@
 
 		app.checkValidDevice()
 		
-		app.itsTheSimulator = function() {
-			return device.uuid.substr(-6) === "010333"
-        }
-
 		document.addEventListener("backbutton", function(){}, false);
 		
 		app.acDictionary.read()
@@ -100,6 +101,9 @@
 		}
 		, getInspxDictURL: function () {
 			return this.get("serviceHostURL()") + "/GetInspectionDictionary"
+		}
+		, sendEmailURL: function () {
+			return this.get("serviceHostURL()") + "/EmailInspectionReport"
 		}
 		, saveInspxImageURL: function (inspection, filename) {
 			return this.get(
@@ -280,28 +284,30 @@
 		}
     }
 
-	app.onContactKeyPress11 = function () {
+	app.onContactKeyPress1 = function () {
 	    //var txt = window.event.keyCode;
 		var txt = document.getElementById("reportEmailTo")
-		txt.value = txt.value.replace(/[\r\n]/g, "ddddd")
+		txt.value = txt.value.replace(/[\r\n]+/g, "ddddd")
 		
-		//alert(">" + txt.value + "<")
+		alert(">" + txt.value + "<")
 
-// find all contacts with 'Bob' in any name field
-var options      = new ContactFindOptions();
-options.filter   = txt.value;
-options.multiple = false;
-options.desiredFields = [navigator.contacts.fieldType.emails];
-var fields       = [navigator.contacts.fieldType.displayName, navigator.contacts.fieldType.name];
-navigator.contacts.find(fields,
-		
-		//navigator.contacts.pickContact(
-				function(contact){
-        			alert(txt.value + 'The following contact has been selected:' + JSON.stringify(contact));
-					txt.value = (txt.value ? txt.value + "; " : "") + contact.emails[0].value
-    			},function(err){
-    			    alert(txt.value + 'Error: ' + err);
-    			}
+		// find all contacts with 'Bob' in any name field
+		var options      = new ContactFindOptions();
+		options.filter   = txt.value;
+		options.multiple = true;
+		options.desiredFields = [navigator.contacts.fieldType.id];
+		var fields = [
+			  navigator.contacts.fieldType.id
+			,  navigator.contacts.fieldType.displayName
+			, navigator.contacts.fieldType.name];
+		navigator.contacts.find(fields,
+			function(contact){
+        		alert(txt.value + 'The following contact has been selected: ' + 
+					JSON.stringify(contact).replace(/}/g, "}\n").replace(/,\"/g, "\n ,\""));
+				txt.value = (txt.value ? txt.value + "; " : "") + contact.forEach(function(e){return e})
+			},function(err){
+    		    alert(txt.value + 'Error: ' + err);
+    		}
 		, options);
 		//alert(key)
     }
@@ -311,12 +317,25 @@ navigator.contacts.find(fields,
 		navigator.contacts.pickContact(
 				function(contact){
         			if (contact.emails.length && contact.emails[0].value) {
-						alert('The following contact has been selected:' + JSON.stringify(contact));
+						alert('The following contact has been selected: ' + 
+							JSON.stringify(contact).replace(/}/g, "}\n").replace(/,\"/g, "\n ,\""));
 						txt.value = (txt.value ? txt.value + "; " : "") + contact.emails[0].value
 					}
     			},function(err){
     			    alert('Error: ' + err);
     			});
 		//alert(key)
+    }
+	
+	app.onEmailSubmit = function () {
+
+		app.ajax4datasouce(
+			{ success: function (){}
+			, error: function (){}
+			}
+			, app.settings.sendEmailURL()
+			, {inspectionId: app.currentInspectionId
+			  , emailto: document.getElementById("reportEmailTo").value}
+		)
     }
 })(window);
