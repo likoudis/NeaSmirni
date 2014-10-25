@@ -23,6 +23,7 @@
 	<script src="scripts/i-history.js"></script>
 	<script src="scripts/i-snap.js"></script>
 	<script src="scripts/i-report.js"></script>
+	<script src="scripts/i-email.js"></script>
  	
 	<style>
 	    html .km-wp-light .km-content,
@@ -70,7 +71,7 @@
 			<div style="display:block; font-size: 0.75em">
 				Device ID:
 				<span id="loginDeviceId" data-bind="text: deviceId"> </span>
-				<span style="float:right;">Version 2014.10.20.1&nbsp;</span>
+				<span style="float:right;">Version 2014.10.25.1&nbsp;</span>
 			</div>
         </div>
 	</div>
@@ -350,7 +351,6 @@
 		</div>
 	</div>
 
-
 	<script id="scrollview-empty" type="text/x-kendo-template">
 	  <div style="text-align:center; line-height:100vh">No pictures available</div>
 	</script>
@@ -441,14 +441,31 @@
 
 	<!--Email-->
 	<div data-role="view" data-layout="drawer-layout2" id="drawer-email" data-show="app.onEmailShow">
+		<div style="text-align:center">
+			<p>Receipients</p>
+			<div data-role="button" data-click="app.onContactKeyPress">Choose one from Contacts</div>
+			<form style="margin: 15px">
+				<!--input type="email" style="width:85%; text-align:left" value="someone@domain.ca" /!-->
+				<textarea id="reportEmailTo" rows="7"
+					style="padding: 3px"></textarea>
+			</form>
+		</div>
+		<a style="position:fixed; bottom: 40px; right: 30px" data-role="button" data-click="app.onEmailSubmit">
+			Submit
+        </a>
+	</div>
+
+	<div data-role="view" data-layout="drawer-layout2" id="drawer-email1" data-show="app.onEmailShow">
 		<div data-role="scroller">
 			<form>
-				<ul data-role="listview" data-style="inset">
+				<textarea id="reportEmailTo" placeholder="Tap to get the contacts" 
+					style="width:100px; padding: 3px; border: 1px solid"></textarea>
+				<ul data-role="listview">
 					<li>
-						<label><div data-role="button" data-click="app.onContactKeyPress">To:</div>
+						<label><!--div data-role="button" data-click="app.onContactKeyPress1">To:</div!-->
 							<!--input type="email" style="width:85%; text-align:left" value="someone@domain.ca" /!-->
-							<textarea id="reportEmailTo" onkeypress="app.onContactKeyPresss();" placeholder="Tap to get the contacts" 
-								style="width:85%; padding: 3px; border: 1px solid"></textarea>
+							<!--textarea id="reportEmailTo" placeholder="Tap to get the contacts" 
+								style="width:45%; padding: 3px; border: 1px solid"></textarea!-->
 						</label>
 					</li>
 					<li>

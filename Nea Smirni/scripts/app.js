@@ -180,11 +180,6 @@
     	});
 	}
 
-	app.onEmailShow = function (e) {
-		var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
-		t.title("Email - " + app.currentInspxAddress)
-	}
-
 	app.acDictionary = new kendo.data.DataSource({
 		transport: {
 		 	//read: {
@@ -279,63 +274,8 @@
 	
 	app.onDictionaryRefresh = function (e) { //why is this function executed twice???
 		if (e.button) {
-			console.log(e)
+			//console.log(e)
 			app.acDictionary.read()
 		}
-    }
-
-	app.onContactKeyPress1 = function () {
-	    //var txt = window.event.keyCode;
-		var txt = document.getElementById("reportEmailTo")
-		txt.value = txt.value.replace(/[\r\n]+/g, "ddddd")
-		
-		alert(">" + txt.value + "<")
-
-		// find all contacts with 'Bob' in any name field
-		var options      = new ContactFindOptions();
-		options.filter   = txt.value;
-		options.multiple = true;
-		options.desiredFields = [navigator.contacts.fieldType.id];
-		var fields = [
-			  navigator.contacts.fieldType.id
-			,  navigator.contacts.fieldType.displayName
-			, navigator.contacts.fieldType.name];
-		navigator.contacts.find(fields,
-			function(contact){
-        		alert(txt.value + 'The following contact has been selected: ' + 
-					JSON.stringify(contact).replace(/}/g, "}\n").replace(/,\"/g, "\n ,\""));
-				txt.value = (txt.value ? txt.value + "; " : "") + contact.forEach(function(e){return e})
-			},function(err){
-    		    alert(txt.value + 'Error: ' + err);
-    		}
-		, options);
-		//alert(key)
-    }
-
-	app.onContactKeyPress = function () {
-		var txt = document.getElementById("reportEmailTo")
-		navigator.contacts.pickContact(
-				function(contact){
-        			if (contact.emails.length && contact.emails[0].value) {
-						alert('The following contact has been selected: ' + 
-							JSON.stringify(contact).replace(/}/g, "}\n").replace(/,\"/g, "\n ,\""));
-						txt.value = (txt.value ? txt.value + "; " : "") + contact.emails[0].value
-					}
-    			},function(err){
-    			    alert('Error: ' + err);
-    			});
-		//alert(key)
-    }
-	
-	app.onEmailSubmit = function () {
-
-		app.ajax4datasouce(
-			{ success: function (){}
-			, error: function (){}
-			}
-			, app.settings.sendEmailURL()
-			, {inspectionId: app.currentInspectionId
-			  , emailto: document.getElementById("reportEmailTo").value}
-		)
     }
 })(window);
