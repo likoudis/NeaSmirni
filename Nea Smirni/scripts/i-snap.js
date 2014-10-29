@@ -40,6 +40,7 @@ function onPhotoDataSuccess(imageURI) {
 		window.resolveLocalFileSystemURL("file:///" + imageURI.substr(imageURI.lastIndexOf("/") +1 )
 	    , resolveOnSuccess, resOnError2)
     } else {
+alert(JSON.stringify(imageURI))
 		window.resolveLocalFileSystemURL(imageURI, resolveOnSuccess, resOnError2); 
 	}
 }

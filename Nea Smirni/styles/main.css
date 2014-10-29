@@ -487,3 +487,7 @@ border-bottom: 1px solid rgba(0,0,0,0.1);
 #inspx-notes textarea, #pixur-note-form textarea, #reportEmailTo {
 	font-size: 1.7em;
 }
+
+#modal-psfc li label {
+	color: White;
+}

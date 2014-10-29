@@ -26,8 +26,8 @@
 
 		app.lsInitialise("dsTimeOut", 5)
 		app.settings.set("deviceId", device.uuid)
-		//app.itsTheSimulator() && app.settings.set("deviceId", "CBD30130-86F8-4C42-B7C3-CD6C7EE6C93A")
-		// app.itsTheSimulator() && app.settings.set("deviceId", "b32f2b6527524b5c")
+		//app.itsTheSimulator() && app.settings.set("deviceId", "6FB844D6-1509-4E5B-8E77-5C645BB0B52C")
+		//app.itsTheSimulator() && app.settings.set("deviceId", "b32f2b6527524b5c")
 
 		//app.lsInitialise("hostName", "qqw.directit.ca:8000")
 		//app.lsInitialise("hostName", "89.210.253.91:8000")
@@ -145,7 +145,30 @@
 	}
 
 	app.closeAssessModalView = function (e) {
-        $("#modal-psfc").kendoMobileModalView("close");
+		if (e.sender && e.sender.options.name === "ModalView") { // on show
+			$('input[name="assessAs"]').attr('checked', false)
+			return
+		}
+
+		if (e.value !== undefined) { // on radio change
+			$("#submit-assess").data("kendoMobileButton").enable(true)
+			return
+        }
+
+		$("#modal-psfc").kendoMobileModalView("close");
+
+		if (e.target.text() === "Cancel") return // on Cancel press
+
+		$("#right-drawer").data("kendoMobileDrawer").hide()
+
+		app.ajax4datasouce(
+			{ success: function (){}
+			, error: function (){}
+			}
+			, app.settings.sendEmailURL()
+			, {inspectionId: app.currentInspectionId
+			  , emailto: $('input[name="assessAs"]:checked').attr('value')}
+		)
     };
 	
 	app.changeSkin = function (e) {

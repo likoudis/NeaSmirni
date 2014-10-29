@@ -77,7 +77,9 @@ app.onContactKeyPress = function () {
 	var txt = document.getElementById("reportEmailTo")
 	navigator.contacts.pickContact(
 			function(contact){
-    			if (!contact.emails.length) {
+				alert('Following contact has been selected: ' + 
+						JSON.stringify(contact).replace(/}/g, "}\n").replace(/,\"/g, "\n ,\""));
+				if (!contact.emails.length) {
 					app.showStatus("There is no e-mail addess for this person")
 					//alert('Following contact has been selected: ' + 
 					//	JSON.stringify(contact).replace(/}/g, "}\n").replace(/,\"/g, "\n ,\""));
