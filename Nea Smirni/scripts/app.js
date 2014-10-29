@@ -55,6 +55,7 @@
 		kendo.bind($("#openHomePage"), app.settings);
 		kendo.bind($("#no-host"), app.settings);
 		kendo.bind($("#logout"), app.settings);
+		kendo.bind($("#drawer-snap"), app.settings);
 
 		app.checkValidDevice()
 		
@@ -127,6 +128,7 @@
 		, headerDateRange: "all"
 		, contains: ""
 		, uploadProgress: 0
+		, allowSnap: true
 
     });
 	
@@ -147,6 +149,7 @@
 	app.closeAssessModalView = function (e) {
 		if (e.sender && e.sender.options.name === "ModalView") { // on show
 			$('input[name="assessAs"]').attr('checked', false)
+			$("#submit-assess").data("kendoMobileButton").enable(false)
 			return
 		}
 
@@ -171,21 +174,6 @@
 		)
     };
 	
-	app.changeSkin = function (e) {
-		var mobileSkin = "flat";
-
-		if (e.sender.element.text() === "Flat") {
-			mobileSkin = "flat";
-			e.sender.element.text("Native");
-		} else {
-			mobileSkin = "";
-			e.sender.element.text("Flat");
-		}
-		app.application.skin(mobileSkin);
-		navigator.splashscreen.show()
-		setTimeout(function() {navigator.splashscreen.hide()}, 2000)
-	};
-
 	app.checkValidDevice = function () {
 		$.ajax({
 			url: app.settings.devValidURL()

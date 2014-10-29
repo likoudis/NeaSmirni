@@ -71,7 +71,7 @@
 			<div style="display:block; font-size: 0.75em">
 				Device ID:
 				<span id="loginDeviceId" data-bind="text: deviceId"> </span>
-				<span style="float:right;">Version 2014.10.27.1&nbsp;</span>
+				<span style="float:right;">Version 2014.10.29.1&nbsp;</span>
 			</div>
         </div>
 	</div>
@@ -384,7 +384,7 @@
 	<!--Snap-->
 	<div id="drawer-snap" data-role="view" data-layout="drawer-layout2"
 		data-title="Take Pictures" data-show="app.onSnapShow">
-		<div style="margin:5px">
+		<div style="margin:5px" data-bind="visible:allowSnap">
 			<div id="pixur-preview">
 				<p>Picture preview</p>
 				<img id="snap-thumb" alt=" No picture available"
@@ -403,6 +403,15 @@
 				</div>
 			</form>
 		</div>
+		<div style="margin:5px; text-align: center" data-bind="invisible:allowSnap">
+			<h1> Picture uploaded</h1>
+			<p> Press the button to take a new one  </p>
+			<div data-role="button" data-click="app.onSnapAgain">
+				Snap Again
+			</div>
+			
+		</div>
+
 	</div>
 	
 	<!--Report-->

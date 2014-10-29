@@ -23,6 +23,7 @@ app.onSnapShow = function (e) {
 
 app.onSnapClick = function () {
 	// Take picture using device camera and retrieve image file
+
 	navigator.camera.getPicture(
 		onPhotoDataSuccess, 
 		onFail, 
@@ -40,7 +41,7 @@ function onPhotoDataSuccess(imageURI) {
 		window.resolveLocalFileSystemURL("file:///" + imageURI.substr(imageURI.lastIndexOf("/") +1 )
 	    , resolveOnSuccess, resOnError2)
     } else {
-alert(JSON.stringify(imageURI))
+//alert(JSON.stringify(imageURI))
 		window.resolveLocalFileSystemURL(imageURI, resolveOnSuccess, resOnError2); 
 	}
 }
@@ -74,7 +75,7 @@ function successMove(entry) {
 	//app.imageCount = app.imageCount < 999 ? app.imageCount + 1 : 0;
 	document.getElementById("snap-thumb").src = entry.toInternalURL()
 	t = entry.toInternalURL()
-	document.getElementById("snap-fname").innerHTML = t.substr(t.lastIndexOf("/") +1)
+	//document.getElementById("snap-fname").innerHTML = t.substr(t.lastIndexOf("/") +1)
 	//$.ajax({
 	//	url: app.settings.saveInspxImageURL(app.currentInspectionId, entry.toInternalURL())
 	//	, type: "POST"
@@ -122,10 +123,15 @@ app.onAddImgNote = function (e){
     
     var ft = new FileTransfer();
 
-    ft.upload(imageURI, encodeURI(app.settings.saveInspxImageURL(app.currentInspectionId, options.fileName)), win, fail, options);
+    ft.upload(imageURI
+		, encodeURI(app.settings.saveInspxImageURL(app.currentInspectionId, options.fileName))
+		, win
+		, fail
+		, options);
      
     function win() {
         app.showStatus("Picture uploaded")
+		app.settings.set("allowSnap", false)
     }
     
     function fail(error) {
@@ -142,4 +148,13 @@ app.onAddImgNote = function (e){
 			
 		}
 	}
+	
+}
+
+app.onSnapAgain = function () {
+
+	document.getElementById("snap-thumb").src = "noImageToShow"
+	document.getElementById("newImgNoteText").value = ""
+	app.settings.set("allowSnap", true)
+
 }
