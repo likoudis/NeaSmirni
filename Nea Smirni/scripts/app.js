@@ -21,7 +21,7 @@
         })
 
 		app.itsTheSimulator = function() {
-			return device.uuid.substr(-6) === "010333"
+			return device.uuid.substr(0,2) === "e0"
         }
 
 		app.lsInitialise("dsTimeOut", 5)

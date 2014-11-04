@@ -73,5 +73,10 @@
   "WP8ProductID": "{22d62ba6-ca4c-4950-b152-5d02b2d50816}",
   "WP8PublisherID": "{22d62ba6-ca4c-4950-b152-5d02b2d50816}",
   "WP8Publisher": "",
-  "Framework": "Cordova"
+  "Framework": "Cordova",
+  "CordovaPluginVariables": {
+    "com.telerik.mobiletesting": {
+      "IOS_APP_URL": ""
+    }
+  }
 }

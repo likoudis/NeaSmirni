@@ -25,13 +25,13 @@ app.onSnapClick = function () {
 	// Take picture using device camera and retrieve image file
 
 	navigator.camera.getPicture(
-		onPhotoDataSuccess, 
-		onFail, 
-		{   quality: 50
+		onPhotoDataSuccess
+		, onFail
+		, { quality: 50
 			, destinationType: Camera.DestinationType.FILE_URI
-			, targetWidth: 500
-            , targetHeight: 500
-			, correctOrientation: true
+			//, targetWidth: 200
+            //, targetHeight: 200
+			//, correctOrientation: true
 		}
 	)
 }
@@ -41,7 +41,6 @@ function onPhotoDataSuccess(imageURI) {
 		window.resolveLocalFileSystemURL("file:///" + imageURI.substr(imageURI.lastIndexOf("/") +1 )
 	    , resolveOnSuccess, resOnError2)
     } else {
-//alert(JSON.stringify(imageURI))
 		window.resolveLocalFileSystemURL(imageURI, resolveOnSuccess, resOnError2); 
 	}
 }
