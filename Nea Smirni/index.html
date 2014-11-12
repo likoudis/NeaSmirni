@@ -46,34 +46,52 @@
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
 		<p>&nbsp;</p>
-		<div class="view-content">
-			<div class="img"></div>
-			<div style="text-align:center; margin: 20px">
-            	<a id="openHomePage" 
-					data-role="button"
-					data-bind="visible: isDeviceValid"
-					href="#drawer-inspxions">
-					Open Inspections
-            	</a>
+		<div class="view-content">		
+			<table>
+				<tr>
+					<td></td>
+					<td>Mobile Inspections for Land Manager</td>
+					<td></td>
+                </tr>
+				<tr>
+					<td></td>
+					<td class="img"></td>
+					<td></td>					
+                </tr>
+				<tr>
+					<td></td>
+					<td>
+						<div id="no-host" data-bind="invisible: isDeviceValid">
+							<label>PermitServices Server:								
+								<input type="text" data-bind="value: hostName">
+							</label>
+							<a id="submitbutton" data-role="button" data-click="app.checkValidDevice">Set</a>
+            			</div>
+                    </td>
+					<td></td>
+                </tr>
+				<tr>
+					<td></td>
+					<td>
+						<div>
+			            	<a id="openHomePage" 
+								data-role="button"
+								data-bind="visible: isDeviceValid"
+								href="#drawer-inspxions">Start</a>
+						</div>
+                    </td>
+					<td>							
+						<div>
+	        				<a id="logout" data-role="button" data-bind="visible: isDeviceValid" data-click="app.logout" >Exit</a>
+						</div></td>
+                </tr>
+				<tr>
+					<td><div style="display:block; font-size: 0.75em">Device ID:<span id="loginDeviceId" data-bind="text: deviceId"></span></div></td>
+					<td></td>
+					<td style="font-size:.75em">Version:2014.11.12.3</td>
+                </tr>
+            </table>
 			</div>
-			<div style="height:60px">
-	        	<a id="logout" data-role="button" data-bind="visible: isDeviceValid"
-					data-click="app.logout" >
-					Logout
-                </a>
-			</div>
-			<div id="no-host" data-bind="invisible: isDeviceValid" style="height:60px">
-				<label> Logged out. Please supply a server address:
-					<a style="float:right" id="submitbutton" data-role="button" data-click="app.checkValidDevice">Enter</a>
-					<input style="float:right" type="text" data-bind="value: hostName">
-				</label>
-            </div>
-			<div style="display:block; font-size: 0.75em">
-				Device ID:
-				<span id="loginDeviceId" data-bind="text: deviceId"> </span>
-				<span style="float:right;">Version 2014.10.29.1&nbsp;</span>
-			</div>
-        </div>
 	</div>
 
 	<!--Left drawer-->
