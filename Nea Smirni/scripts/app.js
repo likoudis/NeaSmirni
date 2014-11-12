@@ -4,7 +4,6 @@
     document.addEventListener('deviceready', function () {
 
 		app.application = new kendo.mobile.Application(document.body, {
-			platform: "ios8",
 			initial: "view-welcome"
 		});
 
