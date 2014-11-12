@@ -1,11 +1,10 @@
 (function (global) {
     var app = global.app = global.app || {};
 
-	//alert(localStorage.getItem("NeaSmyrni.settings"))
     document.addEventListener('deviceready', function () {
 
 		app.application = new kendo.mobile.Application(document.body, {
-			platform: !0 ? !0 ? "android" : "ios" : "ios7",
+			platform: "ios8",
 			initial: "view-welcome"
 		});
 
@@ -29,13 +28,13 @@
 		//app.itsTheSimulator() && app.settings.set("deviceId", "6FB844D6-1509-4E5B-8E77-5C645BB0B52C")
 		//app.itsTheSimulator() && app.settings.set("deviceId", "b32f2b6527524b5c")
 
-		//app.lsInitialise("hostName", "qqw.directit.ca:8000")
+		app.lsInitialise("hostName", "qqw.directit.ca:8000")
 		//app.lsInitialise("hostName", "89.210.253.91:8000")
 		//app.lsInitialise("hostName", "192.168.2.6:8000")
 		//app.lsInitialise("hostName", "dctlt063:8000")
 		//app.lsInitialise("hostName", "dctlt060:8000")
 		//app.lsInitialise("hostName", "192.168.2.50:8000")
-		app.lsInitialise("hostName", "192.168.2.60:8000")
+		//app.lsInitialise("hostName", "192.168.2.60:8000")
 		//app.lsInitialise("hostName", "192.168.2.7:8000")
 
 		app.lsInitialise("useJson", true)
