@@ -1,7 +1,7 @@
 {
   "ProjectGuid": "3e539579-b648-4540-8219-cc71419441dd",
   "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
-  "AppIdentifier": "com.telerik.NeaSmirni",
+  "AppIdentifier": "ca.directit.landmaninspections",
   "ProjectName": "Nea Smirni",
   "IsRunnable": "true",
   "FrameworkVersion": "3.5.0",
@@ -26,29 +26,20 @@
     "android.permission.WRITE_EXTERNAL_STORAGE"
   ],
   "CorePlugins": [
-    "org.apache.cordova.battery-status",
     "org.apache.cordova.camera",
-    "org.apache.cordova.media-capture",
     "org.apache.cordova.console",
     "org.apache.cordova.contacts",
     "org.apache.cordova.device",
-    "org.apache.cordova.device-motion",
     "org.apache.cordova.device-orientation",
     "org.apache.cordova.file",
     "org.apache.cordova.file-transfer",
-    "org.apache.cordova.geolocation",
-    "org.apache.cordova.globalization",
     "org.apache.cordova.inappbrowser",
     "org.apache.cordova.keyboard",
-    "org.apache.cordova.network-information",
-    "org.apache.cordova.dialogs",
     "org.apache.cordova.splashscreen",
-    "org.apache.cordova.statusbar",
-    "org.apache.cordova.vibration"
+    "org.apache.cordova.statusbar"
   ],
   "DeviceOrientations": [
-    "Portrait",
-    "Landscape"
+    "Portrait"
   ],
   "iOSStatusBarStyle": "Default",
   "AndroidHardwareAcceleration": "false",
@@ -57,15 +48,17 @@
     "ID_RESOLUTION_WXGA",
     "ID_RESOLUTION_HD720P"
   ],
-  "BundleVersion": "1.1",
-  "DisplayName": "",
-  "Author": "",
-  "Description": "Nea Smirni",
+  "BundleVersion": "1.7.7",
+  "DisplayName": "Mobile Inspections for Land Manager",
+  "Author": "Direct IT Ltd",
+  "Description": "Mobile Inspections for Building Permits",
   "iOSDeviceFamily": [
     "1",
     "2"
   ],
-  "iOSBackgroundMode": [],
+  "iOSBackgroundMode": [
+    "bluetooth-central"
+  ],
   "AndroidVersionCode": "1",
   "WP8Requirements": [],
   "WP8Capabilities": [],
@@ -74,9 +67,5 @@
   "WP8PublisherID": "{22d62ba6-ca4c-4950-b152-5d02b2d50816}",
   "WP8Publisher": "",
   "Framework": "Cordova",
-  "CordovaPluginVariables": {
-    "com.telerik.mobiletesting": {
-      "IOS_APP_URL": ""
-    }
-  }
+  "projectVersion": "1"
 }

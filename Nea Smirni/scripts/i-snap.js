@@ -41,7 +41,7 @@ function onPhotoDataSuccess(imageURI) {
 		window.resolveLocalFileSystemURL("file:///" + imageURI.substr(imageURI.lastIndexOf("/") +1 )
 	    , resolveOnSuccess, resOnError2)
     } else {
-		window.resolveLocalFileSystemURL(imageURI, resolveOnSuccess, resOnError2); 
+		window.resolveLocalFileSystemURL(imageURI, resolveOnSuccess, resOnError2);
 	}
 }
 
@@ -71,17 +71,8 @@ function resolveOnSuccess(entry) {
 
 //Callback function when the file has been moved successfully - inserting the complete path
 function successMove(entry) {
-	//app.imageCount = app.imageCount < 999 ? app.imageCount + 1 : 0;
-	document.getElementById("snap-thumb").src = entry.toInternalURL()
-	t = entry.toInternalURL()
-	//document.getElementById("snap-fname").innerHTML = t.substr(t.lastIndexOf("/") +1)
-	//$.ajax({
-	//	url: app.settings.saveInspxImageURL(app.currentInspectionId, entry.toInternalURL())
-	//	, type: "POST"
-	//	, data: "shit"
-	//	, success: function (data) { }
-	//	, error: function (x,s,e) { }
-	//});
+	document.getElementById("snap-thumb").src = entry.toInternalURL();
+	t = entry.toInternalURL();
 }
 
 function resOnError(error) {
@@ -114,16 +105,20 @@ app.onAddImgNote = function (e){
     options.mimeType="image/jpeg" 
 	
     var params = {};
-    //params.Inspectionid = app.currentInspectionId;
-    params.ImageFileName = options.fileName;
+    params.ImageFileName = options.fileName
 	params.ImageNotes = $("#newImgNoteText").val().replace(/\n/g,"\\r\\n")
     
-    options.params = params;
-    
-    var ft = new FileTransfer();
-
+    options.params = params
+    var ft = new FileTransfer()
+	
+	var saveImageUrl = app.settings.saveInspxImageURL(app.currentInspectionId);
+	//alert(document.getElementById("uploadButton"));
+	//alert(document.getElementById("uploadButton").outerHTML); 
+	//document.getElementById("uploadButton").innerHTML = "Uploading" 
+	
+	
     ft.upload(imageURI
-		, encodeURI(app.settings.saveInspxImageURL(app.currentInspectionId, options.fileName))
+		, encodeURI(saveImageUrl)
 		, win
 		, fail
 		, options);
@@ -136,15 +131,17 @@ app.onAddImgNote = function (e){
     function fail(error) {
 		switch (error.code) {
 			case FileTransferError.FILE_NOT_FOUND_ERR:
-				app.showStatus("Photo file not found");
+				app.showStatus("Photo file not found. Http Status:" + error.http_status);
 				break;
 			case FileTransferError.INVALID_URL_ERR:
-				app.showStatus("Bad Photo URL");
+				app.showStatus("Bad Photo URL. Http Status:" + error.http_status);
 				break;
 			case FileTransferError.CONNECTION_ERR:
-				app.showStatus("Connection error");
+				app.showStatus("Connection error. Http Status:" + error.http_status);
 				break;
-			
+			default:
+				alert("Failed. Http Status:" + error.http_status);		
+				break;	
 		}
 	}
 	

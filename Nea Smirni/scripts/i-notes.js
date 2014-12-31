@@ -61,6 +61,5 @@ app.onAddNote = function(e) {
 	app.notesDataSource.at(l).set("Note", app.newNoteText)
 	app.notesDataSource.at(l).set("CreateDate", new Date())
 	app.notesDataSource.sync()
-	//app.notesDataSource.read()
 	document.getElementById("newNoteText").value = ""
 }

@@ -41,8 +41,6 @@ app.detailsDataSource = new kendo.data.DataSource ({
 app.onDetailsShow = function (e) {
 	var t = e.view.header.find(".km-navbar").data("kendoMobileNavBar")
 	t.title("Details - " + app.currentInspxAddress)
-
-	//app.detailsViewModel.detailsDataSource.read()
 	app.detailsDataSource.read()
 	$("#i-detail-section").data("kendoMobileListView").refresh()
 }

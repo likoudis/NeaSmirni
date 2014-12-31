@@ -4,7 +4,7 @@
     document.addEventListener('deviceready', function () {
 
 		app.application = new kendo.mobile.Application(document.body, {
-			initial: "view-welcome"
+			initial: "view-landing"
 		});
 
         navigator.splashscreen.hide();
@@ -24,18 +24,7 @@
 
 		app.lsInitialise("dsTimeOut", 5)
 		app.settings.set("deviceId", device.uuid)
-		//app.itsTheSimulator() && app.settings.set("deviceId", "6FB844D6-1509-4E5B-8E77-5C645BB0B52C")
-		//app.itsTheSimulator() && app.settings.set("deviceId", "b32f2b6527524b5c")
-
 		app.lsInitialise("hostName", "qqw.directit.ca:8000")
-		//app.lsInitialise("hostName", "89.210.253.91:8000")
-		//app.lsInitialise("hostName", "192.168.2.6:8000")
-		//app.lsInitialise("hostName", "dctlt063:8000")
-		//app.lsInitialise("hostName", "dctlt060:8000")
-		//app.lsInitialise("hostName", "192.168.2.50:8000")
-		//app.lsInitialise("hostName", "192.168.2.60:8000")
-		//app.lsInitialise("hostName", "192.168.2.7:8000")
-
 		app.lsInitialise("useJson", true)
 		app.settings.isInetConnected = true
 		app.settings.set("isHostConnected", false)
@@ -48,14 +37,14 @@
 		app.reportElement = ""
 		
 		kendo.bind($("#drawer-settings"), app.settings);
-		kendo.bind($("#drawer-filter"), app.settings);
+		kendo.bind($("#drawer-search"), app.settings);
 		kendo.bind($("#loginDeviceId"), app.settings);
 		kendo.bind($("#openHomePage"), app.settings);
 		kendo.bind($("#no-host"), app.settings);
 		kendo.bind($("#logout"), app.settings);
 		kendo.bind($("#drawer-snap"), app.settings);
 
-		app.checkValidDevice()
+		app.validateDevice();
 		
 		document.addEventListener("backbutton", function(){}, false);
 		
@@ -67,9 +56,7 @@
 	app.isInetConnected = false;
 	app.isDeviceValid   = false;
 	
-	app.newNoteText ="Note text";
-
-	//app.imageCount = 0;
+	app.newNoteText = "Note text";
 
 	app.settings = new kendo.data.ObservableObject({
 		deviceId: "noDeviceId"
@@ -78,6 +65,8 @@
 			return "http://" + this.get("hostName") + "/permitservice"
         }
 		, devValidURL: function () {
+			console.log("in valid url");
+			console.log(this.serviceHostURL());
 			return this.get("serviceHostURL()") + "/IsDeviceValid?deviceid=" + this.get("deviceId")
         }
 		, headersURL: function () {
@@ -104,19 +93,22 @@
 		, sendEmailURL: function () {
 			return this.get("serviceHostURL()") + "/EmailInspectionReport"
 		}
-		, saveInspxImageURL: function (inspection, filename) {
+		, saveInspxImageURL: function (inspectionId) {
 			return this.get(
 			"serviceHostURL()") + "/SaveInspectionImage"
 			+ "?DeviceId=" + this.get("deviceId")
-			+ "&InspectionId=" + inspection
-			//+ "&ImageFileName=" + filename
+			+ "&InspectionId=" + inspectionId
 		}
-		, getInspxCheckListXmlURL: function (inspection) {
+		, getInspxCheckListXmlURL: function (inspectionId) {
 			return this.get(
 			"serviceHostURL()") + "/GetInspectionCheckListXml"
 			+ "?DeviceId=" + this.get("deviceId")
-			+ "&InspectionId=" + inspection
+			+ "&InspectionId=" + inspectionId
 		}
+		, changeInspxStatusURL: function() {
+			return this.get(
+			"serviceHostURL()") + "/ChangeInspectionStatus"
+        }
 		, useJson: false
 		, dsDataType: function () {return "json" + (app.settings.useJson ? "" : "p")}
 		, dsTimeOut: 5
@@ -132,16 +124,16 @@
 	
 	// Connection related stuff
 	document.addEventListener("online", onOnline, false);
+	
 	function onOnline() {
     	app.isInetConnected = true;
-		//alert("online")
 	}
 
 	document.addEventListener("offline", onOffline, false);
+	
 	function onOffline() {
     	app.settings.set("isHostConnected", false);
 		app.headersDataSource.data([])
-		//alert("offline")
 	}
 
 	app.closeAssessModalView = function (e) {
@@ -166,21 +158,21 @@
 			{ success: function (){}
 			, error: function (){}
 			}
-			, app.settings.sendEmailURL()
-			, {inspectionId: app.currentInspectionId
-			  , emailto: $('input[name="assessAs"]:checked').attr('value')}
+			, app.settings.changeInspxStatusURL()
+			, {
+				inspectionId: app.currentInspectionId, 
+				newStatus: $('input[name="assessAs"]:checked').attr('value')
+			}
 		)
     };
 	
-	app.checkValidDevice = function () {
+	app.validateDevice = function (e) {
 		$.ajax({
 			url: app.settings.devValidURL()
-			, success: function (data) {
-				//console.log(data)
-				app.settings.set("isDeviceValid", data)
+			, success: function (serverResponse) {
+				app.settings.set("isDeviceValid", serverResponse)
 			}
 			, error: function (x,s) {
-				//console.log(x,s,e)
 				app.settings.set("isDeviceValid", undefined)
 				app.showStatus("Could not authorize the device: " + s)
 			}
@@ -191,10 +183,6 @@
 
 	app.acDictionary = new kendo.data.DataSource({
 		transport: {
-		 	//read: {
-		 	// 	url: "data/MyInspections/dictionary.json",
-		 	// 	dataType: "json"
-		 	//}
 			read: function(option) {
 				app.ajax4datasouce(
 					option
@@ -216,14 +204,14 @@
 		var statusLineElement = document.getElementById("status-line")
 		statusLineElement.style.webkitTransition= "opacity 0s"
 		statusLineElement.style.opacity = 1
-		statusLineElement.innerHTML =message
+		statusLineElement.innerHTML = message
 		setTimeout(
 			function() {
 				statusLineElement.style.webkitTransition= "opacity 2s"
 				statusLineElement.style.opacity = 0
 			}
-			, 5000
-		)
+			, 10000
+		);
     }
 	
 	app.ajax4datasouce = function (option, url, dataObject, that) {
@@ -246,14 +234,14 @@
 				// notify the data source that the request failed
 				option.error(result);
 				app.application && app.application.hideLoading()
-				app.showStatus("Datasource transport reports: "+ result.statusText)
+				app.showStatus("Result: "+ result.statusText)
 			}
 		})
     }
 	
 	app.guid = function () {
 		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,
-		function(c) {var r = Math.random()*16|0, v=c==='x'?r:r&0x3|0x8;return v.toString(16);})
+		function(c) {var r = Math.random()*16 | 0, v = c ==='x' ? r: r & 0x3 | 0x8;return v.toString(16);})
     }
 	
 	app.lsInitialise = function(item, value) {
@@ -283,7 +271,6 @@
 	
 	app.onDictionaryRefresh = function (e) { //why is this function executed twice???
 		if (e.button) {
-			//console.log(e)
 			app.acDictionary.read()
 		}
     }

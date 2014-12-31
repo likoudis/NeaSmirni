@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>LandMan - Mobile Inspections</title>
+
 	<meta charset="utf-8" />
-	<link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
-	<link href="styles/main.css" rel="stylesheet" />
-	<link href="styles/dctmodernui.css" rel="stylesheet" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="shortcut icon" href="styles/images/dct/favicon.png" type="image/x-icon">
 	
+	<!-- Telerik styles --> 
+	<link href="kendo/styles/kendo.common.min.css" rel="stylesheet" />
+	<link href="kendo/styles/kendo.default.mobile.min.css" rel="stylesheet" />
+	<link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+
+	<!-- Direct IT Styles -->	
+	<!--<link href="styles/main.css" rel="stylesheet" />-->
+	<!--<link href="styles/dctmodernui.css" rel="stylesheet" />-->
+		
 	<script src="cordova.js"></script>
 	<script src="kendo/js/jquery.min.js"></script>
 	<script src="kendo/js/kendo.all.min.js"></script>
-	<!-- script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script!-->
-	<!-- CDN-based script reference for Kendo UI -->
-	<!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.all.min.js"></script!-->
-	<!--script src="http://cdn.kendostatic.com/2014.1.318/js/kendo.mobile.min.js"></script!-->
 	
 	<script src="scripts/app.js"></script>
 	<script src="scripts/i-headers.js"></script>
@@ -23,121 +30,71 @@
 	<script src="scripts/i-history.js"></script>
 	<script src="scripts/i-snap.js"></script>
 	<script src="scripts/i-report.js"></script>
-	<script src="scripts/i-email.js"></script>
+	<script src="scripts/i-email.js"></script> 
  	
-	<style>
-	    html .km-wp-light .km-content,
-	    html .km-wp-light .km-button,
-	    html .km-wp-light .km-navbar,
-	    html .km-wp-light .km-detail,
-	    html .km-wp-light *:not(.k-label) > input:not(.k-input),
-	    html .km-wp-light .k-dropdown,
-	    html .km-wp-light *:not(.k-label) > textarea,
-	    html .km-wp-light *:not(.k-label) > select {
-	        background: #fff;
-	    }
-	</style>
 </head>
 <body>
-    <!--Welcome-->
-	<div id="view-welcome"
-        data-role="view"
-        data-title="Welcome">
-		<p>&nbsp;</p>
-		<p>&nbsp;</p>
-		<p>&nbsp;</p>
-		<div class="view-content">		
-			<table border="1" style="width:100%">
-				<tr>
-					<td></td>
-					<td>Mobile Inspections for Land Manager</td>
-					<td></td>
-                </tr>
-				<tr>
-					<td></td>
-					<td class="img"></td>
-					<td></td>					
-                </tr>
-				<tr>
-					<td></td>
-					<td>
-						<div id="no-host" data-bind="invisible: isDeviceValid">
-							<label>PermitServices Server:								
-								<input type="text" data-bind="value: hostName">
-							</label>
-							<a id="submitbutton" data-role="button" data-click="app.checkValidDevice">Set</a>
-            			</div>
-                    </td>
-					<td></td>
-                </tr>
-				<tr>
-					<td></td>
-					<td>
-						<div>
-			            	<a id="openHomePage" 
-								data-role="button"
-								data-bind="visible: isDeviceValid"
-								href="#drawer-inspxions">Start</a>
-						</div>
-                    </td>
-					<td>							
-						<div>
-	        				<a id="logout" data-role="button" data-bind="visible: isDeviceValid" data-click="app.logout" >Exit</a>
-						</div></td>
-                </tr>
-				<tr>
-					<td><div style="display:block; font-size: 0.75em">Device ID:<span id="loginDeviceId" data-bind="text: deviceId"></span></div></td>
-					<td></td>
-					<td style="font-size:.75em">Version:2014.11.12.3</td>
-                </tr>
-            </table>
+	<!-- Landing view -->
+	<div id="view-landing" data-role="view" data-title="Mobile Inspections for Land Manager">
+		<h3>LandMan Mobile Inspections</h3>
+		<div id="no-host" data-bind="invisible: isDeviceValid">
+			<div >
+				<input placeholder="servername[:port]" id="hostName" type="text" data-bind="value: hostName">
 			</div>
+			<div>
+				<a id="submitbutton" data-role="button" data-click="app.validateDevice">Set</a>
+			</div>
+		</div>					
+		<div>
+			<a id="openHomePage" data-role="button" data-bind="visible: isDeviceValid" href="#drawer-inspxions">Start</a>
+		</div>
+		<div>
+			<a id="logout" data-role="button" data-bind="visible: isDeviceValid" data-click="app.logout" >Change Server</a>					
+        </div>
+		<div>
+			<img src="styles/images/dct/DctSplash-Larger.png" style="width:25%;"/>
+        </div>
+		<div> 
+			<h6>Device:<span id="loginDeviceId" data-bind="text: deviceId"></span></h6>
+			<h6>Version:2014.12.30.1</h6>					
+        </div>
 	</div>
-
+	
 	<!--Left drawer-->
-	<!-- map should not be included here, if it should not respond to swipe -->
 	<div data-role="drawer" id="left-drawer" data-position="left"
 		data-views="[
-		'drawer-inspxions','drawer-filter','drawer-map','drawer-sync','drawer-settings',
-		'drawer-snap','drawer-report','drawer-email',
-		'inspx-details','inspx-notes', 'inspx-hist', 'drawer-pixurs']"
-		style="width: 290px"> 
-		<ul data-role="listview" data-type="flat">
-			<li data-icon="dct-home">    <a data-transition="none" href="#view-welcome">Home</a></li>
-			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=all">All Inspections</a></li>
-			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=today">Today's Inspections</a></li>
-			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=yesterday">Yesterday's Inspections</a></li>
-			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=thisWeek">This Week's Inspections</a></li>
-			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=lastWeek">Last Week's Inspections</a></li>
-			<li data-icon="dct-search">  <a data-transition="none" href="#drawer-filter">Search</a></li>
-			<!--li data-icon="dct-map">    <a data-transition="none" href="#drawer-map"   >Map</a></li!-->
-			<li></li>
-			<!--<li data-icon="downloads"><a data-transition="none" href="#drawer-sync"    >Synchronize</a></li>-->
+		'drawer-inspxions','drawer-search',
+		'drawer-settings','inspx-details',
+		'inspx-notes', 'inspx-hist', 'drawer-pixurs']">
+		<ul data-role="listview" data-style="inset">
+			<li data-icon="dct-home">    <a data-transition="none" href="#view-landing">Home</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=all">All</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=today">Today's</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=yesterday">Yesterday's</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=thisWeek">This Week's</a></li>
+			<li data-icon="dct-headers"> <a data-transition="none" href="#drawer-inspxions?filter=lastWeek">Last Week's</a></li>
+			<li data-icon="dct-search">  <a data-transition="none" href="#drawer-search">Search</a></li>
 			<li data-icon="dct-settings"> <a data-transition="none" href="#drawer-settings" >Settings</a></li>
 		</ul>
 	</div>
 	
-	<!--Right drawer 4 single inspx-->
+	<!--Right drawer - For single inspx -->
 	<div data-role="drawer" id="right-drawer" data-position="right"
-		data-views="[
-		'inspx-details','inspx-notes','drawer-pixurs','drawer-addinspx', 'inspx-hist']"
-		style="width: 200px">
+		data-views="['inspx-details','inspx-notes','drawer-pixurs','drawer-addinspx', 'inspx-hist']">
 		<ul data-role="listview" data-type="inset" >
-			<li data-icon="dct-assessment"><a data-transition="none" data-rel="modalview" href="#modal-psfc"  data-role="button">Assessment</a></li>
+			<li data-icon="dct-assessment"><a data-transition="none" data-rel="modalview" href="#modal-psfc">Result</a></li>
 			<li data-icon="dct-details">  <a data-transition="none" href="#inspx-details" >Details</a></li>
 			<li data-icon="dct-notes"> <a data-transition="none" href="#inspx-notes"   >Notes</a></li>
 			<li data-icon="dct-pictures">   <a data-transition="none" href="#drawer-pixurs">Pictures</a></li>
-			<li></li>
 			<li data-icon="dct-snap">   <a data-transition="none" href="#drawer-snap"   >Snap</a> </li>
-			<!--li data-icon="dct-report"> <a data-transition="none" href="#drawer-report" >Report</a></li!-->
 			<li data-icon="dct-e-mail"> <a data-transition="none" href="#drawer-email"  >E-mail</a></li>
 		</ul>
 	</div>
 	
-	<!--Drawer Layout 4 not-leaf views-->
+	<!--Drawer Layout - No Actions -->
 	<div data-role="layout" data-id="drawer-layout">
 		<header data-role="header">
-			<div data-role="navbar" id="inspxListViewNavBar">
+			<div data-role="navbar" id="inspxViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
 				<a data-role="backbutton" data-icon="dct-back" data-align="right">Back</a>
@@ -145,10 +102,10 @@
 		</header>
 	</div>
 
-	<!--Drawer Layout 4 leaf views-->
-	<div data-role="layout" data-id="drawer-layout1">
+	<!--Drawer Layout - Actions for single Inspection-->
+	<div data-role="layout" data-id="drawer-layout-inspection">
 		<header data-role="header">
-			<div data-role="navbar" id="inspxData1ViewNavBar">
+			<div data-role="navbar" id="inspx1ViewNavBar">
 				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
 				<a data-role="button" data-align="right" data-rel="drawer" href="#right-drawer" data-icon="dct-actions">Actions</a>
@@ -157,12 +114,11 @@
 		</header>
 	</div>
 
-	<!--Drawer Layout 4 leaf views with non-leaf options-->
-	<div data-role="layout" data-id="drawer-layout2">
+	<!--Drawer Layout - Back to single inspection -->
+	<div data-role="layout" data-id="drawer-layout-back">
 		<header data-role="header">
-			<div data-role="navbar" id="inspxData2ViewNavBar">
-				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" 
-					data-icon="dct-lists">Lists</a>
+			<div data-role="navbar" id="inspx2ViewNavBar">
+				<a data-role="button" data-align="left" data-rel="drawer" href="#left-drawer" data-icon="dct-lists">Lists</a>
 				<span data-role="view-title"></span>
 				<a data-role="backbutton" data-icon="dct-back" data-align="right">Back</a>
 			</div>
@@ -173,62 +129,45 @@
 	<div id="drawer-inspxions" data-role="view" data-layout="drawer-layout" data-title="All Inspections"
 		data-init="app.mobileListViewFiltering" 
 		data-show="app.onInspectionShow">
-		<div id="headerListScroller" data-role="scroller"
-			style="width:100%">
-		    <ul id="filterList" class="filterList" data-role="listview">
-		    </ul>
+		<div id="headerListScroller" data-role="scroller" style="width:100%">
+		    <ul id="filterList" data-role="listview"></ul>
         </div>
 	</div>
 	<script type="text/x-kendo-template" id="inspx-template">
-		<div class="item-thumb">
-			<img class="loading-thumb" src= "#= "data:image/jpg;base64," + ThumbnailBase64 #" >
+		<div>
+			<img src= "#= "data:image/jpg;base64," + ThumbnailBase64 #" >
 		</div>
-		<a class="km-listview-link" style="display: table-cell; width:100%" href="\#inspx-notes"
+		<a href="\#inspx-notes"
 			onclick="return app.setAndReadFor(#=InspectionId #,'#=PropertyAddress #');">
 			<div style="width:100%">
-				<h3>
-					<span class="time">
-						#= InspectionDate === null ? 'No date' : new Date(InspectionDate).toDateString() #
-					</span>
-					<span style="float:right">
-						#= PropertyAddress #
-					</span>
-				</h3>
-				<p>No: #= InspectionNo #</p>
+				<span>
+					#= InspectionDate === null ? 'No date' : new Date(InspectionDate).toDateString() #
+				</span>
+				<span style="float:right">
+					#= PropertyAddress #
+				</span>
+				<p>Inspection No: #= InspectionNo #</p>
 				<p>#= InspectionType #</p>
 			</div>
 		</a>
 	</script>
 
-	<!--Filter-->
+	<!--Search-->
 	<div data-role="view" data-title="Inspection Search"
-		id="drawer-filter" data-layout="drawer-layout" data-show="app.onFilterFormShow">
+		id="drawer-search" data-layout="drawer-layout" data-show="app.onFilterFormShow">
 		<form id="i-filter-form" style="font-size: 1.4em; padding: 5px">
-			<!--div><label>From-date:
-	 			<input type="date" value="2014-01-22" />
-			</label></div>
-			<div><label>
-	    	    To-date:
-	 			<input type="date" value="2014-03-22" />
-			</label></div>
-			<div><label> Inspection Status
-				<select  id="dropdown">
-					<option value="All">All</option>
-					<option value="Pass">Pass</option>
-					<option value="Fail">Fail</option>
-					<option value="Conditional">Conditional</option>
-				</select>
-			</label></div-->
 			<div><label>Keywords in Type, Number or Address:
 				<input style="font-size: 1.4em; width: 100%" placeholder="Search for"
 					data-bind="value: contains">
 			</label></div>
 		</form>
-			<div style="text-align: center"><a href="#drawer-inspxions" data-role="button">Search</a></div>
+		<div style="text-align: center">
+			<a href="#drawer-inspxions" data-role="button">Search</a>
+        </div>
 	</div>
 
 	<!--Settings-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-settings"
+	<div data-role="view" data-layout="drawer-layout-back" id="drawer-settings"
 		data-title="Settings">
 		<form>
 			<div> <label>Service host and port: 
@@ -249,18 +188,18 @@
        </form>
 	</div>
 	
-	<!--Assess (pass/fail)-->
-	<div data-role="modalview" id="modal-psfc" data-width="260" data-height="260" data-modal="false" data-open="app.closeAssessModalView">
+	<!--Result (pass/fail)-->
+	<div data-role="modalview" id="modal-psfc" data-width="80%" data-height="50%" data-modal="false" data-open="app.closeAssessModalView">
 		<div data-role="header">
 			<div data-role="navbar">
-				<span>Assessment</span>
+				<span>Result</span>
 			</div>
 		</div>
 
 		<ul data-role="listview">
 			<li>
 			    <label style="margin:1px; background-color:green">
-			        <input name="assessAs" type="radio" onclick="app.closeAssessModalView(this)" value="Pass"/> Pass
+			        <input name="assessAs" type="radio" onclick="app.closeAssessModalView(this)" value="Pass"/>Pass
 			    </label>
 			</li>
 			<li>
@@ -284,8 +223,8 @@
 	</div>
  
 	<!--Inspection Details-->
-	<div id="inspx-details" data-role="view" data-layout="drawer-layout1" 
-		data-show="app.onDetailsShow">
+	<div id="inspx-details" data-role="view" data-style="inset"
+		data-layout="drawer-layout-inspection" data-show="app.onDetailsShow">
 		<ul id="i-detail-section" data-role="listview"
 			data-source="app.detailsDataSource"
 			data-template="details-template"
@@ -314,18 +253,17 @@
 		<p><span>Current use</span>                           <span>#=CurrentUse#</span></p>
 		<p><span>Intended use</span>                         <span>#=IntendedUse#</span></p>
 		<p><span>Conditional permit</span><span>#=IsPermitConditional?"Yes":"No"#</span></p>
-		<a class="km-listview-link" href="\#inspx-hist" onclick="return app.savePermitDocId()"><h2>History</h2></a>
+		<a href="\#inspx-hist" onclick="return app.savePermitDocId()"><h2>History</h2></a>
 	</script>
 
 	<!--Inspection Notes-->
-	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout1"
+	<div id="inspx-notes" data-title="Inspection Notes" data-role="view" data-layout="drawer-layout-inspection"
 		data-show="app.onNotesShow">
 		<div style="text-align:center">
 			<p>New Note</p>
-			<form style="margin-right: 25px">
-				<textarea id="newNoteText" rows="7"
-					style="padding: 3px"></textarea>
-			<div data-role="button" data-click="app.onAddNote">Append</div>
+			<form>
+				<textarea id="newNoteText" rows="7"></textarea>
+				<div data-role="button" data-click="app.onAddNote">Add</div>
 			</form>
 		</div>
 		<div>
@@ -335,26 +273,25 @@
 		</div>
 	</div>
 	<script type="text/x-kendo-template" id="notes-template">
-		<div class="item-summary" style="width:100%">
-			<div class="time" style="display: inline">
+		<div>
+			<div>
 				#= CreateDate === null ? "No date" : new Date(CreateDate).toDateString()  #
 			</div>
-		<div style="display: inline"> #= Note || "&lt;no notes&gt;" # </div>
+		<div> #= Note || "&lt;no notes&gt;" # </div>
 		</div>
 	</script>
 
 	<!--Pictures-->
 	<div data-role="view" data-title="Inspection Pictures" id="drawer-pixurs"
-		data-layout="drawer-layout1" data-stretch="true"
+		data-layout="drawer-layout-inspection" data-stretch="true"
 		data-show="app.pixShow">
 
 		<div data-role="scrollview"
 			data-source="app.pixDataSource"
 			data-template="scrollview-template"
 			data-empty-template="scrollview-empty"
-			data-content-height="100%"
 			data-enable-pager="true"
-		  data-changed="app.onPixScrollChange">
+			data-changed="app.onPixScrollChange">
 		</div>
 	</div>
 
@@ -372,41 +309,15 @@
 			</div>
 		</div>
     </script>
-	<script type="text/x-kendo-template" id="scrollview-template2">
-		<div style= "margin: 5px">
-			<div id="i-pix-image">
-				<img style="width:auto; margin:auto; max-width:99%; max-height:99%"
-	  		 src="# "image/jpg;base64," + ImageBase64#" alt="Bugger!">
-			</div>
-			<div id="i-pix-note"> <textarea rows="20" cols="60"> #=Note#</textarea>
-			</div>
-		</div>
-    </script>
-	<script type="text/x-kendo-template" id="scrollview-template1">
-		<div class="image" 
-	    style="background-image: styles/images/DirectIT/actions.png">
-		</div>
-		<div id="i-pix-note"> <textarea rows="20" cols="60"> #=Note#</textarea>
-		</div>
-   </script>
-	<style scoped>
-		.image {
-			display: block;
-			margin: 1em auto;
-			height: 400px;
-			width: 400px;
-			background-size: auto 100%;
-		}
-	</style>
 
 	<!--Snap-->
-	<div id="drawer-snap" data-role="view" data-layout="drawer-layout2"
+	<div id="drawer-snap" data-role="view" data-layout="drawer-layout-back"
 		data-title="Take Pictures" data-show="app.onSnapShow">
 		<div style="margin:5px" data-bind="visible:allowSnap">
 			<div id="pixur-preview">
 				<p>Picture preview</p>
 				<img id="snap-thumb" alt=" No picture available"
-				style="width:350px; margin: 5px">
+				style="width:50%; height:50%; margin: 5px">
 				<div style="text-align: center">
 					<a data-role="button" data-click="app.onSnapClick" id="snap-button">
 						Snap
@@ -415,8 +326,8 @@
 			</div>
 			<form id="pixur-note-form">
 				<p style="margin-top:2em"> Picture Note</p>
-				<textarea rows="15" id="newImgNoteText"></textarea>
-				<div data-role="button" data-click="app.onAddImgNote">
+				<textarea rows="10" id="newImgNoteText"></textarea>
+				<div id="uploadButton" data-role="button" data-click="app.onAddImgNote">
 					Upload
 				</div>
 			</form>
@@ -431,32 +342,9 @@
 		</div>
 
 	</div>
-	
-	<!--Report-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-report"
-		data-title="Reports" data-show="app.onReportShow">
-
-		<div style="height:60vh">
-  		<p>Top Section</p>
-  		<form>
-  			<textarea id="newReportTextTop"></textarea>
-  		</form>
-  		<p>Middle Section</p>
-  		<form>
-  			<textarea id="newReportTextMid"></textarea>
-  		</form>
-  		<p>Bottom Section</p>
-		  <form>
-				<textarea id="newReportTextBot"></textarea>
-          </form>
-  		<div style="text-align:right">
-			<div data-role="button" data-click="app.onAddSection">Save</div>
-          </div>
-		</div>
-	</div>
 
 	<!--Email-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-email" data-show="app.onEmailShow">
+	<div data-role="view" data-layout="drawer-layout-back" id="drawer-email" data-show="app.onEmailShow">
 		<div style="text-align:center">
 			<p>Receipients</p>
 			<div data-role="button" data-click="app.onContactKeyPress">Choose one from Contacts</div>
@@ -473,24 +361,13 @@
 
 	<div id="inspx-hist" data-role="view" data-layout="drawer-layout" data-title="Past Inspections"
 		data-show="app.onHistoryShow">
-		<!--div class="map-search-wrap">
-			<button id="map-navigate-home"></button>
-			<form onsubmit="return false;">
-				<input id="map-address" type="search" placeholder="Address" />
-				<input class="map-search" type="submit" value="" />
-			</form>
-		</div-->
-		<ul class="filterList" data-role="listview" data-template="inspx-template" data-source="app.historyDataSource" data-auto-bind="false">
+		<ul data-role="listview" data-template="inspx-template" data-source="app.historyDataSource" data-auto-bind="false">
 		</ul>
-	</div>
-
-	<!--Add Inspection-->
-	<div data-role="view" data-layout="drawer-layout2" id="drawer-addinspx" data-title="Add an Inspection">
 	</div>
 	
 	<!-- Status line -->
 	<div id="status-line"
-		style="position: absolute; bottom:0px; width: 100%;
+		style="position: absolute; top:50px; width: 100%;
 			background-color:lightBlue;">
 	</div>
 	
