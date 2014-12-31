@@ -39,7 +39,8 @@
     "org.apache.cordova.statusbar"
   ],
   "DeviceOrientations": [
-    "Portrait"
+    "Portrait",
+    "Landscape"
   ],
   "iOSStatusBarStyle": "Default",
   "AndroidHardwareAcceleration": "false",
